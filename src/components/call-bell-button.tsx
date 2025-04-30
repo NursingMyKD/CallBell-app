@@ -38,7 +38,8 @@ export default function CallBellButton() {
             if (typeof e === 'string') {
                 errorMessage = e;
             } else if (e.target instanceof HTMLMediaElement && e.target.error) {
-                switch (e.target.error.code) {
+                const mediaError = e.target.error;
+                switch (mediaError.code) {
                     case MediaError.MEDIA_ERR_ABORTED:
                         errorMessage = 'Audio playback aborted.';
                         break;
@@ -49,21 +50,25 @@ export default function CallBellButton() {
                         errorMessage = 'The audio playback was aborted due to a corruption problem or because the audio used features your browser did not support.';
                         break;
                     case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-                        errorMessage = 'The audio not be loaded, either because the server or network failed or because the format is not supported.';
+                        errorMessage = `The audio could not be loaded, either because the server or network failed or because the format is not supported. Check path: ${SUCCESS_SOUND_PATH}`;
                         break;
                     default:
-                        errorMessage = `An unknown error occurred (code: ${e.target.error.code}).`;
+                        errorMessage = `An unknown error occurred (code: ${mediaError.code}, message: ${mediaError.message}).`;
                 }
-                console.error("Audio Element Error Details:", e.target.error);
+                // Log more specific details from the MediaError object
+                console.error("Audio Element Error Details:", { code: mediaError.code, message: mediaError.message }, e);
+            } else {
+                // Log the event object itself if it's not a standard MediaError event
+                console.error("Non-standard audio error event:", e);
             }
-          console.error("Error loading success sound:", errorMessage, e);
+          console.error("Error loading success sound:", errorMessage);
           setIsSoundReady(false);
           // Optional: Notify user sound won't play
            toast({
              title: "Audio Issue",
              description: `Confirmation sound could not be loaded: ${errorMessage}`,
              variant: "destructive",
-             duration: 4000,
+             duration: 5000, // Increased duration for visibility
            });
         };
 
@@ -111,16 +116,14 @@ export default function CallBellButton() {
           // Provide feedback to the user that sound failed
           toast({
             title: "Audio Playback Issue",
-            description: "Could not play the confirmation sound. Please check browser permissions.",
+            description: "Could not play the confirmation sound. Please check browser permissions or audio settings.",
             variant: "destructive",
             duration: 3000,
           });
         });
       } else {
         console.warn("Success sound reported ready, but readyState is low. Attempting to play might fail.", audioRef.current.readyState);
-        // Optionally try to play anyway, but it's riskier
-        // audioRef.current.currentTime = 0;
-        // audioRef.current.play().catch(err => console.error("Error playing low-readyState sound:", err));
+        // Avoid playing if not truly ready to prevent errors like "The operation is not supported."
       }
     } else if (!audioRef.current) {
         console.warn("Audio element reference is null. Cannot play sound.");
@@ -231,3 +234,4 @@ export default function CallBellButton() {
     </Button>
   );
 }
+
