@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from 'react';
@@ -9,19 +10,43 @@ import { cn } from "@/lib/utils";
 
 type Status = 'idle' | 'pending' | 'success' | 'error';
 
+// NOTE: Ensure you have a sound file at /sounds/success.mp3 in your public directory.
+const SUCCESS_SOUND_PATH = '/sounds/success.mp3';
+
 export default function CallBellButton() {
   const [status, setStatus] = React.useState<Status>('idle');
   const { toast } = useToast();
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const audioRef = React.useRef<HTMLAudioElement | null>(null);
 
+  // Preload the audio element on mount
   React.useEffect(() => {
-    // Cleanup timeout on component unmount
+    audioRef.current = new Audio(SUCCESS_SOUND_PATH);
+    audioRef.current.load(); // Preload the audio file
+
+    // Cleanup timeout and audio object on component unmount
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
+      if (audioRef.current) {
+        audioRef.current.pause(); // Stop playback if any
+        audioRef.current = null; // Release the reference
+      }
     };
   }, []);
+
+  const playSuccessSound = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0; // Rewind to the start
+      audioRef.current.play().catch(error => {
+        console.error("Error playing success sound:", error);
+        // Optional: Notify user that sound couldn't play, though toast already confirms success.
+      });
+    } else {
+      console.warn("Success sound audio element not available.");
+    }
+  };
 
   const handleClick = async () => {
     if (status === 'pending') return; // Prevent multiple clicks while pending
@@ -36,6 +61,7 @@ export default function CallBellButton() {
 
     if (result.success) {
       setStatus('success');
+      playSuccessSound(); // Play confirmation sound
       toast({
         title: "Success!",
         description: "Help is on the way.",
