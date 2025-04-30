@@ -43,6 +43,7 @@ export default {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
+        'ring-offset': 'hsl(var(--background))', // Add background as the ring offset color
   			chart: {
   				'1': 'hsl(var(--chart-1))',
   				'2': 'hsl(var(--chart-2))',
@@ -66,6 +67,12 @@ export default {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
+      ringOffsetWidth: {
+        '2': '2px', // Default Shadcn offset
+      },
+      ringOffsetColor: {
+        background: 'hsl(var(--background))', // Use the background color for offset
+      },
   		keyframes: {
   			'accordion-down': {
   				from: {
