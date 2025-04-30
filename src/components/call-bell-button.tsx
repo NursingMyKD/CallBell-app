@@ -35,10 +35,14 @@ export default function CallBellButton() {
 
         const handleError = (e: Event | string) => {
             let errorMessage = "Unknown audio error";
+            let detailedError: MediaError | null | string = null;
+
             if (typeof e === 'string') {
                 errorMessage = e;
+                detailedError = e;
             } else if (e.target instanceof HTMLMediaElement && e.target.error) {
                 const mediaError = e.target.error;
+                detailedError = mediaError; // Keep the MediaError object
                 switch (mediaError.code) {
                     case MediaError.MEDIA_ERR_ABORTED:
                         errorMessage = 'Audio playback aborted.';
@@ -50,7 +54,7 @@ export default function CallBellButton() {
                         errorMessage = 'The audio playback was aborted due to a corruption problem or because the audio used features your browser did not support.';
                         break;
                     case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-                        errorMessage = `The audio could not be loaded, either because the server or network failed or because the format is not supported. Check path: ${SUCCESS_SOUND_PATH}`;
+                        errorMessage = `The audio could not be loaded. Please ensure the file exists at '${SUCCESS_SOUND_PATH}' in the public directory and the format is supported.`;
                         break;
                     default:
                         errorMessage = `An unknown error occurred (code: ${mediaError.code}, message: ${mediaError.message}).`;
@@ -60,15 +64,16 @@ export default function CallBellButton() {
             } else {
                 // Log the event object itself if it's not a standard MediaError event
                 console.error("Non-standard audio error event:", e);
+                detailedError = "Non-standard error event";
             }
-          console.error("Error loading success sound:", errorMessage);
+          console.error("Error loading success sound:", errorMessage, "Details:", detailedError);
           setIsSoundReady(false);
           // Optional: Notify user sound won't play
            toast({
              title: "Audio Issue",
              description: `Confirmation sound could not be loaded: ${errorMessage}`,
              variant: "destructive",
-             duration: 5000, // Increased duration for visibility
+             duration: 7000, // Increased duration for visibility
            });
         };
 
