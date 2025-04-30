@@ -33,19 +33,38 @@ export default function CallBellButton() {
           setIsSoundReady(true);
         };
 
-        const handleError = (e: Event) => {
-          console.error("Error loading success sound. Event:", e);
-          // Access the error details from the audio element itself
-          const audioError = (e.target as HTMLAudioElement)?.error;
-          console.error("Audio Element Error Details:", audioError);
+        const handleError = (e: Event | string) => {
+            let errorMessage = "Unknown audio error";
+            if (typeof e === 'string') {
+                errorMessage = e;
+            } else if (e.target instanceof HTMLMediaElement && e.target.error) {
+                switch (e.target.error.code) {
+                    case MediaError.MEDIA_ERR_ABORTED:
+                        errorMessage = 'Audio playback aborted.';
+                        break;
+                    case MediaError.MEDIA_ERR_NETWORK:
+                        errorMessage = 'A network error caused the audio download to fail.';
+                        break;
+                    case MediaError.MEDIA_ERR_DECODE:
+                        errorMessage = 'The audio playback was aborted due to a corruption problem or because the audio used features your browser did not support.';
+                        break;
+                    case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+                        errorMessage = 'The audio not be loaded, either because the server or network failed or because the format is not supported.';
+                        break;
+                    default:
+                        errorMessage = `An unknown error occurred (code: ${e.target.error.code}).`;
+                }
+                console.error("Audio Element Error Details:", e.target.error);
+            }
+          console.error("Error loading success sound:", errorMessage, e);
           setIsSoundReady(false);
           // Optional: Notify user sound won't play
-          // toast({
-          //   title: "Audio Issue",
-          //   description: "Confirmation sound could not be loaded.",
-          //   variant: "destructive",
-          //   duration: 4000,
-          // });
+           toast({
+             title: "Audio Issue",
+             description: `Confirmation sound could not be loaded: ${errorMessage}`,
+             variant: "destructive",
+             duration: 4000,
+           });
         };
 
         // Add event listeners
@@ -57,6 +76,11 @@ export default function CallBellButton() {
           if (audioRef.current) {
             audioRef.current.removeEventListener('canplaythrough', handleCanPlay);
             audioRef.current.removeEventListener('error', handleError);
+            // Pause and release resources
+            audioRef.current.pause();
+            audioRef.current.src = ""; // Detach source
+            audioRef.current.load(); // Reset state
+            audioRef.current = null; // Release the reference
           }
         };
         return cleanup;
@@ -67,49 +91,45 @@ export default function CallBellButton() {
       }
     }
 
-    // Cleanup timeout and audio object on component unmount
+    // Cleanup timeout on component unmount
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
-      if (audioRef.current) {
-        audioRef.current.pause(); // Stop playback if any
-        // Listeners are removed by the inner cleanup function above
-        audioRef.current = null; // Release the reference
-      }
     };
-  }, []); // Empty dependency array ensures this runs once on mount
+  }, [toast]); // Add toast to dependency array
 
-  const playSuccessSound = () => {
+  const playSuccessSound = React.useCallback(() => {
     if (audioRef.current && isSoundReady) {
-       // Check if the audio is ready to play to avoid interruptions
+       // Double-check readiness state just before playing
        if (audioRef.current.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
         audioRef.current.currentTime = 0; // Rewind to the start
-        audioRef.current.play().catch(error => {
+        audioRef.current.play().then(() => {
+          console.log("Success sound played.");
+        }).catch(error => {
           console.error("Error playing success sound:", error);
-          // Optionally, provide feedback to the user that sound failed
+          // Provide feedback to the user that sound failed
           toast({
             title: "Audio Playback Issue",
-            description: "Could not play the confirmation sound.",
+            description: "Could not play the confirmation sound. Please check browser permissions.",
             variant: "destructive",
             duration: 3000,
           });
         });
       } else {
-        console.warn("Success sound not ready to play yet (readyState:", audioRef.current.readyState, "). Attempting anyway...");
-         // You might still try to play, or wait for 'canplaythrough' event
-         audioRef.current.currentTime = 0;
-         audioRef.current.play().catch(error => console.error("Error playing not-ready sound:", error));
+        console.warn("Success sound reported ready, but readyState is low. Attempting to play might fail.", audioRef.current.readyState);
+        // Optionally try to play anyway, but it's riskier
+        // audioRef.current.currentTime = 0;
+        // audioRef.current.play().catch(err => console.error("Error playing low-readyState sound:", err));
       }
+    } else if (!audioRef.current) {
+        console.warn("Audio element reference is null. Cannot play sound.");
     } else if (!isSoundReady) {
-        console.warn("Success sound audio element not ready or failed to load. Skipping playback.");
+        console.warn("Success sound not ready (isSoundReady=false). Skipping playback.");
     }
-     else {
-      console.warn("Success sound audio element not available or not initialized.");
-    }
-  };
+  }, [isSoundReady, toast]); // Add dependencies
 
-  const handleClick = async () => {
+  const handleClick = React.useCallback(async () => {
     if (status === 'pending') return; // Prevent multiple clicks while pending
 
     setStatus('pending');
@@ -118,31 +138,45 @@ export default function CallBellButton() {
       clearTimeout(timeoutRef.current); // Clear any existing reset timeout
     }
 
-    const result = await handleCallBellTrigger();
+    try {
+      const result = await handleCallBellTrigger();
 
-    if (result.success) {
-      setStatus('success');
-      playSuccessSound(); // Play confirmation sound if ready
-      toast({
-        title: "Success!",
-        description: "Help is on the way.",
-        variant: "default",
-        duration: 5000,
-      });
-      // Reset to idle after a delay
-      timeoutRef.current = setTimeout(() => setStatus('idle'), 5000);
-    } else {
-      setStatus('error');
-      toast({
-        title: "Error",
-        description: `Failed to trigger call bell: ${result.error}`,
-        variant: "destructive",
-        duration: 5000,
-      });
+      if (result.success) {
+        setStatus('success');
+        playSuccessSound(); // Play confirmation sound if ready
+        toast({
+          title: "Success!",
+          description: "Help is on the way.",
+          variant: "default",
+          duration: 5000,
+        });
+        // Reset to idle after a delay
+        timeoutRef.current = setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        setStatus('error');
+        toast({
+          title: "Error",
+          description: `Failed to trigger call bell: ${result.error}`,
+          variant: "destructive",
+          duration: 5000,
+        });
+         // Reset to idle after a delay
+        timeoutRef.current = setTimeout(() => setStatus('idle'), 5000);
+      }
+    } catch (error) {
+       console.error("Error in handleClick during call bell trigger:", error);
+       setStatus('error');
+       const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred.";
+       toast({
+          title: "System Error",
+          description: `Could not process the request: ${errorMessage}`,
+          variant: "destructive",
+          duration: 5000,
+       });
        // Reset to idle after a delay
-      timeoutRef.current = setTimeout(() => setStatus('idle'), 5000);
+       timeoutRef.current = setTimeout(() => setStatus('idle'), 5000);
     }
-  };
+  }, [status, playSuccessSound, toast]); // Add dependencies
 
   const getButtonContent = () => {
     switch (status) {
