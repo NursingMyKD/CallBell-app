@@ -15,6 +15,7 @@ const SUCCESS_SOUND_PATH = '/sounds/success.mp3';
 
 export default function CallBellButton() {
   const [status, setStatus] = React.useState<Status>('idle');
+  const [isSoundReady, setIsSoundReady] = React.useState(false);
   const { toast } = useToast();
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
@@ -23,17 +24,47 @@ export default function CallBellButton() {
   React.useEffect(() => {
     // Ensure this code runs only in the browser
     if (typeof window !== 'undefined') {
-      audioRef.current = new Audio(SUCCESS_SOUND_PATH);
-      audioRef.current.load(); // Preload the audio file
+      try {
+        audioRef.current = new Audio(SUCCESS_SOUND_PATH);
+        audioRef.current.load(); // Preload the audio file
 
-      // Optional: Log successful loading or handle loading errors
-      audioRef.current.addEventListener('canplaythrough', () => {
-        console.log("Success sound ready to play.");
-      });
-      audioRef.current.addEventListener('error', (e) => {
-        console.error("Error loading success sound:", e);
-        // Maybe disable sound playing or notify user
-      });
+        const handleCanPlay = () => {
+          console.log("Success sound ready to play.");
+          setIsSoundReady(true);
+        };
+
+        const handleError = (e: Event) => {
+          console.error("Error loading success sound. Event:", e);
+          // Access the error details from the audio element itself
+          const audioError = (e.target as HTMLAudioElement)?.error;
+          console.error("Audio Element Error Details:", audioError);
+          setIsSoundReady(false);
+          // Optional: Notify user sound won't play
+          // toast({
+          //   title: "Audio Issue",
+          //   description: "Confirmation sound could not be loaded.",
+          //   variant: "destructive",
+          //   duration: 4000,
+          // });
+        };
+
+        // Add event listeners
+        audioRef.current.addEventListener('canplaythrough', handleCanPlay);
+        audioRef.current.addEventListener('error', handleError);
+
+        // Cleanup function to remove listeners
+        const cleanup = () => {
+          if (audioRef.current) {
+            audioRef.current.removeEventListener('canplaythrough', handleCanPlay);
+            audioRef.current.removeEventListener('error', handleError);
+          }
+        };
+        return cleanup;
+
+      } catch (error) {
+         console.error("Failed to initialize Audio element:", error);
+         setIsSoundReady(false);
+      }
     }
 
     // Cleanup timeout and audio object on component unmount
@@ -43,16 +74,14 @@ export default function CallBellButton() {
       }
       if (audioRef.current) {
         audioRef.current.pause(); // Stop playback if any
-        // Remove event listeners if added
-        // audioRef.current.removeEventListener('canplaythrough', ...);
-        // audioRef.current.removeEventListener('error', ...);
+        // Listeners are removed by the inner cleanup function above
         audioRef.current = null; // Release the reference
       }
     };
   }, []); // Empty dependency array ensures this runs once on mount
 
   const playSuccessSound = () => {
-    if (audioRef.current) {
+    if (audioRef.current && isSoundReady) {
        // Check if the audio is ready to play to avoid interruptions
        if (audioRef.current.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
         audioRef.current.currentTime = 0; // Rewind to the start
@@ -72,7 +101,10 @@ export default function CallBellButton() {
          audioRef.current.currentTime = 0;
          audioRef.current.play().catch(error => console.error("Error playing not-ready sound:", error));
       }
-    } else {
+    } else if (!isSoundReady) {
+        console.warn("Success sound audio element not ready or failed to load. Skipping playback.");
+    }
+     else {
       console.warn("Success sound audio element not available or not initialized.");
     }
   };
@@ -90,7 +122,7 @@ export default function CallBellButton() {
 
     if (result.success) {
       setStatus('success');
-      playSuccessSound(); // Play confirmation sound
+      playSuccessSound(); // Play confirmation sound if ready
       toast({
         title: "Success!",
         description: "Help is on the way.",
