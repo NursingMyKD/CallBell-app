@@ -35,15 +35,24 @@ export default function CallBellButton() {
 
         const handleError = (e: Event | string) => {
             let errorMessage = "Unknown audio error";
-            let detailedError: MediaError | null | string = null;
+            let detailedError: MediaError | string | null = null;
 
             if (typeof e === 'string') {
                 errorMessage = e;
                 detailedError = e;
+                console.error("Audio Error (String):", e);
             } else if (e.target instanceof HTMLMediaElement && e.target.error) {
                 const mediaError = e.target.error;
                 detailedError = mediaError; // Keep the MediaError object
-                switch (mediaError.code) {
+
+                // Log the full MediaError object for debugging
+                console.error("Audio Element MediaError Object:", mediaError);
+
+                // Safely access code and message
+                const errorCode = mediaError.code;
+                const errorMessageFromMediaError = mediaError.message || 'No specific message available';
+
+                switch (errorCode) {
                     case MediaError.MEDIA_ERR_ABORTED:
                         errorMessage = 'Audio playback aborted.';
                         break;
@@ -57,16 +66,25 @@ export default function CallBellButton() {
                         errorMessage = `The audio could not be loaded. Please ensure the file exists at '${SUCCESS_SOUND_PATH}' in the public directory and the format is supported.`;
                         break;
                     default:
-                        errorMessage = `An unknown error occurred (code: ${mediaError.code}, message: ${mediaError.message}).`;
+                        errorMessage = `An unknown error occurred (code: ${errorCode}, message: ${errorMessageFromMediaError}).`;
                 }
-                // Log more specific details from the MediaError object
-                console.error("Audio Element Error Details:", { code: mediaError.code, message: mediaError.message }, e);
+                console.error("Audio Element Error Details:", `Code: ${errorCode}, Message: ${errorMessageFromMediaError}`, "Event:", e);
             } else {
                 // Log the event object itself if it's not a standard MediaError event
                 console.error("Non-standard audio error event:", e);
                 detailedError = "Non-standard error event";
+                if (e.target instanceof HTMLMediaElement && !e.target.error) {
+                    errorMessage = "Audio error event fired, but no MediaError object found on target.";
+                    console.error(errorMessage);
+                } else if (e.target) {
+                    errorMessage = `Audio error on unexpected target: ${e.target.constructor.name}`;
+                    console.error(errorMessage);
+                } else {
+                    errorMessage = "Audio error with no target.";
+                    console.error(errorMessage);
+                }
             }
-          console.error("Error loading success sound:", errorMessage, "Details:", detailedError);
+          console.error(`Error loading success sound: ${errorMessage}. Detailed Info:`, detailedError);
           setIsSoundReady(false);
           // Optional: Notify user sound won't play
            toast({
@@ -91,6 +109,7 @@ export default function CallBellButton() {
             audioRef.current.src = ""; // Detach source
             audioRef.current.load(); // Reset state
             audioRef.current = null; // Release the reference
+            console.log("Audio element cleaned up.");
           }
         };
         return cleanup;
@@ -129,6 +148,7 @@ export default function CallBellButton() {
       } else {
         console.warn("Success sound reported ready, but readyState is low. Attempting to play might fail.", audioRef.current.readyState);
         // Avoid playing if not truly ready to prevent errors like "The operation is not supported."
+        // You could attempt to load() again or wait longer.
       }
     } else if (!audioRef.current) {
         console.warn("Audio element reference is null. Cannot play sound.");
@@ -239,4 +259,3 @@ export default function CallBellButton() {
     </Button>
   );
 }
-
