@@ -10,152 +10,19 @@ import { cn } from "@/lib/utils";
 
 type Status = 'idle' | 'pending' | 'success' | 'error';
 
-// NOTE: Ensure you have a sound file at /sounds/success.mp3 in your public directory.
-const SUCCESS_SOUND_PATH = '/sounds/success.mp3';
-
 export default function CallBellButton() {
   const [status, setStatus] = React.useState<Status>('idle');
-  const [isSoundReady, setIsSoundReady] = React.useState(false);
   const { toast } = useToast();
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
-  const audioRef = React.useRef<HTMLAudioElement | null>(null);
 
-  // Initialize audio element on the client side after mount
+  // Cleanup timeout on component unmount
   React.useEffect(() => {
-    // Ensure this code runs only in the browser
-    if (typeof window !== 'undefined') {
-      try {
-        audioRef.current = new Audio(SUCCESS_SOUND_PATH);
-        audioRef.current.load(); // Preload the audio file
-
-        const handleCanPlay = () => {
-          console.log("Success sound ready to play.");
-          setIsSoundReady(true);
-        };
-
-        const handleError = (e: Event | string) => {
-            let errorMessage = "Unknown audio error";
-            let detailedError: MediaError | string | null = null;
-
-            if (typeof e === 'string') {
-                errorMessage = e;
-                detailedError = e;
-                console.error("Audio Error (String):", e);
-            } else if (e.target instanceof HTMLMediaElement && e.target.error) {
-                const mediaError = e.target.error;
-                detailedError = mediaError; // Keep the MediaError object
-
-                // Log the full MediaError object for debugging
-                console.error("Audio Element MediaError Object:", mediaError);
-
-                // Safely access code and message
-                const errorCode = mediaError.code;
-                const errorMessageFromMediaError = mediaError.message || 'No specific message available';
-
-                switch (errorCode) {
-                    case MediaError.MEDIA_ERR_ABORTED:
-                        errorMessage = 'Audio playback aborted.';
-                        break;
-                    case MediaError.MEDIA_ERR_NETWORK:
-                        errorMessage = 'A network error caused the audio download to fail.';
-                        break;
-                    case MediaError.MEDIA_ERR_DECODE:
-                        errorMessage = 'The audio playback was aborted due to a corruption problem or because the audio used features your browser did not support.';
-                        break;
-                    case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-                        errorMessage = `The audio could not be loaded. Please ensure the file exists at '${SUCCESS_SOUND_PATH}' in the public directory and the format is supported.`;
-                        break;
-                    default:
-                        errorMessage = `An unknown error occurred (code: ${errorCode}, message: ${errorMessageFromMediaError}).`;
-                }
-                console.error("Audio Element Error Details:", `Code: ${errorCode}, Message: ${errorMessageFromMediaError}`, "Event:", e);
-            } else {
-                // Log the event object itself if it's not a standard MediaError event
-                console.error("Non-standard audio error event:", e);
-                detailedError = "Non-standard error event";
-                if (e.target instanceof HTMLMediaElement && !e.target.error) {
-                    errorMessage = "Audio error event fired, but no MediaError object found on target.";
-                    console.error(errorMessage);
-                } else if (e.target) {
-                    errorMessage = `Audio error on unexpected target: ${e.target.constructor.name}`;
-                    console.error(errorMessage);
-                } else {
-                    errorMessage = "Audio error with no target.";
-                    console.error(errorMessage);
-                }
-            }
-          console.error(`Error loading success sound: ${errorMessage}. Detailed Info:`, detailedError);
-          setIsSoundReady(false);
-          // Optional: Notify user sound won't play
-           toast({
-             title: "Audio Issue",
-             description: `Confirmation sound could not be loaded: ${errorMessage}`,
-             variant: "destructive",
-             duration: 7000, // Increased duration for visibility
-           });
-        };
-
-        // Add event listeners
-        audioRef.current.addEventListener('canplaythrough', handleCanPlay);
-        audioRef.current.addEventListener('error', handleError);
-
-        // Cleanup function to remove listeners
-        const cleanup = () => {
-          if (audioRef.current) {
-            audioRef.current.removeEventListener('canplaythrough', handleCanPlay);
-            audioRef.current.removeEventListener('error', handleError);
-            // Pause and release resources
-            audioRef.current.pause();
-            audioRef.current.src = ""; // Detach source
-            audioRef.current.load(); // Reset state
-            audioRef.current = null; // Release the reference
-            console.log("Audio element cleaned up.");
-          }
-        };
-        return cleanup;
-
-      } catch (error) {
-         console.error("Failed to initialize Audio element:", error);
-         setIsSoundReady(false);
-      }
-    }
-
-    // Cleanup timeout on component unmount
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [toast]); // Add toast to dependency array
-
-  const playSuccessSound = React.useCallback(() => {
-    if (audioRef.current && isSoundReady) {
-       // Double-check readiness state just before playing
-       if (audioRef.current.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
-        audioRef.current.currentTime = 0; // Rewind to the start
-        audioRef.current.play().then(() => {
-          console.log("Success sound played.");
-        }).catch(error => {
-          console.error("Error playing success sound:", error);
-          // Provide feedback to the user that sound failed
-          toast({
-            title: "Audio Playback Issue",
-            description: "Could not play the confirmation sound. Please check browser permissions or audio settings.",
-            variant: "destructive",
-            duration: 3000,
-          });
-        });
-      } else {
-        console.warn("Success sound reported ready, but readyState is low. Attempting to play might fail.", audioRef.current.readyState);
-        // Avoid playing if not truly ready to prevent errors like "The operation is not supported."
-        // You could attempt to load() again or wait longer.
-      }
-    } else if (!audioRef.current) {
-        console.warn("Audio element reference is null. Cannot play sound.");
-    } else if (!isSoundReady) {
-        console.warn("Success sound not ready (isSoundReady=false). Skipping playback.");
-    }
-  }, [isSoundReady, toast]); // Add dependencies
+  }, []);
 
   const handleClick = React.useCallback(async () => {
     if (status === 'pending') return; // Prevent multiple clicks while pending
@@ -171,7 +38,6 @@ export default function CallBellButton() {
 
       if (result.success) {
         setStatus('success');
-        playSuccessSound(); // Play confirmation sound if ready
         toast({
           title: "Success!",
           description: "Help is on the way.",
@@ -204,7 +70,7 @@ export default function CallBellButton() {
        // Reset to idle after a delay
        timeoutRef.current = setTimeout(() => setStatus('idle'), 5000);
     }
-  }, [status, playSuccessSound, toast]); // Add dependencies
+  }, [status, toast]); // Add dependencies
 
   const getButtonContent = () => {
     switch (status) {
@@ -259,3 +125,4 @@ export default function CallBellButton() {
     </Button>
   );
 }
+
