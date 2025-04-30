@@ -19,10 +19,22 @@ export default function CallBellButton() {
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
 
-  // Preload the audio element on mount
+  // Initialize audio element on the client side after mount
   React.useEffect(() => {
-    audioRef.current = new Audio(SUCCESS_SOUND_PATH);
-    audioRef.current.load(); // Preload the audio file
+    // Ensure this code runs only in the browser
+    if (typeof window !== 'undefined') {
+      audioRef.current = new Audio(SUCCESS_SOUND_PATH);
+      audioRef.current.load(); // Preload the audio file
+
+      // Optional: Log successful loading or handle loading errors
+      audioRef.current.addEventListener('canplaythrough', () => {
+        console.log("Success sound ready to play.");
+      });
+      audioRef.current.addEventListener('error', (e) => {
+        console.error("Error loading success sound:", e);
+        // Maybe disable sound playing or notify user
+      });
+    }
 
     // Cleanup timeout and audio object on component unmount
     return () => {
@@ -31,20 +43,37 @@ export default function CallBellButton() {
       }
       if (audioRef.current) {
         audioRef.current.pause(); // Stop playback if any
+        // Remove event listeners if added
+        // audioRef.current.removeEventListener('canplaythrough', ...);
+        // audioRef.current.removeEventListener('error', ...);
         audioRef.current = null; // Release the reference
       }
     };
-  }, []);
+  }, []); // Empty dependency array ensures this runs once on mount
 
   const playSuccessSound = () => {
     if (audioRef.current) {
-      audioRef.current.currentTime = 0; // Rewind to the start
-      audioRef.current.play().catch(error => {
-        console.error("Error playing success sound:", error);
-        // Optional: Notify user that sound couldn't play, though toast already confirms success.
-      });
+       // Check if the audio is ready to play to avoid interruptions
+       if (audioRef.current.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
+        audioRef.current.currentTime = 0; // Rewind to the start
+        audioRef.current.play().catch(error => {
+          console.error("Error playing success sound:", error);
+          // Optionally, provide feedback to the user that sound failed
+          toast({
+            title: "Audio Playback Issue",
+            description: "Could not play the confirmation sound.",
+            variant: "destructive",
+            duration: 3000,
+          });
+        });
+      } else {
+        console.warn("Success sound not ready to play yet (readyState:", audioRef.current.readyState, "). Attempting anyway...");
+         // You might still try to play, or wait for 'canplaythrough' event
+         audioRef.current.currentTime = 0;
+         audioRef.current.play().catch(error => console.error("Error playing not-ready sound:", error));
+      }
     } else {
-      console.warn("Success sound audio element not available.");
+      console.warn("Success sound audio element not available or not initialized.");
     }
   };
 
