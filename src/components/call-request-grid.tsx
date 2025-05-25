@@ -132,7 +132,7 @@ export default function CallRequestGrid() {
         toast({
           title: "Success!",
           description: result.status.message || `${requestType} request sent. Help is on the way.`,
-          variant: "default",
+          variant: "default", // Use "default" which can be styled for success via theme
           duration: 5000,
         });
       } else {
