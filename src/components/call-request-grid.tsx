@@ -2,7 +2,7 @@
 "use client";
 
 import * as React from 'react';
-import { Loader2, CheckCircle, XCircle } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { handleCallBellTrigger } from '@/app/actions';
 import { useToast } from "@/hooks/use-toast";
@@ -132,7 +132,7 @@ export default function CallRequestGrid() {
         toast({
           title: "Success!",
           description: result.status.message || `${requestType} request sent. Help is on the way.`,
-          variant: "default", // Use "default" which can be styled for success via theme
+          variant: "default", 
           duration: 5000,
         });
       } else {
@@ -163,12 +163,11 @@ export default function CallRequestGrid() {
       {/* Status Display Area */}
       <div className="h-10 mb-2"> {/* Reserve space for status message */}
         {status === 'pending' && activeRequestType && (
-          <div className="flex items-center text-lg p-2 rounded-md bg-primary/10 text-primary-foreground animate-pulse">
+          <div className="flex items-center text-lg p-2 rounded-md bg-primary/10 text-primary animate-pulse">
             <Loader2 className="mr-3 h-6 w-6 animate-spin" />
             Calling for {activeRequestType}...
           </div>
         )}
-        {/* Success and error messages are primarily handled by toasts, but a temporary visual cue could be added here if desired */}
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
@@ -183,8 +182,8 @@ export default function CallRequestGrid() {
             )}
             variant={
               (status === 'success' && activeRequestType === option.type) || (status === 'error' && activeRequestType === option.type)
-              ? 'default' // Allows success/destructive colors to take over
-              : 'secondary'
+              ? 'default' 
+              : 'default' 
             }
             disabled={status === 'pending'}
             aria-label={`Request ${option.label}`}
