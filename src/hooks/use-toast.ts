@@ -9,8 +9,17 @@ import type {
 } from "@/components/ui/toast"
 
 const TOAST_LIMIT = 1
-const TOAST_REMOVE_DELAY = 1000000
+/**
+ * Defines the duration (in milliseconds) after which a toast, once dismissed visually,
+ * will be removed from the internal memory state. This acts as a garbage collection
+ * mechanism for the toast state.
+ */
+const TOAST_REMOVE_DELAY = 300000 // 5 minutes (previously 1000000)
 
+/**
+ * Represents a toast object within the toaster system, extending base ToastProps
+ * with internal management properties.
+ */
 type ToasterToast = ToastProps & {
   id: string
   title?: React.ReactNode
@@ -34,6 +43,9 @@ function genId() {
 
 type ActionType = typeof actionTypes
 
+/**
+ * Defines the actions that can be dispatched to manage the toast state.
+ */
 type Action =
   | {
       type: ActionType["ADD_TOAST"]
@@ -52,6 +64,9 @@ type Action =
       toastId?: ToasterToast["id"]
     }
 
+/**
+ * Represents the state of the toaster, containing an array of active toasts.
+ */
 interface State {
   toasts: ToasterToast[]
 }
@@ -74,6 +89,12 @@ const addToRemoveQueue = (toastId: string) => {
   toastTimeouts.set(toastId, timeout)
 }
 
+/**
+ * Reducer function to manage toast state transitions.
+ * @param state - The current state.
+ * @param action - The action to process.
+ * @returns The new state.
+ */
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "ADD_TOAST":
@@ -140,8 +161,16 @@ function dispatch(action: Action) {
   })
 }
 
+/**
+ * Represents the properties for creating a new toast, omitting the internally managed 'id'.
+ */
 type Toast = Omit<ToasterToast, "id">
 
+/**
+ * Displays a new toast notification.
+ * @param props - The properties of the toast to display.
+ * @returns An object with methods to `dismiss` or `update` the displayed toast.
+ */
 function toast({ ...props }: Toast) {
   const id = genId()
 
@@ -171,6 +200,11 @@ function toast({ ...props }: Toast) {
   }
 }
 
+/**
+ * Custom hook to access the toast state and dispatcher functions.
+ * @returns An object containing the current toasts, a function to display a new toast,
+ * and a function to dismiss toasts.
+ */
 function useToast() {
   const [state, setState] = React.useState<State>(memoryState)
 

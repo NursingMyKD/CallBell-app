@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from 'react';
@@ -8,13 +7,34 @@ import { handleCallBellTrigger } from '@/app/actions';
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
+/**
+ * Represents the possible visual and operational states of the CallBellButton.
+ */
 type Status = 'idle' | 'pending' | 'success' | 'error';
 
+/**
+ * CallBellButton component allows users to trigger a call bell action.
+ * It provides visual feedback for different states of the action (idle, pending, success, error)
+ * and plays a sound upon successful activation.
+ * It also includes error handling for audio loading and playback, and for the server action.
+ */
 export default function CallBellButton() {
+  /**
+   * Current status of the call bell button.
+   */
   const [status, setStatus] = React.useState<Status>('idle');
   const { toast } = useToast();
+  /**
+   * Ref to store the timeout ID for resetting the status to 'idle'.
+   */
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  /**
+   * Ref to the HTMLAudioElement for playing the success sound.
+   */
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
+  /**
+   * State to track if the success sound is loaded and ready to play.
+   */
   const [isSoundReady, setIsSoundReady] = React.useState(false);
 
   React.useEffect(() => {
@@ -29,74 +49,72 @@ export default function CallBellButton() {
       };
 
       const handleError = (e: Event) => {
-        let userFriendlyMessage = "Call sound effect could not be loaded.";
-        const consoleErrorMessage = "The audio could not be loaded. Please ensure the file exists at '/sounds/success.mp3' in the public directory and the format is supported.";
-        let detailedError: string | object = "Unknown error";
+        let errorMessage = "The audio could not be loaded. Please ensure the file exists at '/sounds/success.mp3' in the public directory and the format is supported.";
+        let detailedErrorPayload: string | object = "Unknown error";
 
         if (audioRef.current && audioRef.current.error) {
             const mediaError = audioRef.current.error;
+            const errorDetails = {
+                code: mediaError.code,
+                message: mediaError.message,
+                type: "MediaError"
+            };
             switch (mediaError.code) {
                 case MediaError.MEDIA_ERR_ABORTED:
-                    detailedError = "The fetching process for the media resource was aborted by the user agent at the user's request.";
+                    detailedErrorPayload = { ...errorDetails, specific: "The fetching process was aborted."};
                     userFriendlyMessage = "Audio loading was aborted by the browser.";
                     break;
                 case MediaError.MEDIA_ERR_NETWORK:
-                    detailedError = "A network error of some description caused the user agent to stop fetching the media resource, after the resource was established to be usable.";
+                    detailedErrorPayload = { ...errorDetails, specific: "A network error caused fetching to stop."};
                     userFriendlyMessage = "A network error prevented the sound from loading.";
                     break;
                 case MediaError.MEDIA_ERR_DECODE:
-                    detailedError = "An error of some description occurred while decoding the media resource, after the resource was established to be usable.";
-                    userFriendlyMessage = "The sound file could not be decoded. It might be corrupted.";
+                    detailedErrorPayload = { ...errorDetails, specific: "An error occurred while decoding the media resource."};
+                     userFriendlyMessage = "The sound file could not be decoded. It might be corrupted.";
                     break;
                 case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-                    detailedError = "The media resource indicated by the src attribute or assigned media provider object was not suitable.";
+                    detailedErrorPayload = { ...errorDetails, specific: "The media resource format is not supported."};
                     userFriendlyMessage = "Sound file format may not be supported, or the file is missing/corrupted. Please check '/sounds/success.mp3'.";
                     break;
                 default:
-                    detailedError = `An unknown error occurred with the audio element (code: ${mediaError.code}).`;
+                    detailedErrorPayload = { ...errorDetails, specific: `An unknown MediaError occurred (code: ${mediaError.code}).`};
             }
-             console.error("Audio Element Error (audioRef.current.error):", { code: mediaError.code, message: mediaError.message, eventDetails: e });
+            console.error("Audio Element Error Details:", detailedErrorPayload, e);
         } else if (e.target && (e.target as HTMLAudioElement).error) {
              const mediaError = (e.target as HTMLAudioElement).error;
               if (mediaError) {
-                const code = mediaError.code;
-                // Update detailedError and userFriendlyMessage if not already set more specifically
-                if (typeof detailedError === 'string' && detailedError === "Unknown error") {
-                    switch (code) {
+                detailedErrorPayload = { code: mediaError.code, message: mediaError.message, type: "MediaErrorEventTarget" };
+                // Update userFriendlyMessage based on common codes from event target if not already more specific
+                 switch (mediaError.code) {
                         case MediaError.MEDIA_ERR_ABORTED:
-                            detailedError = "The fetching process for the media resource was aborted by the user agent at the user's request (target.error).";
-                            userFriendlyMessage = "Audio loading was aborted by the browser.";
+                             if (detailedErrorPayload.specific === "Unknown error") userFriendlyMessage = "Audio loading was aborted by the browser.";
                             break;
                         case MediaError.MEDIA_ERR_NETWORK:
-                            detailedError = "A network error occurred while fetching the media resource (target.error).";
-                            userFriendlyMessage = "A network error prevented the sound from loading.";
+                             if (detailedErrorPayload.specific === "Unknown error") userFriendlyMessage = "A network error prevented the sound from loading.";
                             break;
                         case MediaError.MEDIA_ERR_DECODE:
-                            detailedError = "An error occurred while decoding the media resource (target.error).";
-                            userFriendlyMessage = "The sound file could not be decoded. It might be corrupted.";
+                             if (detailedErrorPayload.specific === "Unknown error") userFriendlyMessage = "The sound file could not be decoded. It might be corrupted.";
                             break;
                         case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-                            detailedError = "The media resource was not suitable (target.error).";
-                            userFriendlyMessage = "Sound file format may not be supported, or the file is missing/corrupted. Please check '/sounds/success.mp3'.";
+                             if (detailedErrorPayload.specific === "Unknown error") userFriendlyMessage = "Sound file format may not be supported, or the file is missing/corrupted. Please check '/sounds/success.mp3'.";
                             break;
-                        default:
-                            detailedError = `An unknown error occurred with the audio element (target.error) (code: ${code}).`;
                     }
-                }
-                console.error("Audio Element Error (e.target.error):", { code: mediaError.code, message: mediaError.message, eventDetails: e });
+                console.error("Audio Element Error Details from event target:", detailedErrorPayload, e);
               } else {
                  console.error("Non-standard audio error event:", e);
-                 detailedError = "A non-standard error event occurred during audio loading.";
+                 detailedErrorPayload = "Non-standard error event on target.";
               }
+        } else {
+            console.error("Audio loading error event:", e);
         }
-        console.error("Error loading success sound (final report):", consoleErrorMessage, "Details:", detailedError);
+
+        console.error("Error loading success sound:", errorMessage, "Details:", detailedErrorPayload);
         setIsSoundReady(false);
-        
          toast({
             title: "Audio Alert",
-            description: userFriendlyMessage,
-            variant: "default", 
-            duration: 5000, 
+            description: userFriendlyMessage, // Use the potentially updated userFriendlyMessage
+            variant: "default",
+            duration: 5000, // Increased duration for visibility
          });
       };
 
@@ -109,8 +127,8 @@ export default function CallBellButton() {
           audioRef.current.removeEventListener('canplaythrough', handleCanPlayThrough);
           audioRef.current.removeEventListener('error', handleError);
           audioRef.current.pause();
-          audioRef.current.src = ''; 
-          audioRef.current.load(); 
+          audioRef.current.src = '';
+          audioRef.current.load();
         }
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
@@ -119,15 +137,18 @@ export default function CallBellButton() {
     }
   }, [toast]);
 
-
+  /**
+   * Plays the success sound if it's ready.
+   * Handles potential playback errors.
+   */
   const playSuccessSound = React.useCallback(() => {
     if (audioRef.current && isSoundReady) {
-        audioRef.current.currentTime = 0; 
+        audioRef.current.currentTime = 0; // Rewind to start
         audioRef.current.play().catch(error => {
             console.error("Error playing success sound:", error);
             toast({
                 title: "Playback Issue",
-                description: "Could not play sound. Browser interaction might be required first.",
+                description: "Could not play sound. Please interact with the page first or check browser permissions.",
                 variant: "destructive",
                 duration: 3000,
             });
@@ -141,7 +162,11 @@ export default function CallBellButton() {
     }
   }, [isSoundReady, toast]);
 
-
+  /**
+   * Handles the click event on the call bell button.
+   * It sets the status to 'pending', triggers the server action,
+   * and updates the status and shows toasts based on the server response.
+   */
   const handleClick = React.useCallback(async () => {
     if (status === 'pending') return;
 
@@ -184,6 +209,10 @@ export default function CallBellButton() {
     }
   }, [status, toast, playSuccessSound]);
 
+  /**
+   * Determines the content (icon and text) of the button based on the current status.
+   * @returns React elements representing the button's content.
+   */
   const getButtonContent = () => {
     switch (status) {
       case 'pending':

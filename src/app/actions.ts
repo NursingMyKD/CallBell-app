@@ -8,11 +8,17 @@ import { triggerCallBell, type CallBellStatus } from "@/services/call-bell";
  */
 export async function handleCallBellTrigger(): Promise<{ success: true; status: CallBellStatus } | { success: false; error: string }> {
   try {
+    // For production, consider a more robust logging solution instead of console.log
     console.log("Server Action: Triggering call bell...");
     const status = await triggerCallBell();
     console.log("Server Action: Call bell triggered successfully.", status);
+
     // Add a slight delay to simulate network latency and allow user to see pending state
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // This should ideally only be for development/testing purposes.
+    if (process.env.NODE_ENV === 'development') {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+    }
+
     return { success: true, status };
   } catch (error) {
     console.error("Server Action: Error triggering call bell:", error);
