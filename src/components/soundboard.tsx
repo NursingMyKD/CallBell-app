@@ -133,7 +133,7 @@ export default function Soundboard() {
 
   if (!speechSynthesisSupported) {
     return (
-      <div className="mt-12 text-center text-muted-foreground p-4 border border-dashed rounded-md">
+      <div className="mt-8 text-center text-muted-foreground p-4 border border-dashed rounded-md w-full max-w-xl md:max-w-2xl">
         <p className="text-lg">Soundboard Feature Not Available</p>
         <p>Your browser does not support the necessary text-to-speech technology.</p>
       </div>
@@ -141,20 +141,20 @@ export default function Soundboard() {
   }
 
   return (
-    <div className="mt-12 w-full max-w-2xl">
-      <h2 className="text-3xl font-semibold mb-6 text-center">Soundboard</h2>
-      <p className="text-md text-muted-foreground mb-6 text-center">
+    <div className="mt-6 md:mt-8 w-full max-w-xl md:max-w-2xl">
+      <h2 className="text-2xl md:text-3xl font-semibold mb-3 md:mb-4 text-center">Soundboard</h2>
+      <p className="text-sm md:text-md text-muted-foreground mb-3 md:mb-4 text-center">
         Select a phrase below to have it spoken aloud.
       </p>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
         {commonPhrases.map((phrase) => (
           <Button
             key={phrase}
             onClick={() => handleSpeak(phrase)}
             disabled={isSpeaking && currentlySpeakingPhrase !== phrase}
-            variant="outline" // Using outline to differentiate from primary call buttons
+            variant="outline" 
             className={cn(
-              "h-28 md:h-32 text-md font-medium rounded-lg shadow-md flex flex-col items-center justify-center p-3 transition-all",
+              "h-24 md:h-28 text-sm md:text-base font-medium rounded-md md:rounded-lg shadow-sm md:shadow-md flex flex-col items-center justify-center p-2 md:p-3 transition-all",
               "focus:ring-2 focus:ring-ring focus:ring-offset-2",
               currentlySpeakingPhrase === phrase && isSpeaking 
                 ? "bg-primary/10 text-primary border-primary ring-2 ring-primary animate-pulse" 
@@ -166,11 +166,11 @@ export default function Soundboard() {
             aria-busy={currentlySpeakingPhrase === phrase && isSpeaking}
           >
             {currentlySpeakingPhrase === phrase && isSpeaking ? (
-              <Loader2 className="h-7 w-7 mb-2 animate-spin" />
+              <Loader2 className="h-5 w-5 md:h-6 md:w-6 mb-1 animate-spin" />
             ) : (
-              <Volume2 className="h-7 w-7 mb-2" />
+              <Volume2 className="h-5 w-5 md:h-6 md:w-6 mb-1" />
             )}
-            <span className="text-center">{phrase}</span>
+            <span className="text-center text-xs sm:text-sm">{phrase}</span>
           </Button>
         ))}
       </div>

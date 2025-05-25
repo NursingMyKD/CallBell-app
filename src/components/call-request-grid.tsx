@@ -159,24 +159,24 @@ export default function CallRequestGrid() {
   }, [status, toast, playSuccessSound]);
 
   return (
-    <div className="flex flex-col items-center space-y-6 w-full max-w-2xl">
+    <div className="flex flex-col items-center space-y-3 w-full max-w-xl md:max-w-2xl">
       {/* Status Display Area */}
-      <div className="h-10 mb-2"> {/* Reserve space for status message */}
+      <div className="h-8 mb-1"> {/* Reserve space for status message */}
         {status === 'pending' && activeRequestType && (
-          <div className="flex items-center text-lg p-2 rounded-md bg-primary/10 text-primary animate-pulse">
-            <Loader2 className="mr-3 h-6 w-6 animate-spin" />
+          <div className="flex items-center text-md md:text-lg p-1.5 md:p-2 rounded-md bg-primary/10 text-primary animate-pulse">
+            <Loader2 className="mr-2 h-5 w-5 md:mr-3 md:h-6 md:w-6 animate-spin" />
             Calling for {activeRequestType}...
           </div>
         )}
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 w-full">
         {callRequestOptions.map((option: CallRequestOption) => (
           <Button
             key={option.type}
             onClick={() => handleSpecificRequest(option.type)}
             className={cn(
-                "h-36 md:h-40 text-xl font-medium rounded-xl shadow-lg flex flex-col items-center justify-center p-3 transition-all",
+                "h-28 md:h-32 text-base md:text-lg font-medium rounded-lg md:rounded-xl shadow-md md:shadow-lg flex flex-col items-center justify-center p-2 md:p-3 transition-all",
                 status === 'success' && activeRequestType === option.type && "bg-success text-success-foreground hover:bg-success/90",
                 status === 'error' && activeRequestType === option.type && "bg-destructive text-destructive-foreground hover:bg-destructive/90"
             )}
@@ -188,7 +188,7 @@ export default function CallRequestGrid() {
             disabled={status === 'pending'}
             aria-label={`Request ${option.label}`}
           >
-            <option.icon className="h-12 w-12 mb-2" />
+            <option.icon className="h-10 w-10 md:h-12 md:w-12 mb-1 md:mb-2" />
             {option.label}
           </Button>
         ))}
