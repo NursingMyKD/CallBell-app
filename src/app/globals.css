@@ -24,6 +24,8 @@ body {
     --accent-foreground: 0 0% 98%; /* White/Very Light */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
+    --success: 145 63% 42%; /* Green for success states */
+    --success-foreground: 0 0% 98%; /* White/Very Light for success text */
     --border: 0 0% 80%; /* Adjusted border */
     --input: 0 0% 80%;
     --ring: 180 100% 25%; /* Teal for focus rings */
@@ -60,6 +62,8 @@ body {
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
+    --success: 145 50% 55%; /* Lighter Green for dark mode success */
+    --success-foreground: 0 0% 98%; /* White/Very Light for dark mode success text */
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 180 100% 35%; /* Adjusted Dark Teal Ring */

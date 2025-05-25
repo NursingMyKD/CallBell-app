@@ -40,10 +40,14 @@ export default {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
+        success: { // Added success color
+          DEFAULT: 'hsl(var(--success))',
+          foreground: 'hsl(var(--success-foreground))'
+        },
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
-        'ring-offset': 'hsl(var(--background))', // Add background as the ring offset color
+        'ring-offset': 'hsl(var(--background))', 
   			chart: {
   				'1': 'hsl(var(--chart-1))',
   				'2': 'hsl(var(--chart-2))',
@@ -68,10 +72,10 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
       ringOffsetWidth: {
-        '2': '2px', // Default Shadcn offset
+        '2': '2px', 
       },
       ringOffsetColor: {
-        background: 'hsl(var(--background))', // Use the background color for offset
+        background: 'hsl(var(--background))', 
       },
   		keyframes: {
   			'accordion-down': {
