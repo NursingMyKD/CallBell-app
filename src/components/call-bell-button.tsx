@@ -29,7 +29,8 @@ export default function CallBellButton() {
       };
 
       const handleError = (e: Event) => {
-        let errorMessage = "The audio could not be loaded. Please ensure the file exists at '/sounds/success.mp3' in the public directory and the format is supported.";
+        let userFriendlyMessage = "Call sound effect could not be loaded.";
+        const consoleErrorMessage = "The audio could not be loaded. Please ensure the file exists at '/sounds/success.mp3' in the public directory and the format is supported.";
         let detailedError: string | object = "Unknown error";
 
         if (audioRef.current && audioRef.current.error) {
@@ -37,38 +38,65 @@ export default function CallBellButton() {
             switch (mediaError.code) {
                 case MediaError.MEDIA_ERR_ABORTED:
                     detailedError = "The fetching process for the media resource was aborted by the user agent at the user's request.";
+                    userFriendlyMessage = "Audio loading was aborted by the browser.";
                     break;
                 case MediaError.MEDIA_ERR_NETWORK:
                     detailedError = "A network error of some description caused the user agent to stop fetching the media resource, after the resource was established to be usable.";
+                    userFriendlyMessage = "A network error prevented the sound from loading.";
                     break;
                 case MediaError.MEDIA_ERR_DECODE:
                     detailedError = "An error of some description occurred while decoding the media resource, after the resource was established to be usable.";
+                    userFriendlyMessage = "The sound file could not be decoded. It might be corrupted.";
                     break;
                 case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
                     detailedError = "The media resource indicated by the src attribute or assigned media provider object was not suitable.";
+                    userFriendlyMessage = "Sound file format may not be supported, or the file is missing/corrupted. Please check '/sounds/success.mp3'.";
                     break;
                 default:
                     detailedError = `An unknown error occurred with the audio element (code: ${mediaError.code}).`;
             }
-             console.error("Audio Element Error Details:", { code: mediaError.code, message: mediaError.message }, e);
+             console.error("Audio Element Error (audioRef.current.error):", { code: mediaError.code, message: mediaError.message, eventDetails: e });
         } else if (e.target && (e.target as HTMLAudioElement).error) {
              const mediaError = (e.target as HTMLAudioElement).error;
               if (mediaError) {
-                detailedError = `MediaError code: ${mediaError.code}, message: ${mediaError.message}`;
-                console.error("Audio Element Error Details:", { code: mediaError.code, message: mediaError.message }, e);
+                const code = mediaError.code;
+                // Update detailedError and userFriendlyMessage if not already set more specifically
+                if (typeof detailedError === 'string' && detailedError === "Unknown error") {
+                    switch (code) {
+                        case MediaError.MEDIA_ERR_ABORTED:
+                            detailedError = "The fetching process for the media resource was aborted by the user agent at the user's request (target.error).";
+                            userFriendlyMessage = "Audio loading was aborted by the browser.";
+                            break;
+                        case MediaError.MEDIA_ERR_NETWORK:
+                            detailedError = "A network error occurred while fetching the media resource (target.error).";
+                            userFriendlyMessage = "A network error prevented the sound from loading.";
+                            break;
+                        case MediaError.MEDIA_ERR_DECODE:
+                            detailedError = "An error occurred while decoding the media resource (target.error).";
+                            userFriendlyMessage = "The sound file could not be decoded. It might be corrupted.";
+                            break;
+                        case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+                            detailedError = "The media resource was not suitable (target.error).";
+                            userFriendlyMessage = "Sound file format may not be supported, or the file is missing/corrupted. Please check '/sounds/success.mp3'.";
+                            break;
+                        default:
+                            detailedError = `An unknown error occurred with the audio element (target.error) (code: ${code}).`;
+                    }
+                }
+                console.error("Audio Element Error (e.target.error):", { code: mediaError.code, message: mediaError.message, eventDetails: e });
               } else {
                  console.error("Non-standard audio error event:", e);
-                 detailedError = "Non-standard error event";
+                 detailedError = "A non-standard error event occurred during audio loading.";
               }
         }
-        console.error("Error loading success sound:", errorMessage, "Details:", detailedError);
+        console.error("Error loading success sound (final report):", consoleErrorMessage, "Details:", detailedError);
         setIsSoundReady(false);
-        // Optional: Notify user sound won't play
+        
          toast({
             title: "Audio Alert",
-            description: "Call sound effect could not be loaded.",
-            variant: "default", // Or a custom "warning" variant
-            duration: 3000,
+            description: userFriendlyMessage,
+            variant: "default", 
+            duration: 5000, 
          });
       };
 
@@ -81,8 +109,8 @@ export default function CallBellButton() {
           audioRef.current.removeEventListener('canplaythrough', handleCanPlayThrough);
           audioRef.current.removeEventListener('error', handleError);
           audioRef.current.pause();
-          audioRef.current.src = ''; // Release the audio resource
-          audioRef.current.load(); // Reset the media element
+          audioRef.current.src = ''; 
+          audioRef.current.load(); 
         }
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
@@ -99,13 +127,13 @@ export default function CallBellButton() {
             console.error("Error playing success sound:", error);
             toast({
                 title: "Playback Issue",
-                description: "Could not play sound. Please interact with the page first.",
+                description: "Could not play sound. Browser interaction might be required first.",
                 variant: "destructive",
                 duration: 3000,
             });
         });
     } else if (audioRef.current && audioRef.current.readyState < HTMLMediaElement.HAVE_ENOUGH_DATA) {
-         console.warn("Success sound not ready yet, readyState:", audioRef.current.readyState);
+         console.warn("Success sound not ready yet (isSoundReady: " + isSoundReady + ", readyState: " + audioRef.current.readyState + ").");
     } else if (!audioRef.current) {
         console.warn("Success sound audio element not available.");
     } else if (!isSoundReady) {
@@ -200,7 +228,6 @@ export default function CallBellButton() {
         status === 'idle' && "bg-accent text-accent-foreground hover:bg-accent/90",
         status === 'pending' && "bg-primary text-primary-foreground cursor-not-allowed",
         status === 'success' && "bg-success text-success-foreground hover:bg-success/90",
-        // Error state is handled by variant="destructive" which uses theme's destructive colors
       )}
       aria-live="polite"
       aria-label={status === 'idle' ? "Call Nurse Button" : `Status: ${status}`}
