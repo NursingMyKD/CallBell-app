@@ -52,39 +52,60 @@ export default function CallRequestGrid() {
         setIsSoundReady(true);
       };
       
-      const handleError = (e: Event) => {
+      const handleError = (event: Event) => {
         let userFriendlyMessage = "Call sound effect could not be loaded.";
-        let detailedErrorPayload: string | object = "Unknown error";
+        let consoleLogMessage = "Error loading success sound. Ensure '/sounds/success.mp3' exists in public/sounds and is a supported format.";
+        let errorPayload: object | string = { eventType: event.type };
+        const audioEl = audioRef.current;
 
-        if (audioRef.current && audioRef.current.error) {
-            const mediaError = audioRef.current.error;
-            const errorDetails = { code: mediaError.code, message: mediaError.message, type: "MediaError" };
-            switch (mediaError.code) {
-                case MediaError.MEDIA_ERR_ABORTED: detailedErrorPayload = { ...errorDetails, specific: "The fetching process was aborted."}; userFriendlyMessage = "Audio loading was aborted."; break;
-                case MediaError.MEDIA_ERR_NETWORK: detailedErrorPayload = { ...errorDetails, specific: "A network error caused fetching to stop."}; userFriendlyMessage = "Network error loading audio."; break;
-                case MediaError.MEDIA_ERR_DECODE: detailedErrorPayload = { ...errorDetails, specific: "An error occurred while decoding."}; userFriendlyMessage = "Audio file corrupted or unreadable."; break;
-                case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED: detailedErrorPayload = { ...errorDetails, specific: "The media resource format is not supported."}; userFriendlyMessage = "Audio format not supported or file missing. Check '/sounds/success.mp3'."; break;
-                default: detailedErrorPayload = { ...errorDetails, specific: `Unknown MediaError (code: ${mediaError.code}).`};
-            }
-            console.error("Audio Element Error Details:", detailedErrorPayload, e);
-        } else if (e.target && (e.target as HTMLAudioElement).error) {
-             const mediaError = (e.target as HTMLAudioElement).error;
-              if (mediaError) { detailedErrorPayload = { code: mediaError.code, message: mediaError.message, type: "MediaErrorEventTarget" }; console.error("Audio Element Error Details from event target:", detailedErrorPayload, e); } 
-              else { detailedErrorPayload = "Non-standard error event on target."; console.error("Non-standard audio error event:", e); }
-        } else { console.error("Audio loading error event:", e); }
+        if (audioEl && audioEl.error) {
+          const mediaError = audioEl.error;
+          errorPayload = {
+            code: mediaError.code,
+            message: mediaError.message || "No specific message.",
+            type: "MediaError",
+          };
+          switch (mediaError.code) {
+            case MediaError.MEDIA_ERR_ABORTED:
+              userFriendlyMessage = "Audio loading was aborted by the browser.";
+              consoleLogMessage += " (MEDIA_ERR_ABORTED: Fetching process aborted by user agent.)";
+              break;
+            case MediaError.MEDIA_ERR_NETWORK:
+              userFriendlyMessage = "A network error prevented the sound from loading.";
+              consoleLogMessage += " (MEDIA_ERR_NETWORK: Network error.)";
+              break;
+            case MediaError.MEDIA_ERR_DECODE:
+              userFriendlyMessage = "The sound file may be corrupted or unreadable.";
+              consoleLogMessage += " (MEDIA_ERR_DECODE: Error decoding media resource.)";
+              break;
+            case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+              userFriendlyMessage = "Audio format not supported or file missing/corrupted. Check '/sounds/success.mp3'.";
+              consoleLogMessage += " (MEDIA_ERR_SRC_NOT_SUPPORTED: Media resource format not suitable.)";
+              break;
+            default:
+              userFriendlyMessage = `An unexpected audio loading error occurred (code: ${mediaError.code}).`;
+              consoleLogMessage += ` (Unknown MediaError code: ${mediaError.code})`;
+          }
+        } else {
+          consoleLogMessage += " (No specific MediaError object found on audio element, or audio element is null). Event type: " + event.type;
+          errorPayload = "No specific MediaError details. Original event: " + event.type;
+        }
         
-        console.error("Error loading success sound:", "Please ensure the file exists at '/sounds/success.mp3' and is a supported format.", "Internal Details:", detailedErrorPayload);
+        console.error(consoleLogMessage, "Internal Details:", errorPayload, "Original Event:", event);
         setIsSoundReady(false);
-        toast({ title: "Audio Alert", description: userFriendlyMessage, variant: "default", duration: 5000 });
+        toast({ title: "Audio Alert", description: userFriendlyMessage, variant: "destructive", duration: 5000 });
       };
 
       audioRef.current.addEventListener('canplaythrough', handleCanPlayThrough);
       audioRef.current.addEventListener('error', handleError);
+      
       return () => {
         if (audioRef.current) {
           audioRef.current.removeEventListener('canplaythrough', handleCanPlayThrough);
           audioRef.current.removeEventListener('error', handleError);
-          audioRef.current.pause(); audioRef.current.src = ''; audioRef.current.load();
+          audioRef.current.pause(); 
+          audioRef.current.src = ''; // Release the resource
+          audioRef.current.load(); // Reset
         }
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
       };
@@ -101,6 +122,8 @@ export default function CallRequestGrid() {
         console.error("Error playing success sound:", error);
         toast({ title: "Playback Issue", description: "Could not play sound. Browser interaction might be required.", variant: "destructive", duration: 3000 });
       });
+    } else {
+      console.warn("Attempted to play sound, but it was not ready or audioRef is null. isSoundReady:", isSoundReady, "audioRef.current:", audioRef.current);
     }
   }, [isSoundReady, toast]);
 
@@ -180,9 +203,9 @@ export default function CallRequestGrid() {
                 status === 'success' && activeRequestType === option.type && "bg-success text-success-foreground hover:bg-success/90",
                 status === 'error' && activeRequestType === option.type && "bg-destructive text-destructive-foreground hover:bg-destructive/90"
             )}
-            variant={
-              (status === 'success' && activeRequestType === option.type) || (status === 'error' && activeRequestType === option.type)
-              ? 'default' 
+            variant={ // Base variant is 'default' (primary color); 'destructive' for error. Success styling is handled by cn.
+              status === 'error' && activeRequestType === option.type
+              ? 'destructive' 
               : 'default' 
             }
             disabled={status === 'pending'}
