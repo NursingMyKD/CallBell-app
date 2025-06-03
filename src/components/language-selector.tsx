@@ -14,6 +14,7 @@ export default function LanguageSelector({ selectedLanguage, onSelectLanguage }:
   const languages: { code: LanguageCode; name: string }[] = [
     { code: 'en', name: 'English' }, // These names are not translated as they are for language selection itself
     { code: 'es', name: 'Español' },
+    { code: 'fr', name: 'Français' }, // Added French
   ];
 
   return (
