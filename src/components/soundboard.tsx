@@ -121,7 +121,6 @@ export default function Soundboard() {
     }
   }, [isSpeaking, speechSynthesisSupported, toast]);
   
-  // Avoid rendering the component server-side or if support is not yet determined client-side.
   const [isClient, setIsClient] = React.useState(false);
   React.useEffect(() => {
     setIsClient(true);
@@ -133,20 +132,20 @@ export default function Soundboard() {
 
   if (!speechSynthesisSupported) {
     return (
-      <div className="mt-8 text-center text-muted-foreground p-4 border border-dashed rounded-md w-full max-w-xl md:max-w-2xl">
-        <p className="text-lg">Soundboard Feature Not Available</p>
-        <p>Your browser does not support the necessary text-to-speech technology.</p>
+      <div className="mt-10 md:mt-12 text-center text-muted-foreground p-4 border border-dashed rounded-lg w-full max-w-xl md:max-w-3xl">
+        <p className="text-lg md:text-xl">Soundboard Feature Not Available</p>
+        <p className="text-base md:text-lg">Your browser does not support the necessary text-to-speech technology.</p>
       </div>
     );
   }
 
   return (
-    <div className="mt-6 md:mt-8 w-full max-w-xl md:max-w-2xl">
-      <h2 className="text-2xl md:text-3xl font-semibold mb-3 md:mb-4 text-center">Soundboard</h2>
-      <p className="text-sm md:text-md text-muted-foreground mb-3 md:mb-4 text-center">
+    <div className="mt-8 md:mt-10 w-full max-w-xl md:max-w-3xl">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4 md:mb-5 text-center">Soundboard</h2>
+      <p className="text-base sm:text-md md:text-lg text-muted-foreground mb-4 md:mb-5 text-center">
         Select a phrase below to have it spoken aloud.
       </p>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
         {commonPhrases.map((phrase) => (
           <Button
             key={phrase}
@@ -154,8 +153,8 @@ export default function Soundboard() {
             disabled={isSpeaking && currentlySpeakingPhrase !== phrase}
             variant="outline" 
             className={cn(
-              "h-24 md:h-28 text-sm md:text-base font-medium rounded-md md:rounded-lg shadow-sm md:shadow-md flex flex-col items-center justify-center p-2 md:p-3 transition-all",
-              "focus:ring-2 focus:ring-ring focus:ring-offset-2",
+              "h-28 md:h-32 text-base md:text-lg font-medium rounded-xl md:rounded-2xl shadow-md md:shadow-lg flex flex-col items-center justify-center p-3 md:p-4 transition-all",
+              "focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
               currentlySpeakingPhrase === phrase && isSpeaking 
                 ? "bg-primary/10 text-primary border-primary ring-2 ring-primary animate-pulse" 
                 : "hover:bg-accent/10 hover:border-accent",
@@ -166,11 +165,11 @@ export default function Soundboard() {
             aria-busy={currentlySpeakingPhrase === phrase && isSpeaking}
           >
             {currentlySpeakingPhrase === phrase && isSpeaking ? (
-              <Loader2 className="h-5 w-5 md:h-6 md:w-6 mb-1 animate-spin" />
+              <Loader2 className="h-7 w-7 md:h-8 md:w-8 mb-1.5 md:mb-2 animate-spin" />
             ) : (
-              <Volume2 className="h-5 w-5 md:h-6 md:w-6 mb-1" />
+              <Volume2 className="h-7 w-7 md:h-8 md:w-8 mb-1.5 md:mb-2" />
             )}
-            <span className="text-center text-xs sm:text-sm">{phrase}</span>
+            <span className="text-center text-sm sm:text-base md:text-md">{phrase}</span>
           </Button>
         ))}
       </div>
