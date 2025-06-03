@@ -7,40 +7,35 @@ import { Button } from '@/components/ui/button';
 import { handleCallBellTrigger } from '@/app/actions';
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import { callRequestOptions, type CallRequestType, type CallRequestOption } from '@/types/call-requests';
+import { callRequestOptionsStructure, type CallRequestType, type CallRequestOption as CallRequestOptionStructure } from '@/types/call-requests';
+import { appTranslations, type LanguageCode } from '@/lib/translations';
 
-/**
- * Represents the possible visual and operational states of the call requests.
- */
 type Status = 'idle' | 'pending' | 'success' | 'error';
 
-/**
- * CallRequestGrid component displays a grid of specific call request options
- * (e.g., Water, Restroom). It handles user interaction, triggers server actions,
- * provides visual feedback, and plays a sound on success.
- */
-export default function CallRequestGrid() {
-  /**
-   * Current status of the last activated call request.
-   */
+interface CallRequestGridProps {
+  selectedLanguage: LanguageCode;
+}
+
+export default function CallRequestGrid({ selectedLanguage }: CallRequestGridProps) {
   const [status, setStatus] = React.useState<Status>('idle');
-  /**
-   * The type of the currently active or last activated request.
-   */
   const [activeRequestType, setActiveRequestType] = React.useState<CallRequestType | null>(null);
   const { toast } = useToast();
-  /**
-   * Ref to store the timeout ID for resetting the status to 'idle'.
-   */
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
-  /**
-   * Ref to the HTMLAudioElement for playing the success sound.
-   */
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
-  /**
-   * State to track if the success sound is loaded and ready to play.
-   */
   const [isSoundReady, setIsSoundReady] = React.useState(false);
+
+  // Dynamically get translated labels for call request options
+  const getTranslatedCallRequestOptions = () => {
+    return callRequestOptionsStructure.map(optionStructure => {
+      const translationEntry = appTranslations.callRequestOptions.find(t => t.type === optionStructure.type);
+      return {
+        ...optionStructure,
+        label: translationEntry ? translationEntry.label[selectedLanguage] : optionStructure.type, // Fallback to type if no translation
+      };
+    });
+  };
+
+  const currentCallRequestOptions = getTranslatedCallRequestOptions();
 
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -53,47 +48,48 @@ export default function CallRequestGrid() {
       };
       
       const handleError = (event: Event) => {
-        let userFriendlyMessage = "Call sound effect could not be loaded.";
+        let userFriendlyMessageKey: keyof typeof appTranslations.callRequestGrid = 'audioErrorDefault';
         let consoleLogMessage = "Error loading success sound. Ensure '/sounds/success.mp3' exists in public/sounds and is a supported format.";
         let errorPayload: object | string = { eventType: event.type };
         const audioEl = audioRef.current;
 
         if (audioEl && audioEl.error) {
           const mediaError = audioEl.error;
-          errorPayload = {
-            code: mediaError.code,
-            message: mediaError.message || "No specific message.",
-            type: "MediaError",
-          };
+          errorPayload = { code: mediaError.code, message: mediaError.message || "No specific message.", type: "MediaError" };
           switch (mediaError.code) {
             case MediaError.MEDIA_ERR_ABORTED:
-              userFriendlyMessage = "Audio loading was aborted by the browser.";
-              consoleLogMessage += " (MEDIA_ERR_ABORTED: Fetching process aborted by user agent.)";
+              userFriendlyMessageKey = 'audioErrorAborted';
+              consoleLogMessage += " (MEDIA_ERR_ABORTED)";
               break;
             case MediaError.MEDIA_ERR_NETWORK:
-              userFriendlyMessage = "A network error prevented the sound from loading.";
-              consoleLogMessage += " (MEDIA_ERR_NETWORK: Network error.)";
+              userFriendlyMessageKey = 'audioErrorNetwork';
+              consoleLogMessage += " (MEDIA_ERR_NETWORK)";
               break;
             case MediaError.MEDIA_ERR_DECODE:
-              userFriendlyMessage = "The sound file may be corrupted or unreadable.";
-              consoleLogMessage += " (MEDIA_ERR_DECODE: Error decoding media resource.)";
+              userFriendlyMessageKey = 'audioErrorDecode';
+              consoleLogMessage += " (MEDIA_ERR_DECODE)";
               break;
             case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-              userFriendlyMessage = "Audio format not supported or file missing/corrupted. Check '/sounds/success.mp3'.";
-              consoleLogMessage += " (MEDIA_ERR_SRC_NOT_SUPPORTED: Media resource format not suitable.)";
+              userFriendlyMessageKey = 'audioErrorSrcNotSupported';
+              consoleLogMessage += " (MEDIA_ERR_SRC_NOT_SUPPORTED)";
               break;
             default:
-              userFriendlyMessage = `An unexpected audio loading error occurred (code: ${mediaError.code}).`;
+              userFriendlyMessageKey = 'audioErrorUnexpected';
               consoleLogMessage += ` (Unknown MediaError code: ${mediaError.code})`;
           }
         } else {
-          consoleLogMessage += " (No specific MediaError object found on audio element, or audio element is null). Event type: " + event.type;
+          consoleLogMessage += " (No specific MediaError object found). Event type: " + event.type;
           errorPayload = "No specific MediaError details. Original event: " + event.type;
         }
         
         console.error(consoleLogMessage, "Internal Details:", errorPayload, "Original Event:", event);
         setIsSoundReady(false);
-        toast({ title: "Audio Alert", description: userFriendlyMessage, variant: "destructive", duration: 5000 });
+        toast({ 
+          title: appTranslations.callRequestGrid.audioErrorToastTitle[selectedLanguage], 
+          description: appTranslations.callRequestGrid[userFriendlyMessageKey][selectedLanguage] || appTranslations.callRequestGrid.audioErrorDefault[selectedLanguage], 
+          variant: "destructive", 
+          duration: 5000 
+        });
       };
 
       audioRef.current.addEventListener('canplaythrough', handleCanPlayThrough);
@@ -104,42 +100,41 @@ export default function CallRequestGrid() {
           audioRef.current.removeEventListener('canplaythrough', handleCanPlayThrough);
           audioRef.current.removeEventListener('error', handleError);
           audioRef.current.pause(); 
-          audioRef.current.src = ''; // Release the resource
-          audioRef.current.load(); // Reset
+          audioRef.current.src = '';
+          audioRef.current.load(); 
         }
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
       };
     }
-  }, [toast]);
+  }, [toast, selectedLanguage]);
 
-  /**
-   * Plays the success sound if it's ready.
-   */
   const playSuccessSound = React.useCallback(() => {
     if (audioRef.current && isSoundReady) {
       audioRef.current.currentTime = 0;
       audioRef.current.play().catch(error => {
         console.error("Error playing success sound:", error);
-        toast({ title: "Playback Issue", description: "Could not play sound. Browser interaction might be required.", variant: "destructive", duration: 3000 });
+        toast({ 
+            title: appTranslations.callRequestGrid.audioErrorToastTitle[selectedLanguage], 
+            description: "Could not play sound. Browser interaction might be required.", // This specific message could also be translated
+            variant: "destructive", 
+            duration: 3000 
+        });
       });
     } else {
-      console.warn("Attempted to play sound, but it was not ready or audioRef is null. isSoundReady:", isSoundReady, "audioRef.current:", audioRef.current);
+      console.warn("Attempted to play sound, but it was not ready or audioRef is null.");
     }
-  }, [isSoundReady, toast]);
+  }, [isSoundReady, toast, selectedLanguage]);
 
-  /**
-   * Resets the status of the component to 'idle'.
-   */
   const resetToIdle = () => {
     setStatus('idle');
     setActiveRequestType(null);
   };
 
-  /**
-   * Handles a specific call request. Sets pending state, calls server action,
-   * and updates UI based on the outcome.
-   * @param requestType - The type of assistance requested.
-   */
+  const getTranslatedLabelForType = (requestType: CallRequestType): string => {
+    const option = appTranslations.callRequestOptions.find(opt => opt.type === requestType);
+    return option ? option.label[selectedLanguage] : requestType;
+  };
+
   const handleSpecificRequest = React.useCallback(async (requestType: CallRequestType) => {
     if (status === 'pending') return;
 
@@ -147,22 +142,24 @@ export default function CallRequestGrid() {
     setActiveRequestType(requestType);
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
+    const translatedRequestLabel = getTranslatedLabelForType(requestType);
+
     try {
-      const result = await handleCallBellTrigger(requestType);
+      const result = await handleCallBellTrigger(requestType); // Pass requestType to action
       if (result.success) {
         setStatus('success');
         playSuccessSound();
         toast({
-          title: "Success!",
-          description: result.status.message || `${requestType} request sent. Help is on the way.`,
+          title: appTranslations.callRequestGrid.toastSuccessTitle[selectedLanguage],
+          description: `${translatedRequestLabel} ${appTranslations.callRequestGrid.toastSuccessRequestSent[selectedLanguage]}`,
           variant: "default", 
           duration: 5000,
         });
       } else {
         setStatus('error');
         toast({
-          title: "Error",
-          description: `Failed to send ${requestType} request: ${result.error}`,
+          title: appTranslations.callRequestGrid.toastErrorTitle[selectedLanguage],
+          description: `${appTranslations.callRequestGrid.toastFailedToSend[selectedLanguage]} ${translatedRequestLabel} request: ${result.error}`,
           variant: "destructive",
           duration: 5000,
         });
@@ -170,21 +167,21 @@ export default function CallRequestGrid() {
     } catch (error) {
       console.error(`Error in handleSpecificRequest for ${requestType}:`, error);
       setStatus('error');
-      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred.";
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
       toast({
-        title: "System Error",
-        description: `Could not process ${requestType} request: ${errorMessage}`,
+        title: appTranslations.callRequestGrid.toastSystemErrorTitle[selectedLanguage],
+        description: `${appTranslations.callRequestGrid.toastCouldNotProcess[selectedLanguage]} ${translatedRequestLabel} request: ${errorMessage}`,
         variant: "destructive",
         duration: 5000,
       });
     }
     timeoutRef.current = setTimeout(resetToIdle, 5000);
-  }, [status, toast, playSuccessSound]);
+  }, [status, toast, playSuccessSound, selectedLanguage]);
 
-  const firstRowOptions = callRequestOptions.slice(0, 2);
-  const secondRowOptions = callRequestOptions.slice(2, 5);
+  const firstRowOptions = currentCallRequestOptions.slice(0, 2);
+  const secondRowOptions = currentCallRequestOptions.slice(2, 5);
 
-  const renderButton = (option: CallRequestOption) => (
+  const renderButton = (option: { type: CallRequestType; icon: CallRequestOptionStructure['icon']; label: string }) => (
     <Button
       key={option.type}
       onClick={() => handleSpecificRequest(option.type)}
@@ -195,11 +192,11 @@ export default function CallRequestGrid() {
       )}
       variant={ 
         (status === 'success' || status === 'error') && activeRequestType === option.type
-        ? (status === 'error' ? 'destructive' : 'default') // 'default' for success, then overridden by bg-success
-        : 'default' // For idle and pending, use default primary color
+        ? (status === 'error' ? 'destructive' : 'default') 
+        : 'default' 
       }
       disabled={status === 'pending'}
-      aria-label={`Request ${option.label}`}
+      aria-label={`${appTranslations.callRequestGrid.statusCallingFor[selectedLanguage]} ${option.label}`}
     >
       <option.icon className="h-12 w-12 md:h-16 md:w-16 mb-2 md:mb-3" />
       {option.label}
@@ -207,26 +204,24 @@ export default function CallRequestGrid() {
   );
 
   return (
-    <div className="flex flex-col items-center space-y-4 md:space-y-6 w-full max-w-xl md:max-w-3xl">
-      {/* Status Display Area */}
-      <div className="h-10 mb-2 md:mb-3 flex items-center justify-center w-full">
+    <div className="flex flex-col items-center space-y-3 md:space-y-4 w-full max-w-xl md:max-w-3xl px-2">
+      <div className="h-8 md:h-10 mb-1 md:mb-2 flex items-center justify-center w-full">
         {status === 'pending' && activeRequestType && (
-          <div className="flex items-center text-lg md:text-xl p-2 md:p-2.5 rounded-md bg-primary/10 text-primary animate-pulse">
-            <Loader2 className="mr-2.5 h-6 w-6 md:mr-3 md:h-7 md:w-7 animate-spin" />
-            Calling for {activeRequestType}...
+          <div className="flex items-center text-md md:text-lg p-1.5 md:p-2 rounded-md bg-primary/10 text-primary animate-pulse">
+            <Loader2 className="mr-2 h-5 w-5 md:mr-2.5 md:h-6 md:w-6 animate-spin" />
+            {appTranslations.callRequestGrid.statusCallingFor[selectedLanguage]} {getTranslatedLabelForType(activeRequestType)}...
           </div>
         )}
       </div>
 
-      <div className="w-full space-y-4 md:space-y-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+      <div className="w-full space-y-3 md:space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
           {firstRowOptions.map(renderButton)}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
           {secondRowOptions.map(renderButton)}
         </div>
       </div>
     </div>
   );
 }
-

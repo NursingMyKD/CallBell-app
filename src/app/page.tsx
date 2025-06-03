@@ -1,16 +1,25 @@
 
+"use client";
+import * as React from 'react';
 import CallRequestGrid from '@/components/call-request-grid';
 import Soundboard from '@/components/soundboard';
+import LanguageSelector from '@/components/language-selector';
+import { appTranslations, type LanguageCode } from '@/lib/translations';
 
 export default function Home() {
+  const [selectedLanguage, setSelectedLanguage] = React.useState<LanguageCode>('en');
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 md:py-8">
-       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8 text-center">iControlBell</h1>
-       <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 md:mb-10 text-center max-w-lg md:max-w-xl">
-         Focus your gaze on the button below that best describes your need to call for assistance, or use the soundboard to speak.
+    <main className="flex min-h-screen flex-col items-center justify-center p-2 sm:p-3 md:py-4">
+       <LanguageSelector selectedLanguage={selectedLanguage} onSelectLanguage={setSelectedLanguage} />
+       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 text-center">
+         {appTranslations.page.title[selectedLanguage]}
+       </h1>
+       <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 md:mb-8 text-center max-w-lg md:max-w-xl">
+         {appTranslations.page.description[selectedLanguage]}
        </p>
-      <CallRequestGrid />
-      <Soundboard />
+      <CallRequestGrid selectedLanguage={selectedLanguage} />
+      <Soundboard selectedLanguage={selectedLanguage} />
     </main>
   );
 }
