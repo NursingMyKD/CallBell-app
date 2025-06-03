@@ -181,8 +181,33 @@ export default function CallRequestGrid() {
     timeoutRef.current = setTimeout(resetToIdle, 5000);
   }, [status, toast, playSuccessSound]);
 
+  const firstRowOptions = callRequestOptions.slice(0, 2);
+  const secondRowOptions = callRequestOptions.slice(2, 5);
+
+  const renderButton = (option: CallRequestOption) => (
+    <Button
+      key={option.type}
+      onClick={() => handleSpecificRequest(option.type)}
+      className={cn(
+          "h-36 md:h-44 text-lg md:text-xl font-semibold rounded-xl md:rounded-2xl shadow-lg md:shadow-xl flex flex-col items-center justify-center p-3 md:p-4 transition-all focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
+          status === 'success' && activeRequestType === option.type && "bg-success text-success-foreground hover:bg-success/90",
+          status === 'error' && activeRequestType === option.type && "bg-destructive text-destructive-foreground hover:bg-destructive/90"
+      )}
+      variant={ 
+        (status === 'success' || status === 'error') && activeRequestType === option.type
+        ? (status === 'error' ? 'destructive' : 'default') // 'default' for success, then overridden by bg-success
+        : 'default' // For idle and pending, use default primary color
+      }
+      disabled={status === 'pending'}
+      aria-label={`Request ${option.label}`}
+    >
+      <option.icon className="h-12 w-12 md:h-16 md:w-16 mb-2 md:mb-3" />
+      {option.label}
+    </Button>
+  );
+
   return (
-    <div className="flex flex-col items-center space-y-4 w-full max-w-xl md:max-w-3xl">
+    <div className="flex flex-col items-center space-y-4 md:space-y-6 w-full max-w-xl md:max-w-3xl">
       {/* Status Display Area */}
       <div className="h-10 mb-2 md:mb-3 flex items-center justify-center w-full">
         {status === 'pending' && activeRequestType && (
@@ -193,29 +218,15 @@ export default function CallRequestGrid() {
         )}
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 w-full">
-        {callRequestOptions.map((option: CallRequestOption) => (
-          <Button
-            key={option.type}
-            onClick={() => handleSpecificRequest(option.type)}
-            className={cn(
-                "h-32 md:h-40 text-lg md:text-xl font-semibold rounded-xl md:rounded-2xl shadow-lg md:shadow-xl flex flex-col items-center justify-center p-3 md:p-4 transition-all focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
-                status === 'success' && activeRequestType === option.type && "bg-success text-success-foreground hover:bg-success/90",
-                status === 'error' && activeRequestType === option.type && "bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            )}
-            variant={ 
-              status === 'error' && activeRequestType === option.type
-              ? 'destructive' 
-              : 'default' 
-            }
-            disabled={status === 'pending'}
-            aria-label={`Request ${option.label}`}
-          >
-            <option.icon className="h-12 w-12 md:h-16 md:w-16 mb-2 md:mb-3" />
-            {option.label}
-          </Button>
-        ))}
+      <div className="w-full space-y-4 md:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+          {firstRowOptions.map(renderButton)}
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+          {secondRowOptions.map(renderButton)}
+        </div>
       </div>
     </div>
   );
 }
+
