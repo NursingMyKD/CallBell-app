@@ -30,28 +30,45 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
       setSpeechSynthesisSupported(true);
 
       const loadVoices = () => {
-        const voices = window.speechSynthesis.getVoices();
-        const filteredVoices = voices.filter(voice => voice.lang.startsWith(currentBcp47Lang.split('-')[0]));
-        setAvailableVoices(filteredVoices);
-        // If a voice was previously selected for this language, try to keep it.
-        // Otherwise, reset to default or first available.
-        const currentSelectedVoice = filteredVoices.find(v => v.voiceURI === selectedVoiceURI);
-        if (!currentSelectedVoice && filteredVoices.length > 0) {
-          // Check if there's a default voice for the language
-          const defaultVoiceForLang = filteredVoices.find(v => v.default && v.lang === currentBcp47Lang);
-          setSelectedVoiceURI(defaultVoiceForLang?.voiceURI || filteredVoices[0].voiceURI);
-        } else if (!currentSelectedVoice && filteredVoices.length === 0) {
-          setSelectedVoiceURI(undefined); // No voices for this lang, use browser default
+        const allSystemVoices = window.speechSynthesis.getVoices();
+        
+        // Filter by current language first
+        let voicesForCurrentLang = allSystemVoices.filter(voice => voice.lang.startsWith(currentBcp47Lang.split('-')[0]));
+        
+        // Then de-duplicate these language-specific voices by voiceURI
+        // This ensures unique keys when rendering SelectItem components
+        voicesForCurrentLang = Array.from(new Map(voicesForCurrentLang.map(voice => [voice.voiceURI, voice])).values());
+        
+        setAvailableVoices(voicesForCurrentLang);
+
+        const currentSelectedVoice = voicesForCurrentLang.find(v => v.voiceURI === selectedVoiceURI);
+        if (!currentSelectedVoice && voicesForCurrentLang.length > 0) {
+          const defaultVoiceForLang = voicesForCurrentLang.find(v => v.default && v.lang === currentBcp47Lang);
+          setSelectedVoiceURI(defaultVoiceForLang?.voiceURI || voicesForCurrentLang[0].voiceURI);
+        } else if (voicesForCurrentLang.length === 0 && selectedVoiceURI !== undefined) {
+          // If no voices for this lang (after filtering & dedupe) and a voice was previously selected, reset it
+          setSelectedVoiceURI(undefined);
         }
       };
 
-      loadVoices();
-      window.speechSynthesis.onvoiceschanged = loadVoices; // Update if voices change
+      // Voices might load asynchronously, so call loadVoices() initially
+      // and also when the voiceschanged event fires.
+      loadVoices(); 
+      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+      } else {
+        // Fallback for browsers that might not support onvoiceschanged well initially,
+        // though getVoices() should be sufficient for most modern browsers on first call.
+        setTimeout(loadVoices, 100); // Attempt to reload voices shortly after initial load
+      }
+      
 
       return () => {
-        window.speechSynthesis.onvoiceschanged = null;
-        if (window.speechSynthesis && window.speechSynthesis.speaking) {
-          window.speechSynthesis.cancel();
+        if (window.speechSynthesis) {
+            window.speechSynthesis.onvoiceschanged = null;
+            if (window.speechSynthesis.speaking) {
+            window.speechSynthesis.cancel();
+            }
         }
         setIsSpeaking(false);
         setCurrentlySpeakingPhrase(null);
@@ -66,7 +83,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
         duration: 7000,
       });
     }
-  }, [toast, selectedLanguage, currentBcp47Lang, selectedVoiceURI]);
+  }, [toast, selectedLanguage, currentBcp47Lang, selectedVoiceURI]); // selectedVoiceURI is needed to re-evaluate if it's still valid
 
 
   const handleSpeak = React.useCallback((phrase: string) => {
@@ -88,12 +105,12 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
     const utterance = new SpeechSynthesisUtterance(phrase);
     utterance.lang = currentBcp47Lang;
 
-    if (selectedVoiceURI) {
+    if (selectedVoiceURI && selectedVoiceURI !== "default") { // Check for "default"
       const voice = availableVoices.find(v => v.voiceURI === selectedVoiceURI);
       if (voice) {
         utterance.voice = voice;
       } else {
-        console.warn(`Selected voice URI ${selectedVoiceURI} not found. Using default.`);
+        console.warn(`Selected voice URI ${selectedVoiceURI} not found. Using browser default for language.`);
       }
     }
     
@@ -148,9 +165,6 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
     );
   }
 
-  const languageFilteredVoices = availableVoices.filter(voice => voice.lang.startsWith(currentBcp47Lang.split('-')[0]));
-
-
   return (
     <div className="mt-6 md:mt-8 w-full max-w-xl md:max-w-3xl px-2">
       <h2 className="text-2xl sm:text-3xl font-semibold mb-3 md:mb-4 text-center">
@@ -160,21 +174,21 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
         {appTranslations.soundboard.description[selectedLanguage]}
       </p>
 
-      {languageFilteredVoices.length > 0 && (
+      {availableVoices.length > 0 && (
         <div className="mb-4 md:mb-6 flex flex-col items-center">
            <Label htmlFor="voice-select" className="text-sm md:text-md text-muted-foreground mb-1.5">
             {appTranslations.soundboard.voiceSelectorLabel[selectedLanguage]}
           </Label>
           <Select
-            value={selectedVoiceURI}
-            onValueChange={setSelectedVoiceURI}
+            value={selectedVoiceURI || "default"} // Ensure "default" is handled if selectedVoiceURI is undefined
+            onValueChange={(value) => setSelectedVoiceURI(value === "default" ? undefined : value)}
           >
             <SelectTrigger id="voice-select" className="w-full max-w-xs mx-auto text-sm md:text-base">
               <SelectValue placeholder={appTranslations.soundboard.defaultVoiceName[selectedLanguage]} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="default">{appTranslations.soundboard.defaultVoiceName[selectedLanguage]}</SelectItem>
-              {languageFilteredVoices.map((voice) => (
+              {availableVoices.map((voice) => (
                 <SelectItem key={voice.voiceURI} value={voice.voiceURI}>
                   {voice.name} ({voice.lang})
                 </SelectItem>
