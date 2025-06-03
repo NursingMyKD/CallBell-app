@@ -39,6 +39,8 @@ export const appTranslations = {
   soundboard: {
     title: { en: "Soundboard", es: "Panel de Sonido", fr: "Table d'Harmonie" },
     description: { en: "Select a phrase below to have it spoken aloud.", es: "Seleccione una frase de abajo para que se diga en voz alta.", fr: "Sélectionnez une phrase ci-dessous pour la faire prononcer à voix haute." },
+    voiceSelectorLabel: { en: "Select Voice:", es: "Seleccionar Voz:", fr: "Choisir la Voix:" },
+    defaultVoiceName: { en: "Default Voice", es: "Voz Predeterminada", fr: "Voix par Défaut"},
     phrases: {
       en: [
         "Yes", "No", "I'm thirsty", "I'm in pain", "I need to use the restroom",
@@ -74,5 +76,5 @@ export const appTranslations = {
 export const bcp47LangMap: Record<LanguageCode, string> = {
     en: 'en-US',
     es: 'es-ES',
-    fr: 'fr-FR', // Added French BCP 47 code
+    fr: 'fr-FR',
 };
