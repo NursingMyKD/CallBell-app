@@ -3,10 +3,10 @@ import type {NextConfig} from 'next';
 const nextConfig: NextConfig = {
   /* config options here */
   typescript: {
-    ignoreBuildErrors: false, // Changed from true
+    ignoreBuildErrors: false,
   },
   eslint: {
-    ignoreDuringBuilds: false, // Changed from true
+    ignoreDuringBuilds: false,
   },
   images: {
     remotePatterns: [
@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+    ],
+  },
+  experimental: {
+    allowedDevOrigins: [
+      'https://6000-idx-studio-1746049973989.cluster-ux5mmlia3zhhask7riihruxydo.cloudworkstations.dev',
     ],
   },
 };
