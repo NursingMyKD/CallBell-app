@@ -186,14 +186,14 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
       key={option.type}
       onClick={() => handleSpecificRequest(option.type)}
       className={cn(
-          "h-36 md:h-44 text-lg md:text-xl font-semibold rounded-xl md:rounded-2xl shadow-lg md:shadow-xl flex flex-col items-center justify-center p-3 md:p-4 transition-all focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
-          status === 'success' && activeRequestType === option.type && "bg-success text-success-foreground hover:bg-success/90",
-          status === 'error' && activeRequestType === option.type && "bg-destructive text-destructive-foreground hover:bg-destructive/90"
+          "h-36 md:h-44 text-lg md:text-xl font-semibold rounded-xl md:rounded-2xl shadow-lg md:shadow-xl flex flex-col items-center justify-center p-3 md:p-4 transition-all focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2"
       )}
-      variant={ 
-        (status === 'success' || status === 'error') && activeRequestType === option.type
-        ? (status === 'error' ? 'destructive' : 'default') 
-        : 'default' 
+      variant={
+        status === 'success' && activeRequestType === option.type
+          ? 'success'
+          : status === 'error' && activeRequestType === option.type
+          ? 'destructive'
+          : 'accent'
       }
       disabled={status === 'pending'}
       aria-label={`${appTranslations.callRequestGrid.statusCallingFor[selectedLanguage]} ${option.label}`}
