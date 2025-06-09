@@ -1,11 +1,32 @@
 import Foundation
 
-enum CallRequestType: String {
-    case Water
-    case Restroom
-    case Reposition
-    case Pain
-    case General
+/// Represents the different assistance requests a patient can trigger.
+enum CallRequestType: String, CaseIterable, Identifiable {
+    case pain
+    case bathroom
+    case water
+    case reposition
+    case emergency
+    case general
+
+    var id: String { rawValue }
+
+    /// SF Symbol name used when displaying the request in a SwiftUI view.
+    var icon: String {
+        switch self {
+        case .pain: return "bandage.fill"
+        case .bathroom: return "toilet.fill"
+        case .water: return "drop.fill"
+        case .reposition: return "arrow.triangle.2.circlepath"
+        case .emergency: return "exclamationmark.triangle.fill"
+        case .general: return "bell.fill"
+        }
+    }
+
+    /// Localized label describing the request.
+    var localizedLabel: String {
+        NSLocalizedString(rawValue, comment: "")
+    }
 }
 
 struct CallBellStatus {
