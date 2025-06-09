@@ -3,7 +3,7 @@ import Foundation
 @main
 struct Main {
     static func main() async {
-        let result = await handleCallBellTrigger(requestType: .General)
+        let result = await handleCallBellTrigger(requestType: .general)
         switch result {
         case .success(let status):
             print("Success: call bell active \(status.isCallBellActive)")
