@@ -20,6 +20,7 @@ This application serves as a starting point for building...
 - **Firebase**: Integrated for backend services (authentication, database, etc.)
 - **Linting/Formatting**: ESLint (as per Next.js defaults)
 - **Package Manager**: (Assumed Yarn or NPM based on `.gitignore` and `package.json`)
+- **Swift Prototype**: Early Swift port located in `swift/`
 
 ## Prerequisites
 
