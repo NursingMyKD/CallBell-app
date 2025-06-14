@@ -13,6 +13,10 @@
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
       # "vscodevim.vim"
+ "dbaeumer.vscode-eslint"
+ "esbenp.prettier-vscode"
+ " মুহাম্মদ.vscode-typescript-next"
+ "bradlc.vscode-tailwindcss"
     ];
     workspace = {
       onCreate = {
