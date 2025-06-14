@@ -21,6 +21,10 @@ const nextConfig: NextConfig = {
   experimental: {
     allowedDevOrigins: [
       'https://6000-idx-studio-1746049973989.cluster-ux5mmlia3zhhask7riihruxydo.cloudworkstations.dev',
+      'local-origin.dev',
+      '*.local-origin.dev',
+      'https://9004-idx-studio-1746049973989.cluster-ux5mmlia3zhhask7riihruxydo.cloudworkstations.dev',
+      'https://9005-idx-studio-1746049973989.cluster-ux5mmlia3zhhask7riihruxydo.cloudworkstations.dev',
     ],
   },
 };
