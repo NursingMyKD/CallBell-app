@@ -1,4 +1,13 @@
 import Foundation
+import FirebaseFirestoreSwift // Added import
+
+// MARK: - Call Request Entry Struct
+struct CallRequestEntry: Codable {
+    @DocumentID var id: String?
+    var requestType: String
+    var timestamp: Timestamp
+    var userId: String? = nil // Optional user ID for future use
+}
 
 /// Represents the different assistance requests a patient can trigger.
 enum CallRequestType: String, CaseIterable, Identifiable {
@@ -36,13 +45,25 @@ struct CallBellStatus {
 }
 
 func triggerCallBell(requestType: CallRequestType) async throws -> CallBellStatus {
-    // TODO: Replace with actual API call to the hospital call bell system
-    print("Call bell triggered for request: \(requestType.rawValue)")
-    return CallBellStatus(
-        isCallBellActive: true,
-        requestType: requestType,
-        message: "Assistance for \(requestType.rawValue) has been requested."
+    let db = Firestore.firestore()
+    let newCallRequestEntry = CallRequestEntry(
+        requestType: requestType.rawValue,
+        timestamp: Timestamp(date: Date()),
+        userId: nil // Set to nil for now
     )
+
+    do {
+        let newRequestRef = try db.collection("callRequests").addDocument(from: newCallRequestEntry)
+        // Successfully added
+        return CallBellStatus(
+            isCallBellActive: true, // Kept as true for now
+            requestType: requestType,
+            message: "Request for \(requestType.localizedLabel) successfully sent and logged with ID: \(newRequestRef.documentID)."
+        )
+    } catch {
+        // Re-throw the error to be caught by handleCallBellTrigger
+        throw error
+    }
 }
 
 @discardableResult

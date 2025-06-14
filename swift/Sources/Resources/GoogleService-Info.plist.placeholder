@@ -1,0 +1,9 @@
+Please replace this file with your actual GoogleService-Info.plist file from Firebase.
+You can download it from your Firebase project settings.
+Instructions:
+1. Go to your Firebase project console.
+2. Navigate to Project settings (click the gear icon next to Project Overview).
+3. Under the "General" tab, in the "Your apps" section, select your iOS app.
+4. Download the GoogleService-Info.plist file.
+5. Replace this placeholder file with the downloaded file.
+6. Ensure the file is named exactly "GoogleService-Info.plist" and is placed in the "swift/Sources/Resources/" directory.

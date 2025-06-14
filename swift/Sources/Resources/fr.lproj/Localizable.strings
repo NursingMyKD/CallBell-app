@@ -1,0 +1,31 @@
+// TODO: Translate these strings into French.
+/*
+  Localizable.strings
+  iControlBellApp
+*/
+
+// Call Request Types (keys are CallRequestType.rawValue from CallBell.swift)
+"pain" = "Douleur (FR)"; // Sample translation
+"bathroom" = "Toilettes";
+"water" = "Eau";
+"reposition" = "Repositionner";
+"emergency" = "Urgence";
+"general" = "Demande Générale";
+
+// Main UI
+"iControlBell" = "iControlBell (FR)"; // Sample translation
+"main_description" = "Sélectionnez un type de demande ou utilisez la table d'harmonie pour obtenir de l'aide.";
+"soundboard_title" = "Phrases Rapides";
+"Language" = "Langue"; // Picker title for language selection
+
+// Toast Messages
+"Request Sent" = "Demande Envoyée";
+"Error Sending Request" = "Erreur d'Envoi de la Demande";
+
+// Soundboard Phrases
+"Can you help me?" = "Pouvez-vous m'aider?";
+"I need to use the bathroom." = "J'ai besoin d'aller aux toilettes.";
+"I'm in pain." = "J'ai mal.";
+
+// Accessibility
+"Send %@ request" = "Envoyer la demande %@";

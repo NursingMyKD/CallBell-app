@@ -1,0 +1,31 @@
+// TODO: Translate these strings into Spanish.
+/*
+  Localizable.strings
+  iControlBellApp
+*/
+
+// Call Request Types (keys are CallRequestType.rawValue from CallBell.swift)
+"pain" = "Dolor (ES)"; // Sample translation
+"bathroom" = "Baño";
+"water" = "Agua";
+"reposition" = "Reposicionar";
+"emergency" = "Emergencia";
+"general" = "Solicitud General";
+
+// Main UI
+"iControlBell" = "iControlBell (ES)"; // Sample translation
+"main_description" = "Seleccione un tipo de solicitud o use el panel de sonido para obtener ayuda.";
+"soundboard_title" = "Frases Rápidas";
+"Language" = "Idioma"; // Picker title for language selection
+
+// Toast Messages
+"Request Sent" = "Solicitud Enviada";
+"Error Sending Request" = "Error al Enviar Solicitud";
+
+// Soundboard Phrases
+"Can you help me?" = "¿Puede ayudarme?";
+"I need to use the bathroom." = "Necesito usar el baño.";
+"I'm in pain." = "Tengo dolor.";
+
+// Accessibility
+"Send %@ request" = "Enviar solicitud de %@";

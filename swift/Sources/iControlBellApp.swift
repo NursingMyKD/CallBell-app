@@ -3,6 +3,7 @@
 #if canImport(SwiftUI)
 import SwiftUI
 import AVFoundation
+import FirebaseCore // Added FirebaseCore import
 
 // MARK: - Models
 
@@ -33,16 +34,29 @@ class AppViewModel: ObservableObject {
     @Published var selectedLanguage: LanguageCode = .en
     @Published var toast: ToastData?
     @Published var isPlayingSuccess: Bool = false
+    @Published var isLoading: Bool = false // Added isLoading
 
     private var player: AVAudioPlayer?
     private let speechSynthesizer = AVSpeechSynthesizer()
 
-    func sendCallRequest(_ type: CallRequestType) {
-        playSuccessSound()
-        showToast(
-            title: NSLocalizedString("Request Sent", comment: ""),
-            description: String(format: NSLocalizedString("Your %@ request was sent.", comment: ""), type.localizedLabel)
-        )
+    func sendCallRequest(_ type: CallRequestType) async { // Made async
+        isLoading = true
+        let result = await handleCallBellTrigger(requestType: type)
+        isLoading = false
+
+        switch result {
+        case .success(let status):
+            playSuccessSound()
+            showToast(
+                title: NSLocalizedString("Request Sent", comment: "Toast title for successful request"),
+                description: status.message ?? String(format: NSLocalizedString("Your %@ request was successfully logged.", comment: "Fallback success toast description"), type.localizedLabel)
+            )
+        case .failure(let error):
+            showToast(
+                title: NSLocalizedString("Error Sending Request", comment: "Toast title for failed request"),
+                description: error.localizedDescription
+            )
+        }
     }
 
     func playSuccessSound() {
@@ -96,7 +110,7 @@ struct MainView: View {
                 VStack(spacing: 28) {
                     LanguageSelector(selected: $viewModel.selectedLanguage)
                         .padding(.top)
-                    Text("iControlBell")
+                    Text(NSLocalizedString("iControlBell", comment: "App title"))
                         .font(.largeTitle).fontWeight(.bold)
                     Text(NSLocalizedString("main_description", comment: ""))
                         .font(.title3)
@@ -123,7 +137,7 @@ struct CallRequestGrid: View {
         VStack(spacing: 14) {
             ForEach(requests) { request in
                 Button(action: {
-                    viewModel.sendCallRequest(request)
+                    Task { await viewModel.sendCallRequest(request) } // Updated action
                 }) {
                     HStack(spacing: 16) {
                         Image(systemName: request.icon)
@@ -150,7 +164,7 @@ struct CallRequestGrid: View {
                         )
                     )
                 )
-                .disabled(viewModel.isPlayingSuccess)
+                .disabled(viewModel.isLoading || viewModel.isPlayingSuccess) // Updated disabled condition
             }
         }
         .padding(.vertical)
@@ -185,6 +199,7 @@ struct Soundboard: View {
                         .background(Color.secondary.opacity(0.1))
                         .cornerRadius(10)
                     }
+                    .disabled(viewModel.isLoading) // Disable soundboard buttons when isLoading
                 }
             }
         }
@@ -195,7 +210,7 @@ struct LanguageSelector: View {
     @Binding var selected: LanguageCode
 
     var body: some View {
-        Picker("Language", selection: $selected) {
+        Picker(NSLocalizedString("Language", comment: "Picker title for language selection"), selection: $selected) {
             ForEach(LanguageCode.allCases) { lang in
                 Text(lang.displayName).tag(lang)
             }
@@ -233,7 +248,7 @@ extension View {
                     Spacer()
                 }
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) { // Increased toast duration
                         data.wrappedValue = nil
                     }
                 }
@@ -247,6 +262,9 @@ extension View {
 
 @main
 struct iControlBellApp: App {
+    init() { // Added init
+        FirebaseApp.configure()
+    }
     var body: some Scene {
         WindowGroup {
             MainView()
