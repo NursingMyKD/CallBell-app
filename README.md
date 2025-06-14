@@ -2,10 +2,6 @@
 
 This repository hosts the CallBell project, which includes a Next.js web application and a native Swift iOS application. Both applications aim to provide users with a way to signal for assistance, with requests logged to a Firebase backend.
 
-## Project Overview
-
-*(Existing Next.js project overview can be expanded here if desired.)*
-
 This repository contains:
 1.  A **Next.js web application** providing a user interface for call bell requests, integrated with Firebase and potentially AI features via Genkit.
 2.  A **native Swift iOS application** offering similar call bell functionality, built with SwiftUI and Firebase Firestore for data storage.
