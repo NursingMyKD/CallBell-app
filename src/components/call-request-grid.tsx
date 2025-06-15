@@ -130,10 +130,10 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
     setActiveRequestType(null);
   };
 
-  const getTranslatedLabelForType = (requestType: CallRequestType): string => {
+  const getTranslatedLabelForType = React.useCallback((requestType: CallRequestType): string => {
     const option = appTranslations.callRequestOptions.find(opt => opt.type === requestType);
     return option ? option.label[selectedLanguage] : requestType;
-  };
+  }, [selectedLanguage]);
 
   const handleSpecificRequest = React.useCallback(async (requestType: CallRequestType) => {
     if (status === 'pending') return;
@@ -176,7 +176,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
       });
     }
     timeoutRef.current = setTimeout(resetToIdle, 5000);
-  }, [status, toast, playSuccessSound, selectedLanguage]);
+  }, [status, toast, playSuccessSound, selectedLanguage, getTranslatedLabelForType]);
 
   const firstRowOptions = currentCallRequestOptions.slice(0, 2);
   const secondRowOptions = currentCallRequestOptions.slice(2, 5);
