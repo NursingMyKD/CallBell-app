@@ -38,7 +38,7 @@
       ".git",
       "firebase-debug.log",
       "firebase-debug.*.log",
-        "functions"
+      "functions"
     ]
   },
   "hosting": {
@@ -53,7 +53,10 @@
       "**/node_modules/**"
     ],
     "rewrites": [
-      { "source": "**", "destination": "/index.html" }
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
   }
 }
