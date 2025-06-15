@@ -26,8 +26,14 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
   const [isSoundReady, setIsSoundReady] = React.useState(false);
 
   const t = useTranslations(selectedLanguage);
-  const gridStrings = t('callRequestGrid');
-  const callRequestOptionLabels = t('callRequestOptions');
+
+  const gridStrings = React.useMemo(() => {
+    return t('callRequestGrid');
+  }, [t]);
+
+  const callRequestOptionLabels = React.useMemo(() => {
+    return t('callRequestOptions');
+  }, [t]);
 
 
   const getTranslatedCallRequestOptions = React.useCallback(() => {
@@ -35,12 +41,12 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
       const translationEntry = callRequestOptionLabels.find(trans => trans.type === optionStructure.type);
       return {
         ...optionStructure,
-        label: translationEntry ? translationEntry.label : optionStructure.type, // Hook handles language selection for label
+        label: translationEntry ? translationEntry.label : optionStructure.type,
       };
     });
   }, [callRequestOptionLabels]);
 
-  const currentCallRequestOptions = getTranslatedCallRequestOptions();
+  const currentCallRequestOptions = React.useMemo(() => getTranslatedCallRequestOptions(), [getTranslatedCallRequestOptions]);
 
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
