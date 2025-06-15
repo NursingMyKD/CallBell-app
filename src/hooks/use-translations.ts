@@ -17,7 +17,9 @@ type ProxyTranslated<O, L extends LanguageCode> = O extends object
   ? {
       // For properties that are translation objects (e.g., { en: string, es: string })
       [P in keyof O]: O[P] extends Record<L, any>
-        ? Translated<O[P], L>
+        ? O[P][L] extends Array<any> // Check if the language-specific value is an array
+          ? O[P][L] // If so, return it directly (e.g., for phrases)
+          : Translated<O[P], L> // Otherwise, apply standard translation
         // For arrays, recursively apply ProxyTranslated to each element
         : O[P] extends Array<infer A>
         ? Array<ProxyTranslated<A, L>>
@@ -40,15 +42,13 @@ export function useTranslations(lang: LanguageCode) {
       }
 
       // If the target itself is a translation object (e.g., { en: "Hello", es: "Hola" })
-      if (lang in target && Object.keys(target).every(key => ['en', 'es', 'fr'].includes(key) && typeof target[key] === 'string')) {
-         // Check if all keys are language codes and values are strings
-         const langKeys = Object.keys(target);
-         const isTranslationObject = langKeys.length > 0 && langKeys.every(k => ['en', 'es', 'fr'].includes(k));
-         if(isTranslationObject && typeof target[lang] === 'string') {
-            return target[lang];
-         }
+      // This case is for when the 'target' itself is {en: string, es: string, ...}
+      const langKeysForTarget = Object.keys(target);
+      const isTargetSimpleTranslation = langKeysForTarget.length > 0 &&
+                                     langKeysForTarget.every(k => ['en', 'es', 'fr'].includes(k) && typeof target[k] === 'string');
+      if (lang in target && isTargetSimpleTranslation) {
+        return target[lang];
       }
-
 
       if (Array.isArray(target)) {
         return target.map(item => createProxy(item));
@@ -57,16 +57,36 @@ export function useTranslations(lang: LanguageCode) {
       const handler = {
         get: (_target: any, prop: string | symbol) => {
           const value = _target[prop as string];
+
           if (value && typeof value === 'object') {
-            // Check if 'value' is a translation object like { en: "...", es: "..." }
-            if (lang in value && typeof value[lang] === 'string' ) {
-               const valueKeys = Object.keys(value);
-               const isSimpleTranslationObject = valueKeys.length > 0 && valueKeys.every(k => ['en','es','fr'].includes(k) && typeof value[k] === 'string');
-               if(isSimpleTranslationObject) return value[lang];
+            // Check if 'value' is an object where keys are language codes
+            // and 'value[lang]' is the actual translated content (string or array).
+            if (lang in value) {
+              const langSpecificValue = value[lang];
+              const valueKeys = Object.keys(value);
+
+              // Case 1: value[lang] is a string (e.g., title: { en: "Title", es: "Título" })
+              if (typeof langSpecificValue === 'string') {
+                const isSimpleTranslationObject = valueKeys.length > 0 && 
+                                                 valueKeys.every(k => ['en','es','fr'].includes(k) && typeof value[k] === 'string');
+                if (isSimpleTranslationObject) {
+                  return langSpecificValue;
+                }
+              } 
+              // Case 2: value[lang] is an array (e.g., phrases: { en: ["Hi"], es: ["Hola"] })
+              else if (Array.isArray(langSpecificValue)) {
+                const isLanguageArrayObject = valueKeys.length > 0 && 
+                                              valueKeys.every(k => ['en','es','fr'].includes(k) && Array.isArray(value[k]));
+                if (isLanguageArrayObject) {
+                  return langSpecificValue; // Return the array of phrases for the current language
+                }
+              }
             }
-            return createProxy(value); // Recursively create proxy for nested objects/arrays
+            // If not directly translatable by 'lang' key or not fitting the above structures,
+            // recurse with a proxy. This handles nested objects that are not themselves lang-keyed.
+            return createProxy(value);
           }
-          return value; // Primitive value
+          return value; // Primitive value or already processed by outer array.map(createProxy)
         }
       };
       return new Proxy(target, handler);
@@ -74,3 +94,4 @@ export function useTranslations(lang: LanguageCode) {
     return createProxy(appTranslations[scope]);
   };
 }
+
