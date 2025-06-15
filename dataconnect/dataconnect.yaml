@@ -1,5 +1,5 @@
 specVersion: "v1"
-serviceId: "iControlBell"
+serviceId: "icontrolbell"
 location: "us-east1"
 schema:
   source: "./schema"
