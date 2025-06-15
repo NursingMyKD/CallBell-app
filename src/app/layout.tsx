@@ -17,7 +17,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      {/*
+        Hydration warning suppression moved to body as browser extensions
+        like Grammarly often inject attributes there.
+      */}
+      <body
+        className={inter.className}
+        suppressHydrationWarning={true}
+      >
         {children}
         <Toaster />
       </body>
