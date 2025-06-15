@@ -8,7 +8,8 @@ import { handleCallBellTrigger } from '@/app/actions';
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { callRequestOptionsStructure, type CallRequestType, type CallRequestOption as CallRequestOptionStructure } from '@/types/call-requests';
-import { appTranslations, type LanguageCode } from '@/lib/translations';
+import type { LanguageCode } from '@/lib/translations';
+import { useTranslations } from '@/hooks/use-translations';
 
 type Status = 'idle' | 'pending' | 'success' | 'error';
 
@@ -24,16 +25,20 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
   const [isSoundReady, setIsSoundReady] = React.useState(false);
 
-  // Dynamically get translated labels for call request options
-  const getTranslatedCallRequestOptions = () => {
+  const t = useTranslations(selectedLanguage);
+  const gridStrings = t('callRequestGrid');
+  const callRequestOptionLabels = t('callRequestOptions');
+
+
+  const getTranslatedCallRequestOptions = React.useCallback(() => {
     return callRequestOptionsStructure.map(optionStructure => {
-      const translationEntry = appTranslations.callRequestOptions.find(t => t.type === optionStructure.type);
+      const translationEntry = callRequestOptionLabels.find(trans => trans.type === optionStructure.type);
       return {
         ...optionStructure,
-        label: translationEntry ? translationEntry.label[selectedLanguage] : optionStructure.type, // Fallback to type if no translation
+        label: translationEntry ? translationEntry.label : optionStructure.type, // Hook handles language selection for label
       };
     });
-  };
+  }, [callRequestOptionLabels]);
 
   const currentCallRequestOptions = getTranslatedCallRequestOptions();
 
@@ -48,7 +53,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
       };
       
       const handleError = (event: Event) => {
-        let userFriendlyMessageKey: keyof typeof appTranslations.callRequestGrid = 'audioErrorDefault';
+        let userFriendlyMessageKey: keyof typeof gridStrings = 'audioErrorDefault';
         let consoleLogMessage = "Error loading success sound. Ensure '/sounds/success.mp3' exists in public/sounds and is a supported format.";
         let errorPayload: object | string = { eventType: event.type };
         const audioEl = audioRef.current;
@@ -85,8 +90,8 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
         console.error(consoleLogMessage, "Internal Details:", errorPayload, "Original Event:", event);
         setIsSoundReady(false);
         toast({ 
-          title: appTranslations.callRequestGrid.audioErrorToastTitle[selectedLanguage], 
-          description: appTranslations.callRequestGrid[userFriendlyMessageKey][selectedLanguage] || appTranslations.callRequestGrid.audioErrorDefault[selectedLanguage], 
+          title: gridStrings.audioErrorToastTitle, 
+          description: gridStrings[userFriendlyMessageKey] || gridStrings.audioErrorDefault, 
           variant: "destructive", 
           duration: 5000 
         });
@@ -106,7 +111,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
       };
     }
-  }, [toast, selectedLanguage]);
+  }, [toast, gridStrings, selectedLanguage]);
 
   const playSuccessSound = React.useCallback(() => {
     if (audioRef.current && isSoundReady) {
@@ -114,8 +119,8 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
       audioRef.current.play().catch(error => {
         console.error("Error playing success sound:", error);
         toast({ 
-            title: appTranslations.callRequestGrid.audioErrorToastTitle[selectedLanguage], 
-            description: "Could not play sound. Browser interaction might be required.", // This specific message could also be translated
+            title: gridStrings.audioErrorToastTitle, 
+            description: "Could not play sound. Browser interaction might be required.",
             variant: "destructive", 
             duration: 3000 
         });
@@ -123,7 +128,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
     } else {
       console.warn("Attempted to play sound, but it was not ready or audioRef is null.");
     }
-  }, [isSoundReady, toast, selectedLanguage]);
+  }, [isSoundReady, toast, gridStrings]);
 
   const resetToIdle = () => {
     setStatus('idle');
@@ -131,9 +136,9 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
   };
 
   const getTranslatedLabelForType = React.useCallback((requestType: CallRequestType): string => {
-    const option = appTranslations.callRequestOptions.find(opt => opt.type === requestType);
-    return option ? option.label[selectedLanguage] : requestType;
-  }, [selectedLanguage]);
+    const option = callRequestOptionLabels.find(opt => opt.type === requestType);
+    return option ? option.label : requestType;
+  }, [callRequestOptionLabels]);
 
   const handleSpecificRequest = React.useCallback(async (requestType: CallRequestType) => {
     if (status === 'pending') return;
@@ -145,21 +150,21 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
     const translatedRequestLabel = getTranslatedLabelForType(requestType);
 
     try {
-      const result = await handleCallBellTrigger(requestType); // Pass requestType to action
+      const result = await handleCallBellTrigger(requestType);
       if (result.success) {
         setStatus('success');
         playSuccessSound();
         toast({
-          title: appTranslations.callRequestGrid.toastSuccessTitle[selectedLanguage],
-          description: `${translatedRequestLabel} ${appTranslations.callRequestGrid.toastSuccessRequestSent[selectedLanguage]}`,
+          title: gridStrings.toastSuccessTitle,
+          description: `${translatedRequestLabel} ${gridStrings.toastSuccessRequestSent}`,
           variant: "default", 
           duration: 5000,
         });
       } else {
         setStatus('error');
         toast({
-          title: appTranslations.callRequestGrid.toastErrorTitle[selectedLanguage],
-          description: `${appTranslations.callRequestGrid.toastFailedToSend[selectedLanguage]} ${translatedRequestLabel} request: ${result.error}`,
+          title: gridStrings.toastErrorTitle,
+          description: `${gridStrings.toastFailedToSend} ${translatedRequestLabel} request: ${result.error}`,
           variant: "destructive",
           duration: 5000,
         });
@@ -169,17 +174,14 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
       setStatus('error');
       const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
       toast({
-        title: appTranslations.callRequestGrid.toastSystemErrorTitle[selectedLanguage],
-        description: `${appTranslations.callRequestGrid.toastCouldNotProcess[selectedLanguage]} ${translatedRequestLabel} request: ${errorMessage}`,
+        title: gridStrings.toastSystemErrorTitle,
+        description: `${gridStrings.toastCouldNotProcess} ${translatedRequestLabel} request: ${errorMessage}`,
         variant: "destructive",
         duration: 5000,
       });
     }
     timeoutRef.current = setTimeout(resetToIdle, 5000);
-  }, [status, toast, playSuccessSound, selectedLanguage, getTranslatedLabelForType]);
-
-  const firstRowOptions = currentCallRequestOptions.slice(0, 2);
-  const secondRowOptions = currentCallRequestOptions.slice(2, 5);
+  }, [status, toast, playSuccessSound, gridStrings, getTranslatedLabelForType]);
 
   const renderButton = (option: { type: CallRequestType; icon: CallRequestOptionStructure['icon']; label: string }) => (
     <Button
@@ -196,7 +198,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
         : 'default' 
       }
       disabled={status === 'pending'}
-      aria-label={`${appTranslations.callRequestGrid.statusCallingFor[selectedLanguage]} ${option.label}`}
+      aria-label={`${gridStrings.statusCallingFor} ${option.label}`}
     >
       <option.icon className="h-12 w-12 md:h-16 md:w-16 mb-2 md:mb-3" />
       {option.label}
@@ -209,18 +211,12 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
         {status === 'pending' && activeRequestType && (
           <div className="flex items-center text-md md:text-lg p-1.5 md:p-2 rounded-md bg-primary/10 text-primary animate-pulse">
             <Loader2 className="mr-2 h-5 w-5 md:mr-2.5 md:h-6 md:w-6 animate-spin" />
-            {appTranslations.callRequestGrid.statusCallingFor[selectedLanguage]} {getTranslatedLabelForType(activeRequestType)}...
+            {gridStrings.statusCallingFor} {getTranslatedLabelForType(activeRequestType)}...
           </div>
         )}
       </div>
-
-      <div className="w-full space-y-3 md:space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-          {firstRowOptions.map(renderButton)}
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
-          {secondRowOptions.map(renderButton)}
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 w-full">
+        {currentCallRequestOptions.map(renderButton)}
       </div>
     </div>
   );
