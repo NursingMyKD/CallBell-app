@@ -29,40 +29,75 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
   const currentPhrases = soundboardStrings.phrases;
   const currentBcp47Lang = bcp47LangMap[selectedLanguage];
 
+  // Ref to track if an attempt to load voices (with a timeout fallback) has been made for the current language
+  const voiceLoadAttempted = React.useRef(false);
+
+  React.useEffect(() => {
+    voiceLoadAttempted.current = false; // Reset attempt flag when language changes
+  }, [selectedLanguage]);
+
   React.useEffect(() => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       setSpeechSynthesisSupported(true);
+      let voiceLoadTimeoutId: NodeJS.Timeout | null = null;
 
-      const loadVoices = () => {
+      const loadAndSetVoices = () => {
         const allSystemVoices = window.speechSynthesis.getVoices();
-        
-        let voicesForCurrentLang = allSystemVoices.filter(voice => voice.lang.startsWith(currentBcp47Lang.split('-')[0]));
-        
-        voicesForCurrentLang = Array.from(new Map(voicesForCurrentLang.map(voice => [voice.voiceURI, voice])).values());
-        
-        setAvailableVoices(voicesForCurrentLang);
 
-        const currentSelectedVoice = voicesForCurrentLang.find(v => v.voiceURI === selectedVoiceURI);
-        if (!currentSelectedVoice && voicesForCurrentLang.length > 0) {
-          const defaultVoiceForLang = voicesForCurrentLang.find(v => v.default && v.lang === currentBcp47Lang);
-          setSelectedVoiceURI(defaultVoiceForLang?.voiceURI || voicesForCurrentLang[0].voiceURI);
-        } else if (voicesForCurrentLang.length === 0 && selectedVoiceURI !== undefined) {
-          setSelectedVoiceURI(undefined);
+        if (allSystemVoices.length === 0 && !voiceLoadAttempted.current && typeof window.speechSynthesis.onvoiceschanged === 'undefined') {
+            // If getVoices() is empty and onvoiceschanged is not supported (e.g. some Firefox versions),
+            // try loading once after a delay.
+            voiceLoadAttempted.current = true;
+            voiceLoadTimeoutId = setTimeout(loadAndSetVoices, 300); // Increased delay slightly
+            return;
+        }
+        // If voices are still empty but an attempt was made, or if onvoiceschanged is supported, proceed.
+        // voiceLoadAttempted.current will be true if timeout path was taken.
+        // If onvoiceschanged fires, allSystemVoices should be populated.
+
+        let filteredVoices = allSystemVoices.filter(voice => voice.lang.startsWith(currentBcp47Lang.split('-')[0]));
+        filteredVoices = Array.from(new Map(filteredVoices.map(voice => [voice.voiceURI, voice])).values());
+        // Sort voices by name to ensure a stable order, making filteredVoices[0] consistent if used as a fallback.
+        filteredVoices.sort((a, b) => a.name.localeCompare(b.name));
+        
+        setAvailableVoices(filteredVoices);
+
+        const currentVoiceIsValid = filteredVoices.some(v => v.voiceURI === selectedVoiceURI);
+        let newPotentialVoiceURI = selectedVoiceURI;
+        let needsUpdate = false;
+
+        if (!currentVoiceIsValid && filteredVoices.length > 0) {
+            const defaultVoiceForLang = filteredVoices.find(v => v.default && v.lang === currentBcp47Lang);
+            newPotentialVoiceURI = defaultVoiceForLang?.voiceURI || filteredVoices[0].voiceURI;
+            if (selectedVoiceURI !== newPotentialVoiceURI) {
+                needsUpdate = true;
+            }
+        } else if (filteredVoices.length === 0 && selectedVoiceURI !== undefined) {
+            newPotentialVoiceURI = undefined;
+            if (selectedVoiceURI !== newPotentialVoiceURI) {
+                needsUpdate = true;
+            }
+        }
+
+        if (needsUpdate) {
+            setSelectedVoiceURI(newPotentialVoiceURI);
         }
       };
 
-      loadVoices(); 
+      loadAndSetVoices(); // Initial call
+
       if (window.speechSynthesis.onvoiceschanged !== undefined) {
-        window.speechSynthesis.onvoiceschanged = loadVoices;
-      } else {
-        setTimeout(loadVoices, 100);
+        window.speechSynthesis.onvoiceschanged = loadAndSetVoices;
       }
       
       return () => {
+        if (voiceLoadTimeoutId) {
+            clearTimeout(voiceLoadTimeoutId);
+        }
         if (window.speechSynthesis) {
-            window.speechSynthesis.onvoiceschanged = null;
+            window.speechSynthesis.onvoiceschanged = null; // Clean up event listener
             if (window.speechSynthesis.speaking) {
-            window.speechSynthesis.cancel();
+                window.speechSynthesis.cancel();
             }
         }
         setIsSpeaking(false);
@@ -224,3 +259,4 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
     </div>
   );
 }
+
