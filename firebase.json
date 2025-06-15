@@ -25,8 +25,8 @@
         "*.local"
       ],
       "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run lint",
-        "npm --prefix \"$RESOURCE_DIR\" run build"
+        "npm --prefix "$RESOURCE_DIR" run lint",
+        "npm --prefix "$RESOURCE_DIR" run build""
       ]
     }
   ],
@@ -39,6 +39,21 @@
       "firebase-debug.log",
       "firebase-debug.*.log",
       "functions"
+    ]
+  },
+  "hosting": {
+    "source": "studio",
+    "frameworksBackend": {
+      "region": "us-central1"
+    },
+    "public": "studio/public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      { "source": "**", "destination": "/index.html" }
     ]
   }
 }

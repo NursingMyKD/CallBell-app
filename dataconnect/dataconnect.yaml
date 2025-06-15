@@ -7,6 +7,6 @@ schema:
     postgresql:
       database: "iControlBellDatabase"
       cloudSql:
-        instanceId: "iControlBell-FDC"
+        instanceId: "icontrolbell-fdc"
       # schemaValidation: "COMPATIBLE"
 connectorDirs: ["./connector"]

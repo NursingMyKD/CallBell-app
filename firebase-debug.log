@@ -1,0 +1,580 @@
+[debug] [2025-06-15T01:46:41.998Z] ----------------------------------------------------------------------
+[debug] [2025-06-15T01:46:42.001Z] Command:       /nix/store/rbdrkcs5kkwpalxcd7c6bnm33lk2955n-nodejs-20.19.0/bin/node /home/user/.global_modules/bin/firebase deploy
+[debug] [2025-06-15T01:46:42.002Z] CLI Version:   14.7.0
+[debug] [2025-06-15T01:46:42.002Z] Platform:      linux
+[debug] [2025-06-15T01:46:42.002Z] Node Version:  v20.19.0
+[debug] [2025-06-15T01:46:42.002Z] Time:          Sun Jun 15 2025 01:46:42 GMT+0000 (Coordinated Universal Time)
+[debug] [2025-06-15T01:46:42.003Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-06-15T01:46:42.784Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:46:42.785Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:46:42.785Z] [iam] checking project icontrolbell for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","cloudsql.databases.create","cloudsql.databases.update","cloudsql.instances.connect","cloudsql.instances.create","cloudsql.instances.get","cloudsql.instances.list","cloudsql.instances.update","cloudsql.users.create","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasedataconnect.connectors.create","firebasedataconnect.connectors.delete","firebasedataconnect.connectors.list","firebasedataconnect.connectors.update","firebasedataconnect.operations.get","firebasedataconnect.schemas.create","firebasedataconnect.schemas.delete","firebasedataconnect.schemas.list","firebasedataconnect.schemas.update","firebasedataconnect.services.create","firebasedataconnect.services.delete","firebasedataconnect.services.list","firebasedataconnect.services.update",null]
+[debug] [2025-06-15T01:46:42.788Z] No OAuth tokens found
+[debug] [2025-06-15T01:46:42.788Z] No OAuth tokens found
+[debug] [2025-06-15T01:46:42.789Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:46:42.789Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:46:42.796Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell:testIamPermissions [none]
+[debug] [2025-06-15T01:46:42.796Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell:testIamPermissions x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:46:42.797Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","cloudsql.databases.create","cloudsql.databases.update","cloudsql.instances.connect","cloudsql.instances.create","cloudsql.instances.get","cloudsql.instances.list","cloudsql.instances.update","cloudsql.users.create","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasedataconnect.connectors.create","firebasedataconnect.connectors.delete","firebasedataconnect.connectors.list","firebasedataconnect.connectors.update","firebasedataconnect.operations.get","firebasedataconnect.schemas.create","firebasedataconnect.schemas.delete","firebasedataconnect.schemas.list","firebasedataconnect.schemas.update","firebasedataconnect.services.create","firebasedataconnect.services.delete","firebasedataconnect.services.list","firebasedataconnect.services.update",null]}
+[debug] [2025-06-15T01:46:42.954Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell:testIamPermissions 200
+[debug] [2025-06-15T01:46:42.954Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","cloudsql.databases.create","cloudsql.databases.update","cloudsql.instances.connect","cloudsql.instances.create","cloudsql.instances.get","cloudsql.instances.list","cloudsql.instances.update","cloudsql.users.create","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasedataconnect.connectors.create","firebasedataconnect.connectors.delete","firebasedataconnect.connectors.list","firebasedataconnect.connectors.update","firebasedataconnect.operations.get","firebasedataconnect.schemas.create","firebasedataconnect.schemas.delete","firebasedataconnect.schemas.list","firebasedataconnect.schemas.update","firebasedataconnect.services.create","firebasedataconnect.services.delete","firebasedataconnect.services.list","firebasedataconnect.services.update"]}
+[debug] [2025-06-15T01:46:42.955Z] [iam] error while checking permissions, command may fail: Authorization failed. This account is missing the following required permissions on project icontrolbell:
+
+  
+[debug] [2025-06-15T01:46:42.956Z] No OAuth tokens found
+[debug] [2025-06-15T01:46:42.956Z] No OAuth tokens found
+[debug] [2025-06-15T01:46:42.957Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:46:42.957Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:46:42.957Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/icontrolbell/serviceAccounts/icontrolbell@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-06-15T01:46:42.957Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/icontrolbell/serviceAccounts/icontrolbell@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-06-15T01:46:43.079Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/icontrolbell/serviceAccounts/icontrolbell@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2025-06-15T01:46:43.079Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/icontrolbell/serviceAccounts/icontrolbell@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'icontrolbell'...
+[info] 
+[info] i  deploying firestore, functions, dataconnect, apphosting 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] ✔  functions: Finished running predeploy script. 
+[info] i  firestore: reading indexes from (firestore.indexes.json)... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2025-06-15T01:47:12.963Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:12.963Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:12.963Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:12.964Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:12.964Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/icontrolbell:test [none]
+[debug] [2025-06-15T01:47:12.964Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/icontrolbell:test [omitted]
+[debug] [2025-06-15T01:47:13.089Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/icontrolbell:test 200
+[debug] [2025-06-15T01:47:13.089Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/icontrolbell:test {}
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2025-06-15T01:47:13.094Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:13.094Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:13.094Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:13.094Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:13.095Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudresourcemanager.googleapis.com [none]
+[debug] [2025-06-15T01:47:13.095Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudresourcemanager.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:13.644Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudresourcemanager.googleapis.com 200
+[debug] [2025-06-15T01:47:13.644Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudresourcemanager.googleapis.com [omitted]
+[debug] [2025-06-15T01:47:13.645Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:13.645Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:13.645Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:13.645Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:13.646Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell [none]
+[debug] [2025-06-15T01:47:13.753Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell 200
+[debug] [2025-06-15T01:47:13.753Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell {"projectNumber":"850499660933","projectId":"icontrolbell","lifecycleState":"ACTIVE","name":"iControlBell","labels":{"monospace-workspace-id":"studio-22053174","firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-04-30T23:33:26.941594Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[debug] [2025-06-15T01:47:13.755Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:13.755Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:13.756Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:13.756Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:13.756Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:13.756Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:13.756Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:13.757Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[debug] [2025-06-15T01:47:13.758Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:13.758Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:13.758Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:13.758Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2025-06-15T01:47:13.758Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:13.759Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:13.759Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:13.759Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:13.759Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-06-15T01:47:13.759Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:13.760Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/runtimeconfig.googleapis.com [none]
+[debug] [2025-06-15T01:47:13.761Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:13.764Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudbuild.googleapis.com [none]
+[debug] [2025-06-15T01:47:13.764Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudbuild.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:13.766Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/artifactregistry.googleapis.com [none]
+[debug] [2025-06-15T01:47:13.766Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/artifactregistry.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:13.990Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudfunctions.googleapis.com 200
+[debug] [2025-06-15T01:47:13.990Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2025-06-15T01:47:14.037Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/runtimeconfig.googleapis.com 200
+[debug] [2025-06-15T01:47:14.037Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2025-06-15T01:47:14.045Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/artifactregistry.googleapis.com 200
+[debug] [2025-06-15T01:47:14.046Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2025-06-15T01:47:14.055Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudbuild.googleapis.com 200
+[debug] [2025-06-15T01:47:14.056Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2025-06-15T01:47:14.058Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:14.059Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:14.059Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:14.059Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:14.059Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/icontrolbell/adminSdkConfig [none]
+[debug] [2025-06-15T01:47:14.245Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/icontrolbell/adminSdkConfig 200
+[debug] [2025-06-15T01:47:14.245Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/icontrolbell/adminSdkConfig {"projectId":"icontrolbell","storageBucket":"icontrolbell.firebasestorage.app"}
+[debug] [2025-06-15T01:47:14.246Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:14.246Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:14.246Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:14.246Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:14.247Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/icontrolbell/configs [none]
+[debug] [2025-06-15T01:47:14.345Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/icontrolbell/configs 200
+[debug] [2025-06-15T01:47:14.345Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/icontrolbell/configs {}
+[debug] [2025-06-15T01:47:14.351Z] Validating nodejs source
+[debug] [2025-06-15T01:47:15.340Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^3.1.0",
+    "typescript": "^5.7.3"
+  },
+  "private": true
+}
+[debug] [2025-06-15T01:47:15.341Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2025-06-15T01:47:15.344Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-06-15T01:47:15.351Z] Found firebase-functions binary at '/home/user/studio/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8519
+
+[debug] [2025-06-15T01:47:15.683Z] Got response from /__/functions.yaml {"endpoints":{},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2025-06-15T01:47:19.715Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:19.716Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:19.716Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:19.716Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:19.716Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/firebaseextensions.googleapis.com [none]
+[debug] [2025-06-15T01:47:19.716Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/firebaseextensions.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:20.127Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/firebaseextensions.googleapis.com 200
+[debug] [2025-06-15T01:47:20.128Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/firebaseextensions.googleapis.com [omitted]
+[info] ✔  extensions: required API firebaseextensions.googleapis.com is enabled 
+[debug] [2025-06-15T01:47:20.128Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:20.129Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:20.129Z] [iam] checking project icontrolbell for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[debug] [2025-06-15T01:47:20.129Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:20.130Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:20.130Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:20.130Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:20.130Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell:testIamPermissions [none]
+[debug] [2025-06-15T01:47:20.130Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell:testIamPermissions x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:20.130Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-06-15T01:47:20.247Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell:testIamPermissions 200
+[debug] [2025-06-15T01:47:20.247Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-06-15T01:47:20.248Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:20.249Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:20.249Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:20.249Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:20.250Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/icontrolbell/instances pageSize=100&pageToken=
+[debug] [2025-06-15T01:47:20.535Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/icontrolbell/instances 200
+[debug] [2025-06-15T01:47:20.535Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/icontrolbell/instances {}
+[debug] [2025-06-15T01:47:20.540Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:20.541Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:20.541Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:20.541Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:20.541Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/icontrolbell/locations/-/functions [none]
+[debug] [2025-06-15T01:47:21.120Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/icontrolbell/locations/-/functions 200
+[debug] [2025-06-15T01:47:21.120Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/icontrolbell/locations/-/functions {}
+[debug] [2025-06-15T01:47:21.121Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:21.121Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:21.121Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:21.122Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:21.122Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/icontrolbell/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2025-06-15T01:47:21.493Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/icontrolbell/locations/-/functions 200
+[debug] [2025-06-15T01:47:21.493Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/icontrolbell/locations/-/functions {}
+[debug] [2025-06-15T01:47:21.505Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:21.505Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:21.505Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:21.506Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:21.506Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/icontrolbell/billingInfo [none]
+[debug] [2025-06-15T01:47:21.666Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/icontrolbell/billingInfo 200
+[debug] [2025-06-15T01:47:21.666Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/icontrolbell/billingInfo {"name":"projects/icontrolbell/billingInfo","projectId":"icontrolbell","billingAccountName":"billingAccounts/01AB5E-01D802-7F7A1C","billingEnabled":true}
+[info] i  dataconnect: ensuring required API firebasedataconnect.googleapis.com is enabled... 
+[debug] [2025-06-15T01:47:21.667Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:21.667Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:21.667Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:21.668Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:21.668Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-06-15T01:47:21.668Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:21.880Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-06-15T01:47:21.880Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/firebasedataconnect.googleapis.com [omitted]
+[info] ✔  dataconnect: required API firebasedataconnect.googleapis.com is enabled 
+[info] i  dataconnect: ensuring required API sqladmin.googleapis.com is enabled... 
+[debug] [2025-06-15T01:47:21.882Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:21.883Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:21.883Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:21.883Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:21.883Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/sqladmin.googleapis.com [none]
+[debug] [2025-06-15T01:47:21.883Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/sqladmin.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:22.095Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/sqladmin.googleapis.com 200
+[debug] [2025-06-15T01:47:22.095Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/sqladmin.googleapis.com [omitted]
+[info] ✔  dataconnect: required API sqladmin.googleapis.com is enabled 
+[info] i  dataconnect: ensuring required API compute.googleapis.com is enabled... 
+[debug] [2025-06-15T01:47:22.096Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:22.097Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:22.097Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:22.099Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:22.099Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/compute.googleapis.com [none]
+[debug] [2025-06-15T01:47:22.099Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/compute.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:22.548Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/compute.googleapis.com 200
+[debug] [2025-06-15T01:47:22.549Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/compute.googleapis.com [omitted]
+[info] ✔  dataconnect: required API compute.googleapis.com is enabled 
+[info] i  dataconnect: Preparing to deploy 
+[debug] [2025-06-15T01:47:22.573Z] defaultcredentials: no credential available.
+[debug] [2025-06-15T01:47:22.892Z] I0615 01:47:22.835468   62700 build.go:55] No deployed sources found for service icontrolbell
+I0615 01:47:22.874674   62700 control.go:84] [/emulator/icontrolbell 2c97] UpdateResources(): done
+Schema: sources: schema/schema.gql [2088B] 
+Connector "default": sources: connector/queries.gql [1802B] connector/mutations.gql [1233B] 
+ {"metadata":{"emulator":{"name":"dataconnect"},"message":"I0615 01:47:22.835468   62700 build.go:55] No deployed sources found for service icontrolbell\nI0615 01:47:22.874674   62700 control.go:84] [/emulator/icontrolbell 2c97] UpdateResources(): done\nSchema: sources: schema/schema.gql [2088B] \nConnector \"default\": sources: connector/queries.gql [1802B] connector/mutations.gql [1233B] \n"}}
+[info] i  dataconnect: Successfully prepared schema and connectors 
+[debug] [2025-06-15T01:47:22.893Z] {
+  "serviceInfos": [
+    {
+      "serviceName": "projects/icontrolbell/locations/us-east1/services/icontrolbell",
+      "sourceDirectory": "/home/user/studio/dataconnect",
+      "schema": {
+        "name": "projects/icontrolbell/locations/us-east1/services/icontrolbell/schemas/main",
+        "datasources": [
+          {
+            "postgresql": {
+              "database": "iControlBellDatabase",
+              "cloudSql": {
+                "instance": "projects/icontrolbell/locations/us-east1/instances/icontrolbell-fdc"
+              }
+            }
+          }
+        ],
+        "source": {
+          "files": [
+            {
+              "path": "schema.gql",
+              "content": "# # Example schema for simple movie review app\n\n# # User table is keyed by Firebase Auth UID.\n# type User @table {\n#   # `@default(expr: \"auth.uid\")` sets it to Firebase Auth UID during insert and upsert.\n#   id: String! @default(expr: \"auth.uid\")\n#   username: String! @col(dataType: \"varchar(50)\")\n#   # The `user: User!` field in the Review table generates the following one-to-many query field.\n#   #  reviews_on_user: [Review!]!\n#   # The `Review` join table the following many-to-many query field.\n#   #  movies_via_Review: [Movie!]!\n# }\n\n# # Movie is keyed by a randomly generated UUID.\n# type Movie @table {\n#   # If you do not pass a 'key' to `@table`, Data Connect automatically adds the following 'id' column.\n#   # Feel free to uncomment and customize it.\n#   #  id: UUID! @default(expr: \"uuidV4()\")\n#   title: String!\n#   imageUrl: String!\n#   genre: String\n# }\n\n# # MovieMetadata is a metadata attached to a Movie.\n# # Movie <-> MovieMetadata is a one-to-one relationship\n# type MovieMetadata @table {\n#   # @unique ensures each Movie can only one MovieMetadata.\n#   movie: Movie! @unique\n#   # The movie field adds the following foreign key field. Feel free to uncomment and customize it.\n#   #  movieId: UUID!\n#   rating: Float\n#   releaseYear: Int\n#   description: String\n# }\n\n# # Reviews is a join table between User and Movie.\n# # It has a composite primary keys `userUid` and `movieId`.\n# # A user can leave reviews for many movies. A movie can have reviews from many users.\n# # User  <-> Review is a one-to-many relationship\n# # Movie <-> Review is a one-to-many relationship\n# # Movie <-> User is a many-to-many relationship\n# type Review @table(name: \"Reviews\", key: [\"movie\", \"user\"]) {\n#   user: User!\n#   # The user field adds the following foreign key field. Feel free to uncomment and customize it.\n#   #  userUid: String!\n#   movie: Movie!\n#   # The movie field adds the following foreign key field. Feel free to uncomment and customize it.\n#   #  movieId: UUID!\n#   rating: Int\n#   reviewText: String\n#   reviewDate: Date! @default(expr: \"request.time\")\n# }\n"
+            }
+          ]
+        }
+      },
+      "dataConnectYaml": {
+        "specVersion": "v1",
+        "serviceId": "icontrolbell",
+        "location": "us-east1",
+        "schema": {
+          "source": "./schema",
+          "datasource": {
+            "postgresql": {
+              "database": "iControlBellDatabase",
+              "cloudSql": {
+                "instanceId": "icontrolbell-fdc"
+              }
+            }
+          }
+        },
+        "connectorDirs": [
+          "./connector"
+        ]
+      },
+      "connectorInfo": [
+        {
+          "directory": "/home/user/studio/dataconnect/connector",
+          "connectorYaml": {
+            "connectorId": "default",
+            "generate": {
+              "javascriptSdk": {
+                "outputDir": "../../dataconnect-generated/js/default-connector",
+                "package": "@firebasegen/default-connector",
+                "packageJsonDir": "../..",
+                "react": true
+              }
+            }
+          },
+          "connector": {
+            "name": "projects/icontrolbell/locations/us-east1/services/icontrolbell/connectors/default",
+            "source": {
+              "files": [
+                {
+                  "path": "mutations.gql",
+                  "content": "# # Example mutations for a simple movie app\n\n# # Create a movie based on user input\n# mutation CreateMovie($title: String!, $genre: String!, $imageUrl: String!)\n# @auth(level: USER_EMAIL_VERIFIED) {\n#   movie_insert(data: { title: $title, genre: $genre, imageUrl: $imageUrl })\n# }\n\n# # Upsert (update or insert) a user's username based on their auth.uid\n# mutation UpsertUser($username: String!) @auth(level: USER) {\n#   # The \"auth.uid\" server value ensures that users can only register their own user.\n#   user_upsert(data: { id_expr: \"auth.uid\", username: $username })\n# }\n\n# # Add a review for a movie\n# mutation AddReview($movieId: UUID!, $rating: Int!, $reviewText: String!)\n# @auth(level: USER) {\n#   review_upsert(\n#     data: {\n#       userId_expr: \"auth.uid\"\n#       movieId: $movieId\n#       rating: $rating\n#       reviewText: $reviewText\n#       # reviewDate defaults to today in the schema. No need to set it manually.\n#     }\n#   )\n# }\n\n# # Logged in user can delete their review for a movie\n# mutation DeleteReview($movieId: UUID!) @auth(level: USER) {\n#   # The \"auth.uid\" server value ensures that users can only delete their own reviews.\n#   review_delete(key: { userId_expr: \"auth.uid\", movieId: $movieId })\n# }\n"
+                },
+                {
+                  "path": "queries.gql",
+                  "content": "# # Example queries for a simple movie app.\n\n# # @auth() directives control who can call each operation.\n# # Anyone should be able to list all movies, so the auth level is set to PUBLIC\n# query ListMovies @auth(level: PUBLIC) {\n#   movies {\n#     id\n#     title\n#     imageUrl\n#     genre\n#   }\n# }\n\n# # List all users, only admins should be able to list all users, so we use NO_ACCESS\n# query ListUsers @auth(level: NO_ACCESS) {\n#   users {\n#     id\n#     username\n#   }\n# }\n\n# # Logged in users can list all their reviews and movie titles associated with the review\n# # Since the query uses the uid of the current authenticated user, we set auth level to USER\n# query ListUserReviews @auth(level: USER) {\n#   user(key: { id_expr: \"auth.uid\" }) {\n#     id\n#     username\n#     # <field>_on_<foreign_key_field> makes it easy to grab info from another table\n#     # Here, we use it to grab all the reviews written by the user.\n#     reviews: reviews_on_user {\n#       rating\n#       reviewDate\n#       reviewText\n#       movie {\n#         id\n#         title\n#       }\n#     }\n#   }\n# }\n\n# # Get movie by id\n# query GetMovieById($id: UUID!) @auth(level: PUBLIC) {\n#   movie(id: $id) {\n#     id\n#     title\n#     imageUrl\n#     genre\n#     metadata: movieMetadata_on_movie {\n#       rating\n#       releaseYear\n#       description\n#     }\n#     reviews: reviews_on_movie {\n#       reviewText\n#       reviewDate\n#       rating\n#       user {\n#         id\n#         username\n#       }\n#     }\n#   }\n# }\n\n# # Search for movies, actors, and reviews\n# query SearchMovie($titleInput: String, $genre: String) @auth(level: PUBLIC) {\n#   movies(\n#     where: {\n#       _and: [{ genre: { eq: $genre } }, { title: { contains: $titleInput } }]\n#     }\n#   ) {\n#     id\n#     title\n#     genre\n#     imageUrl\n#   }\n# }\n"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "deploymentMetadata": {
+        "primaryDataSource": {
+          "postgres": {
+            "requiredExtensions": null
+          }
+        }
+      }
+    }
+  ]
+}
+[debug] [2025-06-15T01:47:22.894Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:22.894Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:22.894Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:22.894Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:22.895Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-06-15T01:47:22.895Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:23.163Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-06-15T01:47:23.164Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-06-15T01:47:23.167Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.167Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.168Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:23.168Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:23.168Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.168Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.169Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:23.169Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:23.169Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.169Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.171Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:23.171Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:23.171Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.172Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.172Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:23.172Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:23.175Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.175Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.175Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:23.175Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:23.176Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.176Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.176Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:23.176Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:23.177Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/developerconnect.googleapis.com [none]
+[debug] [2025-06-15T01:47:23.177Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/developerconnect.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:23.178Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudbuild.googleapis.com [none]
+[debug] [2025-06-15T01:47:23.178Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudbuild.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:23.181Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/secretmanager.googleapis.com [none]
+[debug] [2025-06-15T01:47:23.181Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/secretmanager.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:23.184Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/run.googleapis.com [none]
+[debug] [2025-06-15T01:47:23.184Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/run.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:23.188Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/artifactregistry.googleapis.com [none]
+[debug] [2025-06-15T01:47:23.188Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/artifactregistry.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:23.191Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/iam.googleapis.com [none]
+[debug] [2025-06-15T01:47:23.191Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/iam.googleapis.com x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:23.418Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/developerconnect.googleapis.com 200
+[debug] [2025-06-15T01:47:23.419Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/developerconnect.googleapis.com [omitted]
+[debug] [2025-06-15T01:47:23.490Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/secretmanager.googleapis.com 200
+[debug] [2025-06-15T01:47:23.491Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/secretmanager.googleapis.com [omitted]
+[debug] [2025-06-15T01:47:23.509Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/run.googleapis.com 200
+[debug] [2025-06-15T01:47:23.511Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/run.googleapis.com [omitted]
+[debug] [2025-06-15T01:47:23.534Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/artifactregistry.googleapis.com 200
+[debug] [2025-06-15T01:47:23.537Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/artifactregistry.googleapis.com [omitted]
+[debug] [2025-06-15T01:47:23.538Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudbuild.googleapis.com 200
+[debug] [2025-06-15T01:47:23.543Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/cloudbuild.googleapis.com [omitted]
+[debug] [2025-06-15T01:47:23.577Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/iam.googleapis.com 200
+[debug] [2025-06-15T01:47:23.577Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/icontrolbell/services/iam.googleapis.com [omitted]
+[debug] [2025-06-15T01:47:23.585Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.585Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.585Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:23.585Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:23.588Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/icontrolbell/serviceAccounts/firebase-app-hosting-compute@icontrolbell.iam.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-06-15T01:47:23.588Z] >>> [apiv2][(partial)header] POST https://iam.googleapis.com/v1/projects/icontrolbell/serviceAccounts/firebase-app-hosting-compute@icontrolbell.iam.gserviceaccount.com:testIamPermissions x-goog-quota-user=projects/icontrolbell
+[debug] [2025-06-15T01:47:23.588Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/icontrolbell/serviceAccounts/firebase-app-hosting-compute@icontrolbell.iam.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-06-15T01:47:23.748Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/icontrolbell/serviceAccounts/firebase-app-hosting-compute@icontrolbell.iam.gserviceaccount.com:testIamPermissions 200
+[debug] [2025-06-15T01:47:23.748Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/icontrolbell/serviceAccounts/firebase-app-hosting-compute@icontrolbell.iam.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-06-15T01:47:23.749Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.749Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.749Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:23.753Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:23.753Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell:getIamPolicy [none]
+[debug] [2025-06-15T01:47:23.867Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell:getIamPolicy 200
+[debug] [2025-06-15T01:47:23.871Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/icontrolbell:getIamPolicy {"version":1,"etag":"BwY3kmuDHhs=","bindings":[{"role":"roles/aiplatform.serviceAgent","members":["serviceAccount:service-850499660933@gcp-sa-aiplatform.iam.gserviceaccount.com"]},{"role":"roles/artifactregistry.serviceAgent","members":["serviceAccount:service-850499660933@gcp-sa-artifactregistry.iam.gserviceaccount.com"]},{"role":"roles/cloudbuild.builds.builder","members":["serviceAccount:850499660933@cloudbuild.gserviceaccount.com"]},{"role":"roles/cloudbuild.serviceAgent","members":["serviceAccount:service-850499660933@gcp-sa-cloudbuild.iam.gserviceaccount.com"]},{"role":"roles/cloudfunctions.serviceAgent","members":["serviceAccount:service-850499660933@gcf-admin-robot.iam.gserviceaccount.com"]},{"role":"roles/compute.serviceAgent","members":["serviceAccount:service-850499660933@compute-system.iam.gserviceaccount.com"]},{"role":"roles/containerregistry.ServiceAgent","members":["serviceAccount:service-850499660933@containerregistry.iam.gserviceaccount.com"]},{"role":"roles/dataflow.serviceAgent","members":["serviceAccount:service-850499660933@dataflow-service-producer-prod.iam.gserviceaccount.com"]},{"role":"roles/developerconnect.readTokenAccessor","members":["serviceAccount:firebase-app-hosting-compute@icontrolbell.iam.gserviceaccount.com"]},{"role":"roles/developerconnect.serviceAgent","members":["serviceAccount:service-850499660933@gcp-sa-devconnect.iam.gserviceaccount.com"]},{"role":"roles/editor","members":["serviceAccount:850499660933-compute@developer.gserviceaccount.com","serviceAccount:850499660933@cloudservices.gserviceaccount.com","serviceAccount:icontrolbell@appspot.gserviceaccount.com"]},{"role":"roles/firebase.managementServiceAgent","members":["serviceAccount:service-850499660933@gcp-sa-firebase.iam.gserviceaccount.com"]},{"role":"roles/firebase.sdkAdminServiceAgent","members":["serviceAccount:firebase-adminsdk-fbsvc@icontrolbell.iam.gserviceaccount.com","serviceAccount:firebase-app-hosting-compute@icontrolbell.iam.gserviceaccount.com"]},{"role":"roles/firebaseappcheck.admin","members":["serviceAccount:firebase-adminsdk-fbsvc@icontrolbell.iam.gserviceaccount.com"]},{"role":"roles/firebaseapphosting.computeRunner","members":["serviceAccount:firebase-app-hosting-compute@icontrolbell.iam.gserviceaccount.com"]},{"role":"roles/firebaseapphosting.serviceAgent","members":["serviceAccount:service-850499660933@gcp-sa-firebaseapphosting.iam.gserviceaccount.com"]},{"role":"roles/firebasedataconnect.serviceAgent","members":["serviceAccount:service-850499660933@gcp-sa-firebasedataconnect.iam.gserviceaccount.com"]},{"role":"roles/firebaseml.serviceAgent","members":["serviceAccount:service-850499660933@gcp-sa-firebasevertexai.iam.gserviceaccount.com"]},{"role":"roles/firebasemods.serviceAgent","members":["serviceAccount:service-850499660933@gcp-sa-firebasemods.iam.gserviceaccount.com"]},{"role":"roles/firebaserules.system","members":["serviceAccount:service-850499660933@firebase-rules.iam.gserviceaccount.com"]},{"role":"roles/firestore.serviceAgent","members":["serviceAccount:service-850499660933@gcp-sa-firestore.iam.gserviceaccount.com"]},{"role":"roles/iam.serviceAccountTokenCreator","members":["serviceAccount:firebase-adminsdk-fbsvc@icontrolbell.iam.gserviceaccount.com"]},{"role":"roles/notebooks.serviceAgent","members":["serviceAccount:service-850499660933@gcp-sa-notebooks.iam.gserviceaccount.com"]},{"role":"roles/owner","members":["user:medicstone4@gmail.com"]},{"role":"roles/run.serviceAgent","members":["serviceAccount:service-850499660933@serverless-robot-prod.iam.gserviceaccount.com"]},{"role":"roles/secretmanager.admin_withcond_30c8a945329aeafb68bb","members":["serviceAccount:service-850499660933@gcp-sa-devconnect.iam.gserviceaccount.com"]},{"role":"roles/storage.objectViewer","members":["serviceAccount:firebase-app-hosting-compute@icontrolbell.iam.gserviceaccount.com"]}]}
+[debug] [2025-06-15T01:47:23.872Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.872Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:23.872Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:23.875Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:23.877Z] >>> [apiv2][query] GET https://firebaseapphosting.googleapis.com/v1beta/projects/icontrolbell/locations/-/backends 
+[debug] [2025-06-15T01:47:24.381Z] <<< [apiv2][status] GET https://firebaseapphosting.googleapis.com/v1beta/projects/icontrolbell/locations/-/backends 200
+[debug] [2025-06-15T01:47:24.385Z] <<< [apiv2][body] GET https://firebaseapphosting.googleapis.com/v1beta/projects/icontrolbell/locations/-/backends {"backends":[{"name":"projects/icontrolbell/locations/us-central1/backends/icontrolbell","createTime":"2025-06-15T01:03:23.624401436Z","updateTime":"2025-06-15T01:07:59.971044Z","uri":"icontrolbell--icontrolbell.us-central1.hosted.app","codebase":{"repository":"projects/icontrolbell/locations/us-central1/connections/apphosting-github-conn-sstq947/gitRepositoryLinks/NursingMyKD-CallBell-app","rootDirectory":"/home/user/studio/package.json"},"uid":"86806fa4-ce1e-4378-81e4-682dcf9311fb","etag":"r8FpdXrrXL2fGy0Aw1C7O4bUqSAMXtpPZvvEiusUEY8","reconciling":false,"servingLocality":"GLOBAL_ACCESS","serviceAccount":"firebase-app-hosting-compute@icontrolbell.iam.gserviceaccount.com","appId":"1:850499660933:web:c0fc42bafd67828af10dec"},{"name":"projects/icontrolbell/locations/us-central1/backends/my-web-app","createTime":"2025-06-15T01:37:10.385510118Z","updateTime":"2025-06-15T01:37:10.620006Z","labels":{"deployment-tool":"cli-firebase--project-idx"},"uri":"my-web-app--icontrolbell.us-central1.hosted.app","uid":"ea430c45-9d7d-4d05-86ae-5d4a9f3770dd","etag":"R5zmk53kBaYMp_yGn-XSAsBQJsL3Z5UqJ_nBDnfpJiA","reconciling":false,"servingLocality":"GLOBAL_ACCESS","serviceAccount":"firebase-app-hosting-compute@icontrolbell.iam.gserviceaccount.com","appId":"1:850499660933:web:a0bd683b6e603542f10dec"},{"name":"projects/icontrolbell/locations/us-central1/backends/studio","createTime":"2025-04-30T23:35:17.472313286Z","updateTime":"2025-06-08T02:26:44.806380Z","uri":"studio--icontrolbell.us-central1.hosted.app","managedResources":[{"runService":{"service":"projects/850499660933/locations/us-central1/services/studio"}}],"displayName":"Studio","uid":"8d171165-9f8e-4d74-be98-38407bc86c07","etag":"cTcxdbGW0OAvZugUzqPZdqDZ4zO6hM8_U-NS4JiE7OI","reconciling":false,"servingLocality":"GLOBAL_ACCESS","serviceAccount":"firebase-app-hosting-compute@icontrolbell.iam.gserviceaccount.com","appId":"1:850499660933:web:c0fc42bafd67828af10dec"}]}
+[info] i  apphosting: Found backend(s) my-web-app 
+[debug] [2025-06-15T01:47:24.390Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:24.390Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:24.390Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:24.391Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:24.391Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/icontrolbell/databases/(default) [none]
+[debug] [2025-06-15T01:47:24.521Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/icontrolbell/databases/(default) 200
+[debug] [2025-06-15T01:47:24.521Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/icontrolbell/databases/(default) {"name":"projects/icontrolbell/databases/(default)","uid":"5b22dae3-826e-4f38-93c5-26739c2583ce","createTime":"2025-06-15T01:44:25.032250Z","updateTime":"2025-06-15T01:44:25.032250Z","locationId":"us-east1","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2025-06-15T01:44:25.032250Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"p","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"etag":"INu78q+n8o0DMNWi89qm8o0D"}
+[debug] [2025-06-15T01:47:24.526Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:24.526Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:24.526Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:24.526Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:24.527Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/icontrolbell/releases pageSize=10&pageToken=
+[debug] [2025-06-15T01:47:24.633Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/icontrolbell/releases 200
+[debug] [2025-06-15T01:47:24.634Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/icontrolbell/releases {}
+[info] i  firestore: uploading rules firestore.rules... 
+[debug] [2025-06-15T01:47:24.635Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:24.635Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:24.635Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:24.635Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:24.636Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/icontrolbell/rulesets [none]
+[debug] [2025-06-15T01:47:24.636Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/icontrolbell/rulesets [omitted]
+[debug] [2025-06-15T01:47:24.927Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/icontrolbell/rulesets 200
+[debug] [2025-06-15T01:47:24.927Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/icontrolbell/rulesets {"name":"projects/icontrolbell/rulesets/eea0219f-5d3e-4c35-808a-1be96390f910","source":{"files":[{"content":"rules_version='2'\n\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /{document=**} {\n      // This rule allows anyone with your database reference to view, edit,\n      // and delete all data in your database. It is useful for getting\n      // started, but it is configured to expire after 30 days because it\n      // leaves your app open to attackers. At that time, all client\n      // requests to your database will be denied.\n      //\n      // Make sure to write security rules for your app before that time, or\n      // else all client requests to your database will be denied until you\n      // update your rules.\n      allow read, write: if request.time < timestamp.date(2025, 7, 15);\n    }\n  }\n}\n","name":"firestore.rules"}]},"createTime":"2025-06-15T01:47:24.891343Z","metadata":{"services":["cloud.firestore"]}}
+[debug] [2025-06-15T01:47:24.928Z] [rules] created ruleset projects/icontrolbell/rulesets/eea0219f-5d3e-4c35-808a-1be96390f910
+[info] i  firestore: deploying indexes... 
+[debug] [2025-06-15T01:47:24.930Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:24.930Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:24.930Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:24.931Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:24.931Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/icontrolbell/databases/(default)/collectionGroups/-/indexes [none]
+[debug] [2025-06-15T01:47:25.042Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/icontrolbell/databases/(default)/collectionGroups/-/indexes 200
+[debug] [2025-06-15T01:47:25.043Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/icontrolbell/databases/(default)/collectionGroups/-/indexes {}
+[debug] [2025-06-15T01:47:25.044Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:25.045Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:25.045Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:25.045Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:25.045Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/icontrolbell/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false OR ttlConfig:* [none]
+[debug] [2025-06-15T01:47:25.099Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/icontrolbell/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false OR ttlConfig:* 200
+[debug] [2025-06-15T01:47:25.103Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/icontrolbell/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false OR ttlConfig:* {"fields":[{"name":"projects/icontrolbell/databases/(default)/collectionGroups/__default__/fields/*","indexConfig":{"indexes":[{"queryScope":"COLLECTION","fields":[{"fieldPath":"*","order":"ASCENDING"}],"state":"READY"},{"queryScope":"COLLECTION","fields":[{"fieldPath":"*","order":"DESCENDING"}],"state":"READY"},{"queryScope":"COLLECTION","fields":[{"fieldPath":"*","arrayConfig":"CONTAINS"}],"state":"READY"}]}}]}
+[info] ✔  firestore: deployed indexes in (firestore.indexes.json) successfully for (default) database 
+[debug] [2025-06-15T01:47:25.106Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:25.109Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:25.109Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:25.109Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:25.109Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/icontrolbell/billingInfo [none]
+[debug] [2025-06-15T01:47:25.184Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/icontrolbell/billingInfo 200
+[debug] [2025-06-15T01:47:25.184Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/icontrolbell/billingInfo {"name":"projects/icontrolbell/billingInfo","projectId":"icontrolbell","billingAccountName":"billingAccounts/01AB5E-01D802-7F7A1C","billingEnabled":true}
+[debug] [2025-06-15T01:47:25.189Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:25.189Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:25.190Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:25.190Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:25.190Z] >>> [apiv2][query] GET https://firebasedataconnect.googleapis.com/v1/projects/icontrolbell/locations/-/services [none]
+[debug] [2025-06-15T01:47:25.688Z] <<< [apiv2][status] GET https://firebasedataconnect.googleapis.com/v1/projects/icontrolbell/locations/-/services 200
+[debug] [2025-06-15T01:47:25.688Z] <<< [apiv2][body] GET https://firebasedataconnect.googleapis.com/v1/projects/icontrolbell/locations/-/services {"services":[{"name":"projects/icontrolbell/locations/us-east1/services/icontrolbell","createTime":"2025-06-15T01:46:19.788492985Z","updateTime":"2025-06-15T01:46:21.186028896Z","uid":"d8f05ac2-7440-43d3-aff8-808e1e6ccdc8","reconciling":false,"etag":"sDDCvHOcfxNrfxLEQ17Nsq07FC_QxBZ3MxzsvP0GO-4"}]}
+[info] i  dataconnect: Checking for CloudSQL resources... 
+[debug] [2025-06-15T01:47:25.690Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:25.691Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:25.691Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:25.691Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:25.691Z] >>> [apiv2][query] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc [none]
+[debug] [2025-06-15T01:47:25.795Z] <<< [apiv2][status] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc 404
+[debug] [2025-06-15T01:47:25.795Z] <<< [apiv2][body] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc {"error":{"code":404,"message":"The Cloud SQL instance does not exist.","errors":[{"message":"The Cloud SQL instance does not exist.","domain":"global","reason":"instanceDoesNotExist"}]}}
+[warn] ⚠  dataconnect: Cloud SQL instances created via the Firebase CLI do not support customer managed encryption keys.
+If you'd like to use a CMEK to encrypt your data, first create a CMEK encrypted instance (https://cloud.google.com/sql/docs/postgres/configure-cmek#createcmekinstance).
+Then, edit your `dataconnect.yaml` file to use the encrypted instance and redeploy. 
+[info] i  dataconnect: Checking Cloud SQL no cost trial eligibility... 
+[debug] [2025-06-15T01:47:25.797Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:25.797Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:25.798Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:25.798Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:25.798Z] >>> [apiv2][query] GET https://monitoring.googleapis.com/v3/projects/icontrolbell/timeSeries/ filter=metric.type%3D%22serviceruntime.googleapis.com%2Fquota%2Fallocation%2Fusage%22+AND+metric.label.quota_metric+%3D+%22sqladmin.googleapis.com%2Ffdc_lifetime_free_trial_per_project%22&interval.endTime=2025-06-15T01%3A47%3A25.797Z&interval.startTime=2025-06-08T01%3A47%3A25.797Z
+[debug] [2025-06-15T01:47:25.829Z] <<< [apiv2][status] GET https://monitoring.googleapis.com/v3/projects/icontrolbell/timeSeries/ 403
+[debug] [2025-06-15T01:47:25.829Z] <<< [apiv2][body] GET https://monitoring.googleapis.com/v3/projects/icontrolbell/timeSeries/ {"error":{"code":403,"message":"Cloud Monitoring API has not been used in project 945553600981 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/monitoring.googleapis.com/overview?project=945553600981 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"activationUrl":"https://console.developers.google.com/apis/api/monitoring.googleapis.com/overview?project=945553600981","service":"monitoring.googleapis.com","containerInfo":"945553600981","consumer":"projects/945553600981","serviceTitle":"Cloud Monitoring API"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Cloud Monitoring API has not been used in project 945553600981 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/monitoring.googleapis.com/overview?project=945553600981 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/monitoring.googleapis.com/overview?project=945553600981"}]}]}}
+[info] ✔  dataconnect: CloudSQL no cost trial available! 
+[info] i  dataconnect:  
+[debug] [2025-06-15T01:47:25.837Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:25.837Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:25.837Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:25.837Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:25.838Z] >>> [apiv2][query] POST https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances [none]
+[debug] [2025-06-15T01:47:25.838Z] >>> [apiv2][body] POST https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances {"name":"icontrolbell-fdc","region":"us-east1","databaseVersion":"POSTGRES_15","settings":{"tier":"db-f1-micro","edition":"ENTERPRISE","ipConfiguration":{"authorizedNetworks":[]},"enableGoogleMlIntegration":false,"databaseFlags":[{"name":"cloudsql.iam_authentication","value":"on"}],"storageAutoResize":false,"userLabels":{"firebase-data-connect":"ft"},"insightsConfig":{"queryInsightsEnabled":true,"queryPlansPerMinute":5,"queryStringLength":1024}}}
+[debug] [2025-06-15T01:47:27.478Z] <<< [apiv2][status] POST https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances 200
+[debug] [2025-06-15T01:47:27.478Z] <<< [apiv2][body] POST https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances {"kind":"sql#operation","targetLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc","status":"PENDING","user":"medicstone4@gmail.com","insertTime":"2025-06-15T01:47:27.444Z","operationType":"CREATE","name":"1e03f981-db8d-4c6d-b128-165900000026","targetId":"icontrolbell-fdc","selfLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026","targetProject":"icontrolbell"}
+[debug] [2025-06-15T01:47:27.480Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:27.481Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:27.481Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:27.481Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:27.481Z] >>> [apiv2][query] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 [none]
+[debug] [2025-06-15T01:47:27.556Z] <<< [apiv2][status] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 200
+[debug] [2025-06-15T01:47:27.556Z] <<< [apiv2][body] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 {"kind":"sql#operation","targetLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc","status":"PENDING","user":"medicstone4@gmail.com","insertTime":"2025-06-15T01:47:27.444Z","operationType":"CREATE","name":"1e03f981-db8d-4c6d-b128-165900000026","targetId":"icontrolbell-fdc","selfLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026","targetProject":"icontrolbell"}
+[debug] [2025-06-15T01:47:28.059Z] [LRO Poller] Retrying task index 0
+[debug] [2025-06-15T01:47:28.060Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:28.060Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:28.060Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:28.060Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:28.060Z] >>> [apiv2][query] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 [none]
+[debug] [2025-06-15T01:47:28.144Z] <<< [apiv2][status] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 200
+[debug] [2025-06-15T01:47:28.144Z] <<< [apiv2][body] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 {"kind":"sql#operation","targetLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc","status":"RUNNING","user":"medicstone4@gmail.com","insertTime":"2025-06-15T01:47:27.444Z","startTime":"2025-06-15T01:47:27.552Z","operationType":"CREATE","name":"1e03f981-db8d-4c6d-b128-165900000026","targetId":"icontrolbell-fdc","selfLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026","targetProject":"icontrolbell"}
+[debug] [2025-06-15T01:47:29.145Z] [LRO Poller] Retrying task index 0
+[debug] [2025-06-15T01:47:29.145Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:29.146Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:29.146Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:29.146Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:29.146Z] >>> [apiv2][query] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 [none]
+[debug] [2025-06-15T01:47:29.222Z] <<< [apiv2][status] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 200
+[debug] [2025-06-15T01:47:29.226Z] <<< [apiv2][body] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 {"kind":"sql#operation","targetLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc","status":"RUNNING","user":"medicstone4@gmail.com","insertTime":"2025-06-15T01:47:27.444Z","startTime":"2025-06-15T01:47:27.552Z","operationType":"CREATE","name":"1e03f981-db8d-4c6d-b128-165900000026","targetId":"icontrolbell-fdc","selfLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026","targetProject":"icontrolbell"}
+[debug] [2025-06-15T01:47:31.226Z] [LRO Poller] Retrying task index 0
+[debug] [2025-06-15T01:47:31.227Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:31.227Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:31.227Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:31.227Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:31.227Z] >>> [apiv2][query] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 [none]
+[debug] [2025-06-15T01:47:31.320Z] <<< [apiv2][status] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 200
+[debug] [2025-06-15T01:47:31.321Z] <<< [apiv2][body] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 {"kind":"sql#operation","targetLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc","status":"RUNNING","user":"medicstone4@gmail.com","insertTime":"2025-06-15T01:47:27.444Z","startTime":"2025-06-15T01:47:27.552Z","operationType":"CREATE","name":"1e03f981-db8d-4c6d-b128-165900000026","targetId":"icontrolbell-fdc","selfLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026","targetProject":"icontrolbell"}
+[debug] [2025-06-15T01:47:35.322Z] [LRO Poller] Retrying task index 0
+[debug] [2025-06-15T01:47:35.323Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:35.323Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:35.323Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:35.323Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:35.324Z] >>> [apiv2][query] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 [none]
+[debug] [2025-06-15T01:47:35.401Z] <<< [apiv2][status] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 200
+[debug] [2025-06-15T01:47:35.401Z] <<< [apiv2][body] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 {"kind":"sql#operation","targetLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc","status":"RUNNING","user":"medicstone4@gmail.com","insertTime":"2025-06-15T01:47:27.444Z","startTime":"2025-06-15T01:47:27.552Z","operationType":"CREATE","name":"1e03f981-db8d-4c6d-b128-165900000026","targetId":"icontrolbell-fdc","selfLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026","targetProject":"icontrolbell"}
+[debug] [2025-06-15T01:47:43.405Z] [LRO Poller] Retrying task index 0
+[debug] [2025-06-15T01:47:43.406Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:43.406Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:43.406Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:43.407Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:43.407Z] >>> [apiv2][query] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 [none]
+[debug] [2025-06-15T01:47:43.481Z] <<< [apiv2][status] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 200
+[debug] [2025-06-15T01:47:43.482Z] <<< [apiv2][body] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 {"kind":"sql#operation","targetLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc","status":"RUNNING","user":"medicstone4@gmail.com","insertTime":"2025-06-15T01:47:27.444Z","startTime":"2025-06-15T01:47:27.552Z","operationType":"CREATE","name":"1e03f981-db8d-4c6d-b128-165900000026","targetId":"icontrolbell-fdc","selfLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026","targetProject":"icontrolbell"}
+[debug] [2025-06-15T01:47:59.493Z] [LRO Poller] Retrying task index 0
+[debug] [2025-06-15T01:47:59.493Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:59.494Z] No OAuth tokens found
+[debug] [2025-06-15T01:47:59.494Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:47:59.494Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:47:59.494Z] >>> [apiv2][query] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 [none]
+[debug] [2025-06-15T01:47:59.585Z] <<< [apiv2][status] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 200
+[debug] [2025-06-15T01:47:59.586Z] <<< [apiv2][body] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 {"kind":"sql#operation","targetLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc","status":"RUNNING","user":"medicstone4@gmail.com","insertTime":"2025-06-15T01:47:27.444Z","startTime":"2025-06-15T01:47:27.552Z","operationType":"CREATE","name":"1e03f981-db8d-4c6d-b128-165900000026","targetId":"icontrolbell-fdc","selfLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026","targetProject":"icontrolbell"}
+[debug] [2025-06-15T01:48:31.596Z] [LRO Poller] Retrying task index 0
+[debug] [2025-06-15T01:48:31.597Z] No OAuth tokens found
+[debug] [2025-06-15T01:48:31.597Z] No OAuth tokens found
+[debug] [2025-06-15T01:48:31.597Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:48:31.597Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:48:31.598Z] >>> [apiv2][query] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 [none]
+[debug] [2025-06-15T01:48:31.691Z] <<< [apiv2][status] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 200
+[debug] [2025-06-15T01:48:31.691Z] <<< [apiv2][body] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 {"kind":"sql#operation","targetLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc","status":"RUNNING","user":"medicstone4@gmail.com","insertTime":"2025-06-15T01:47:27.444Z","startTime":"2025-06-15T01:47:27.552Z","operationType":"CREATE","name":"1e03f981-db8d-4c6d-b128-165900000026","targetId":"icontrolbell-fdc","selfLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026","targetProject":"icontrolbell"}
+[debug] [2025-06-15T01:49:31.736Z] [LRO Poller] Retrying task index 0
+[debug] [2025-06-15T01:49:31.737Z] No OAuth tokens found
+[debug] [2025-06-15T01:49:31.737Z] No OAuth tokens found
+[debug] [2025-06-15T01:49:31.737Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:49:31.737Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:49:31.738Z] >>> [apiv2][query] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 [none]
+[debug] [2025-06-15T01:49:31.844Z] <<< [apiv2][status] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 200
+[debug] [2025-06-15T01:49:31.844Z] <<< [apiv2][body] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 {"kind":"sql#operation","targetLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc","status":"RUNNING","user":"medicstone4@gmail.com","insertTime":"2025-06-15T01:47:27.444Z","startTime":"2025-06-15T01:47:27.552Z","operationType":"CREATE","name":"1e03f981-db8d-4c6d-b128-165900000026","targetId":"icontrolbell-fdc","selfLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026","targetProject":"icontrolbell"}
+[debug] [2025-06-15T01:50:31.899Z] [LRO Poller] Retrying task index 0
+[debug] [2025-06-15T01:50:31.900Z] No OAuth tokens found
+[debug] [2025-06-15T01:50:31.900Z] No OAuth tokens found
+[debug] [2025-06-15T01:50:31.900Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:50:31.900Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:50:31.901Z] >>> [apiv2][query] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 [none]
+[debug] [2025-06-15T01:50:32.001Z] <<< [apiv2][status] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 200
+[debug] [2025-06-15T01:50:32.002Z] <<< [apiv2][body] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 {"kind":"sql#operation","targetLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc","status":"RUNNING","user":"medicstone4@gmail.com","insertTime":"2025-06-15T01:47:27.444Z","startTime":"2025-06-15T01:47:27.552Z","operationType":"CREATE","name":"1e03f981-db8d-4c6d-b128-165900000026","targetId":"icontrolbell-fdc","selfLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026","targetProject":"icontrolbell"}
+[debug] [2025-06-15T01:51:32.058Z] [LRO Poller] Retrying task index 0
+[debug] [2025-06-15T01:51:32.059Z] No OAuth tokens found
+[debug] [2025-06-15T01:51:32.059Z] No OAuth tokens found
+[debug] [2025-06-15T01:51:32.059Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-15T01:51:32.059Z] > authorizing via signed-in user (medicstone4@gmail.com)
+[debug] [2025-06-15T01:51:32.060Z] >>> [apiv2][query] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 [none]
+[debug] [2025-06-15T01:51:32.163Z] <<< [apiv2][status] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 200
+[debug] [2025-06-15T01:51:32.163Z] <<< [apiv2][body] GET https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026 {"kind":"sql#operation","targetLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/instances/icontrolbell-fdc","status":"RUNNING","user":"medicstone4@gmail.com","insertTime":"2025-06-15T01:47:27.444Z","startTime":"2025-06-15T01:47:27.552Z","operationType":"CREATE","name":"1e03f981-db8d-4c6d-b128-165900000026","targetId":"icontrolbell-fdc","selfLink":"https://sqladmin.googleapis.com/v1/projects/icontrolbell/operations/1e03f981-db8d-4c6d-b128-165900000026","targetProject":"icontrolbell"}
