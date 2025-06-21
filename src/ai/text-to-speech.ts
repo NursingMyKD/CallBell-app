@@ -7,7 +7,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import wav from 'wav';
-import {googleAI} from 'genkit/plugins/googleai';
+import {googleAI} from '@genkit-ai/googleai';
 
 export async function generateSpeech(text: string): Promise<string> {
   return textToSpeechFlow(text);
