@@ -6,10 +6,11 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Volume2, Loader2 } from 'lucide-react';
-import { bcp47LangMap, type LanguageCode } from '@/lib/translations';
+import { bcp47LangMap, type LanguageCode, appTranslations } from '@/lib/translations';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from '@/components/ui/label';
 import { useTranslations } from '@/hooks/use-translations';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface SoundboardProps {
   selectedLanguage: LanguageCode;
@@ -29,11 +30,9 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
     return t('soundboard');
   }, [t]);
 
-  const currentPhrases = React.useMemo(() => {
-    const phrases = soundboardStrings.phrases;
-    return Array.isArray(phrases) ? phrases : [];
-  }, [soundboardStrings]);
-
+  const categoryKeys = React.useMemo(() => {
+    return Object.keys(appTranslations.soundboard.categories);
+  }, []);
 
   const currentBcp47Lang = React.useMemo(() => {
     return bcp47LangMap[selectedLanguage];
@@ -257,34 +256,52 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
         </div>
       )}
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
-        {currentPhrases.map((phrase) => (
-          <Button
-            key={phrase}
-            onClick={() => handleSpeak(phrase)}
-            disabled={isSpeaking && currentlySpeakingPhrase !== phrase}
-            variant="outline" 
-            className={cn(
-              "h-24 md:h-28 text-sm md:text-base font-medium rounded-lg md:rounded-xl shadow-md flex flex-col items-center justify-center p-2 md:p-3 transition-all",
-              "focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
-              currentlySpeakingPhrase === phrase && isSpeaking 
-                ? "bg-primary/10 text-primary border-primary ring-2 ring-primary animate-pulse" 
-                : "hover:bg-accent/10 hover:border-accent",
-              isSpeaking && currentlySpeakingPhrase !== phrase && "opacity-60 cursor-not-allowed"
-            )}
-            aria-label={`${phrase}`}
-            aria-live="polite" 
-            aria-busy={currentlySpeakingPhrase === phrase && isSpeaking}
-          >
-            {currentlySpeakingPhrase === phrase && isSpeaking ? (
-              <Loader2 className="h-6 w-6 md:h-7 md:w-7 mb-1 md:mb-1.5 animate-spin" />
-            ) : (
-              <Volume2 className="h-6 w-6 md:h-7 md:w-7 mb-1 md:mb-1.5" />
-            )}
-            <span className="text-center text-sm leading-tight">{phrase}</span>
-          </Button>
-        ))}
-      </div>
+      <Tabs defaultValue={categoryKeys[0]} className="w-full">
+        <TabsList className="grid h-auto w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
+          {categoryKeys.map((key) => (
+            <TabsTrigger key={key} value={key} className="text-xs sm:text-sm">
+              {soundboardStrings.categories[key].title}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        {categoryKeys.map((key) => {
+            const categoryPhrases = soundboardStrings.categories[key].phrases;
+            if (!Array.isArray(categoryPhrases)) return null;
+
+            return (
+              <TabsContent key={key} value={key} className="mt-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
+                  {categoryPhrases.map((phrase) => (
+                    <Button
+                      key={phrase}
+                      onClick={() => handleSpeak(phrase)}
+                      disabled={isSpeaking && currentlySpeakingPhrase !== phrase}
+                      variant="outline" 
+                      className={cn(
+                        "h-28 md:h-32 text-sm md:text-base font-medium rounded-lg md:rounded-xl shadow-md flex flex-col items-center justify-center p-2 md:p-3 transition-all",
+                        "focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
+                        currentlySpeakingPhrase === phrase && isSpeaking 
+                          ? "bg-primary/10 text-primary border-primary ring-2 ring-primary animate-pulse" 
+                          : "hover:bg-accent/10 hover:border-accent",
+                        isSpeaking && currentlySpeakingPhrase !== phrase && "opacity-60 cursor-not-allowed"
+                      )}
+                      aria-label={`${phrase}`}
+                      aria-live="polite" 
+                      aria-busy={currentlySpeakingPhrase === phrase && isSpeaking}
+                    >
+                      {currentlySpeakingPhrase === phrase && isSpeaking ? (
+                        <Loader2 className="h-6 w-6 md:h-7 md:w-7 mb-1 md:mb-1.5 animate-spin" />
+                      ) : (
+                        <Volume2 className="h-6 w-6 md:h-7 md:w-7 mb-1 md:mb-1.5" />
+                      )}
+                      <span className="text-center text-sm leading-tight">{phrase}</span>
+                    </Button>
+                  ))}
+                </div>
+              </TabsContent>
+            )
+        })}
+      </Tabs>
     </div>
   );
 }
