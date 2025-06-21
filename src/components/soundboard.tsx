@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from 'react';
@@ -54,21 +55,28 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
 
         const isSelectedVoiceInList = languageVoices.some(v => v.voiceURI === selectedVoice);
 
-        if (!isSelectedVoiceInList) {
+        if (!isSelectedVoiceInList || !selectedVoice) {
           setSelectedVoice(languageVoices[0]?.voiceURI);
         }
       };
       
+      // onvoiceschanged is not consistently fired in all browsers.
+      // So we call it directly and also set it as a handler.
       handleVoicesChanged();
-      window.speechSynthesis.onvoiceschanged = handleVoicesChanged;
+      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = handleVoicesChanged;
+      }
+
 
       return () => {
-        window.speechSynthesis.onvoiceschanged = null;
+        if (window.speechSynthesis.onvoiceschanged !== undefined) {
+          window.speechSynthesis.onvoiceschanged = null;
+        }
       };
     } else {
       setIsSpeechSupported(false);
     }
-  }, [selectedLanguage]); // Only re-run when language changes
+  }, [selectedLanguage, selectedVoice]);
 
   const handleSpeak = React.useCallback(async (phrase: string, index: number) => {
     if (isSpeaking) {
@@ -193,7 +201,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
                       disabled={isSpeaking && !isCurrentlySpeakingThis}
                       variant="outline" 
                       className={cn(
-                        "h-40 font-medium rounded-xl shadow-md flex flex-col items-center justify-center p-3 transition-all text-base",
+                        "h-full min-h-40 font-medium rounded-xl shadow-md flex flex-col items-center justify-center p-3 transition-all text-base whitespace-normal",
                         "focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
                         isCurrentlySpeakingThis
                           ? "bg-primary/10 text-primary border-primary ring-2 ring-primary"
