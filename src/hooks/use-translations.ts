@@ -46,8 +46,9 @@ export function useTranslations(lang: LanguageCode) {
         }
 
         const langKeysForTarget = Object.keys(target);
+        const allLangCodes = ['en', 'es', 'fr', 'de', 'pt', 'it', 'ja', 'nl'];
         const isTargetSimpleTranslation = langKeysForTarget.length > 0 &&
-                                       langKeysForTarget.every(k => ['en', 'es', 'fr', 'de', 'pt'].includes(k) && typeof target[k] === 'string');
+                                       langKeysForTarget.every(k => allLangCodes.includes(k) && typeof target[k] === 'string');
         if (lang in target && isTargetSimpleTranslation) {
           return target[lang];
         }
@@ -67,14 +68,14 @@ export function useTranslations(lang: LanguageCode) {
 
                 if (typeof langSpecificValue === 'string') {
                   const isSimpleTranslationObject = valueKeys.length > 0 && 
-                                                   valueKeys.every(k => ['en','es','fr', 'de', 'pt'].includes(k) && typeof value[k] === 'string');
+                                                   valueKeys.every(k => allLangCodes.includes(k) && typeof value[k] === 'string');
                   if (isSimpleTranslationObject) {
                     return langSpecificValue;
                   }
                 } 
                 else if (Array.isArray(langSpecificValue)) {
                   const isLanguageArrayObject = valueKeys.length > 0 && 
-                                                valueKeys.every(k => ['en','es','fr', 'de', 'pt'].includes(k) && Array.isArray(value[k]));
+                                                valueKeys.every(k => allLangCodes.includes(k) && Array.isArray(value[k]));
                   if (isLanguageArrayObject) {
                     return langSpecificValue; 
                   }
@@ -92,3 +93,5 @@ export function useTranslations(lang: LanguageCode) {
     [lang] // The 't' function will be re-created only if 'lang' changes.
   );
 }
+
+    

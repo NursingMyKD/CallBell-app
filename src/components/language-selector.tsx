@@ -12,11 +12,14 @@ interface LanguageSelectorProps {
 
 export default function LanguageSelector({ selectedLanguage, onSelectLanguage }: LanguageSelectorProps) {
   const languages: { code: LanguageCode; name: string }[] = [
-    { code: 'en', name: 'English' }, // These names are not translated as they are for language selection itself
+    { code: 'en', name: 'English' },
     { code: 'es', name: 'Español' },
     { code: 'fr', name: 'Français' },
     { code: 'de', name: 'Deutsch' },
     { code: 'pt', name: 'Português' },
+    { code: 'it', name: 'Italiano' },
+    { code: 'ja', name: '日本語' },
+    { code: 'nl', name: 'Nederlands' },
   ];
 
   return (
@@ -40,3 +43,5 @@ export default function LanguageSelector({ selectedLanguage, onSelectLanguage }:
     </div>
   );
 }
+
+    
