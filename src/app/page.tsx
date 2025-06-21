@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-8 lg:p-12">
-       <Logo className="w-48 h-48 lg:w-96 lg:h-96 mb-6" />
+       <Logo className="w-96 h-96 lg:w-[48rem] lg:h-[48rem] mb-6" />
        <LanguageSelector selectedLanguage={selectedLanguage} onSelectLanguage={setSelectedLanguage} />
        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 text-center text-foreground">
          {appTranslations.page.title[selectedLanguage]}
