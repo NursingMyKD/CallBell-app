@@ -78,39 +78,34 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
         return;
       }
       
-      let filteredVoices = allSystemVoices.filter(voice => voice.lang.startsWith(currentBcp47Lang.split('-')[0]));
+      const allVoices = [...allSystemVoices];
       
-      filteredVoices.sort((a, b) => {
+      allVoices.sort((a, b) => {
         if (a.default && !b.default) return -1;
         if (!a.default && b.default) return 1;
-        const uriCompare = (a.voiceURI || "").localeCompare(b.voiceURI || "");
-        if (uriCompare !== 0) return uriCompare;
-        return (a.name || "").localeCompare(b.name || "");
+        return a.name.localeCompare(b.name);
       });
       
       setAvailableVoices(currentAvailVoices => {
-        const newVoiceURIs = filteredVoices.map(v => v.voiceURI).sort().join(',');
+        const newVoiceURIs = allVoices.map(v => v.voiceURI).sort().join(',');
         const currentVoiceURIs = currentAvailVoices.map(v => v.voiceURI).sort().join(',');
         if (newVoiceURIs === currentVoiceURIs) {
           return currentAvailVoices;
         }
-        return filteredVoices;
+        return allVoices;
       });
 
       setSelectedVoiceURI(currentStoredSelectedURI => {
-        const isCurrentValid = filteredVoices.some(v => v.voiceURI === currentStoredSelectedURI);
+        const isCurrentValid = allVoices.some(v => v.voiceURI === currentStoredSelectedURI);
         if (isCurrentValid) {
           return currentStoredSelectedURI;
         }
         
-        if (filteredVoices.length > 0) {
-          const defaultVoiceForLang = filteredVoices.find(v => v.default && v.lang === currentBcp47Lang);
-          if (defaultVoiceForLang) return defaultVoiceForLang.voiceURI;
+        if (allVoices.length > 0) {
+          const defaultVoice = allVoices.find(v => v.default);
+          if (defaultVoice) return defaultVoice.voiceURI;
           
-          const firstMatchingLangPrefix = filteredVoices.find(v => v.lang.startsWith(currentBcp47Lang.split('-')[0]));
-          if (firstMatchingLangPrefix) return firstMatchingLangPrefix.voiceURI;
-
-          return filteredVoices[0].voiceURI; 
+          return allVoices[0].voiceURI; 
         }
         return undefined; 
       });
@@ -133,10 +128,10 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
       setIsSpeaking(false);
       setCurrentlySpeakingPhrase(null);
     };
-  }, [currentBcp47Lang, soundboardStrings, toast, speechSynthesisSupported]);
+  }, [soundboardStrings, toast, speechSynthesisSupported]);
 
 
-  const handleSpeak = React.useCallback((phrase: string) => {
+  const handleSpeak = React.useCallback((phrase: string, index: number) => {
     if (!speechSynthesisSupported || isSpeaking || !phrase || !window.speechSynthesis) {
       if (!speechSynthesisSupported) {
          toast({
@@ -164,8 +159,9 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
       }
     }
     
+    const uniquePhraseKey = `${phrase}-${index}`;
     setIsSpeaking(true);
-    setCurrentlySpeakingPhrase(phrase);
+    setCurrentlySpeakingPhrase(uniquePhraseKey);
 
     utterance.onend = () => {
       setIsSpeaking(false);
@@ -270,32 +266,34 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
             return (
               <TabsContent key={key} value={key} className="mt-4">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
-                  {categoryPhrases.map((phrase, index) => (
+                  {categoryPhrases.map((phrase, index) => {
+                    const uniquePhraseKey = `${phrase}-${index}`;
+                    return (
                     <Button
-                      key={`${phrase}-${index}`}
-                      onClick={() => handleSpeak(phrase)}
-                      disabled={isSpeaking && currentlySpeakingPhrase !== phrase}
+                      key={uniquePhraseKey}
+                      onClick={() => handleSpeak(phrase, index)}
+                      disabled={isSpeaking && currentlySpeakingPhrase !== uniquePhraseKey}
                       variant="outline" 
                       className={cn(
                         "h-32 md:h-36 lg:h-40 font-medium rounded-lg md:rounded-xl shadow-md flex flex-col items-center justify-center p-2 md:p-3 transition-all text-base",
                         "focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
-                        currentlySpeakingPhrase === phrase && isSpeaking 
+                        currentlySpeakingPhrase === uniquePhraseKey && isSpeaking 
                           ? "bg-primary/10 text-primary border-primary ring-2 ring-primary animate-pulse" 
                           : "hover:bg-accent/10 hover:border-accent",
-                        isSpeaking && currentlySpeakingPhrase !== phrase && "opacity-60 cursor-not-allowed"
+                        isSpeaking && currentlySpeakingPhrase !== uniquePhraseKey && "opacity-60 cursor-not-allowed"
                       )}
                       aria-label={`${phrase}`}
                       aria-live="polite" 
-                      aria-busy={currentlySpeakingPhrase === phrase && isSpeaking}
+                      aria-busy={currentlySpeakingPhrase === uniquePhraseKey && isSpeaking}
                     >
-                      {currentlySpeakingPhrase === phrase && isSpeaking ? (
+                      {currentlySpeakingPhrase === uniquePhraseKey && isSpeaking ? (
                         <Loader2 className="h-10 w-10 md:h-12 md:w-12 mb-1.5 md:mb-2 animate-spin" />
                       ) : (
                         <Volume2 className="h-10 w-10 md:h-12 md:w-12 mb-1.5 md:mb-2" />
                       )}
                       <span className="text-center text-sm md:text-base leading-tight">{phrase}</span>
                     </Button>
-                  ))}
+                  )})}
                 </div>
               </TabsContent>
             )
