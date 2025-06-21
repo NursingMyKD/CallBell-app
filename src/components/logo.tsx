@@ -7,6 +7,7 @@ const Logo = ({ className }: { className?: string }) => (
       xmlns="http://www.w3.org/2000/svg"
       className="w-full h-full"
     >
+      <rect width="100" height="100" fill="white" />
       <g>
         <path
           fill="#000000"
