@@ -46,7 +46,7 @@ export function useTranslations(lang: LanguageCode) {
         }
 
         const langKeysForTarget = Object.keys(target);
-        const allLangCodes = ['en', 'es', 'fr', 'de', 'pt', 'it', 'ja', 'nl'];
+        const allLangCodes = ['en', 'es', 'fr', 'de', 'pt', 'it', 'ja', 'nl', 'ru', 'zh', 'hi', 'ar', 'bn', 'ko', 'tr', 'pl', 'sv', 'vi'];
         const isTargetSimpleTranslation = langKeysForTarget.length > 0 &&
                                        langKeysForTarget.every(k => allLangCodes.includes(k) && typeof target[k] === 'string');
         if (lang in target && isTargetSimpleTranslation) {
@@ -93,5 +93,3 @@ export function useTranslations(lang: LanguageCode) {
     [lang] // The 't' function will be re-created only if 'lang' changes.
   );
 }
-
-    

@@ -20,6 +20,16 @@ export default function LanguageSelector({ selectedLanguage, onSelectLanguage }:
     { code: 'it', name: 'Italiano' },
     { code: 'ja', name: '日本語' },
     { code: 'nl', name: 'Nederlands' },
+    { code: 'ru', name: 'Русский' },
+    { code: 'zh', name: '中文' },
+    { code: 'hi', name: 'हिन्दी' },
+    { code: 'ar', name: 'العربية' },
+    { code: 'bn', name: 'বাংলা' },
+    { code: 'ko', name: '한국어' },
+    { code: 'tr', name: 'Türkçe' },
+    { code: 'pl', name: 'Polski' },
+    { code: 'sv', name: 'Svenska' },
+    { code: 'vi', name: 'Tiếng Việt' },
   ];
 
   return (
@@ -43,5 +53,3 @@ export default function LanguageSelector({ selectedLanguage, onSelectLanguage }:
     </div>
   );
 }
-
-    
