@@ -1,9 +1,15 @@
-
 "use client";
 import * as React from 'react';
-import { Button } from '@/components/ui/button';
 import type { LanguageCode } from '@/lib/translations';
 import { appTranslations } from '@/lib/translations';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 interface LanguageSelectorProps {
   selectedLanguage: LanguageCode;
@@ -32,24 +38,28 @@ export default function LanguageSelector({ selectedLanguage, onSelectLanguage }:
     { code: 'vi', name: 'Tiếng Việt', englishName: 'Vietnamese' },
   ];
 
+  const handleValueChange = (value: string) => {
+    onSelectLanguage(value as LanguageCode);
+  };
+
   return (
-    <div className="my-3 md:my-4 flex flex-col items-center">
-      <p className="text-base md:text-lg text-muted-foreground mb-2">
-        {appTranslations.page.languageSelectorLabel[selectedLanguage]}
-      </p>
-      <div className="flex gap-4 flex-wrap justify-center">
-        {languages.map((lang) => (
-          <Button
-            key={lang.code}
-            variant={selectedLanguage === lang.code ? 'default' : 'outline'}
-            onClick={() => onSelectLanguage(lang.code)}
-            className="px-5 py-3 text-base rounded-lg"
-          >
-            {lang.name}
-            {lang.code !== 'en' && <span className="ml-1.5 text-muted-foreground/80 font-normal">({lang.englishName})</span>}
-          </Button>
-        ))}
-      </div>
+    <div className="my-4 md:my-6 flex flex-col items-center w-full max-w-xs md:max-w-sm">
+       <Label htmlFor="language-select" className="text-base md:text-lg text-muted-foreground mb-2">
+         {appTranslations.page.languageSelectorLabel[selectedLanguage]}
+       </Label>
+       <Select value={selectedLanguage} onValueChange={handleValueChange}>
+         <SelectTrigger id="language-select" className="w-full text-base md:text-lg py-6">
+           <SelectValue placeholder="Select a language" />
+         </SelectTrigger>
+         <SelectContent>
+           {languages.map((lang) => (
+             <SelectItem key={lang.code} value={lang.code} className="text-base md:text-lg py-2">
+               {lang.name}
+               {lang.code !== 'en' && <span className="ml-2 text-muted-foreground font-normal">({lang.englishName})</span>}
+             </SelectItem>
+           ))}
+         </SelectContent>
+       </Select>
     </div>
   );
 }
