@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from 'react';
@@ -72,6 +71,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
         if (window.speechSynthesis.onvoiceschanged !== undefined) {
           window.speechSynthesis.onvoiceschanged = null;
         }
+        window.speechSynthesis.cancel();
       };
     } else {
       setIsSpeechSupported(false);
@@ -199,13 +199,13 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
                       key={uniquePhraseKey}
                       onClick={() => handleSpeak(phrase, index)}
                       disabled={isSpeaking && !isCurrentlySpeakingThis}
-                      variant="outline" 
+                      variant="secondary"
                       className={cn(
-                        "h-full min-h-40 font-medium rounded-xl shadow-md flex flex-col items-center justify-center p-3 transition-all text-base whitespace-normal",
+                        "h-full min-h-40 whitespace-normal font-medium rounded-xl shadow-md flex flex-col items-center justify-center p-3 transition-all text-base",
                         "focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
                         isCurrentlySpeakingThis
                           ? "bg-primary/10 text-primary border-primary ring-2 ring-primary"
-                          : "hover:bg-accent/10 hover:border-accent",
+                          : "",
                         isSpeaking && !isCurrentlySpeakingThis && "opacity-60 cursor-not-allowed"
                       )}
                       aria-label={`${phrase}`}
