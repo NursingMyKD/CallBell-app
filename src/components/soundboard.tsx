@@ -258,7 +258,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
       <Tabs defaultValue={categoryKeys[0]} className="w-full">
         <TabsList className="grid h-auto w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
           {categoryKeys.map((key) => (
-            <TabsTrigger key={key} value={key} className="text-sm md:text-base">
+            <TabsTrigger key={key} value={key} className="text-sm md:text-base py-4">
               {soundboardStrings.categories[key].title}
             </TabsTrigger>
           ))}
@@ -270,14 +270,14 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
             return (
               <TabsContent key={key} value={key} className="mt-4">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
-                  {categoryPhrases.map((phrase) => (
+                  {categoryPhrases.map((phrase, index) => (
                     <Button
-                      key={phrase}
+                      key={`${phrase}-${index}`}
                       onClick={() => handleSpeak(phrase)}
                       disabled={isSpeaking && currentlySpeakingPhrase !== phrase}
                       variant="outline" 
                       className={cn(
-                        "h-32 md:h-36 lg:h-40 font-medium rounded-lg md:rounded-xl shadow-md flex flex-col items-center justify-center p-2 md:p-3 transition-all",
+                        "h-32 md:h-36 lg:h-40 font-medium rounded-lg md:rounded-xl shadow-md flex flex-col items-center justify-center p-2 md:p-3 transition-all text-base",
                         "focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
                         currentlySpeakingPhrase === phrase && isSpeaking 
                           ? "bg-primary/10 text-primary border-primary ring-2 ring-primary animate-pulse" 
@@ -289,9 +289,9 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
                       aria-busy={currentlySpeakingPhrase === phrase && isSpeaking}
                     >
                       {currentlySpeakingPhrase === phrase && isSpeaking ? (
-                        <Loader2 className="h-8 w-8 md:h-10 md:w-10 mb-1 md:mb-1.5 animate-spin" />
+                        <Loader2 className="h-10 w-10 md:h-12 md:w-12 mb-1.5 md:mb-2 animate-spin" />
                       ) : (
-                        <Volume2 className="h-8 w-8 md:h-10 md:w-10 mb-1 md:mb-1.5" />
+                        <Volume2 className="h-10 w-10 md:h-12 md:w-12 mb-1.5 md:mb-2" />
                       )}
                       <span className="text-center text-sm md:text-base leading-tight">{phrase}</span>
                     </Button>
