@@ -257,7 +257,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
         </div>
       )}
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 md:gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
         {currentPhrases.map((phrase) => (
           <Button
             key={phrase}
@@ -281,7 +281,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
             ) : (
               <Volume2 className="h-6 w-6 md:h-7 md:w-7 mb-1 md:mb-1.5" />
             )}
-            <span className="text-center text-xs sm:text-sm leading-tight">{phrase}</span>
+            <span className="text-center text-sm leading-tight">{phrase}</span>
           </Button>
         ))}
       </div>
