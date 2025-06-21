@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from 'react';
@@ -37,31 +36,39 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
 
   React.useEffect(() => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      const loadVoices = () => {
-        const availableVoices = window.speechSynthesis.getVoices();
-        if (availableVoices.length > 0) {
-          setVoices(availableVoices);
-          // Set a default voice that matches the app's default language if possible
-          if (!selectedVoice) {
-            const defaultVoice = availableVoices.find(voice => voice.lang.startsWith(selectedLanguage)) || availableVoices.find(voice => voice.lang.startsWith('en')) || availableVoices[0];
-            if (defaultVoice) {
-              setSelectedVoice(defaultVoice.voiceURI);
-            }
-          }
+      const handleVoicesChanged = () => {
+        const allVoices = window.speechSynthesis.getVoices();
+        if (allVoices.length === 0) return;
+
+        let languageVoices = allVoices.filter(v => v.lang.startsWith(selectedLanguage));
+        
+        if (languageVoices.length === 0) {
+          languageVoices = allVoices.filter(v => v.lang.startsWith('en'));
+        }
+        
+        if (languageVoices.length === 0) {
+            languageVoices = allVoices;
+        }
+
+        setVoices(languageVoices);
+
+        const isSelectedVoiceInList = languageVoices.some(v => v.voiceURI === selectedVoice);
+
+        if (!isSelectedVoiceInList) {
+          setSelectedVoice(languageVoices[0]?.voiceURI);
         }
       };
-
-      loadVoices();
-      window.speechSynthesis.onvoiceschanged = loadVoices;
       
+      handleVoicesChanged();
+      window.speechSynthesis.onvoiceschanged = handleVoicesChanged;
+
       return () => {
         window.speechSynthesis.onvoiceschanged = null;
-        window.speechSynthesis.cancel();
       };
     } else {
       setIsSpeechSupported(false);
     }
-  }, [selectedLanguage, selectedVoice]);
+  }, [selectedLanguage]); // Only re-run when language changes
 
   const handleSpeak = React.useCallback(async (phrase: string, index: number) => {
     if (isSpeaking) {
@@ -122,11 +129,11 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
 
   if (!isSpeechSupported) {
     return (
-      <div className="mt-8 md:mt-10 w-full max-w-xl md:max-w-4xl lg:max-w-5xl px-2 text-center">
-        <h2 className="text-2xl sm:text-3xl font-semibold mb-3 md:mb-4">
+      <div className="mt-10 w-full max-w-4xl lg:max-w-5xl px-2 text-center">
+        <h2 className="text-3xl font-semibold mb-4">
           {soundboardStrings.speechNotSupportedTitle}
         </h2>
-        <p className="text-base sm:text-lg text-muted-foreground">
+        <p className="text-lg text-muted-foreground">
           {soundboardStrings.speechNotSupportedDescription}
         </p>
       </div>
@@ -134,25 +141,25 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
   }
 
   return (
-    <div className="mt-8 md:mt-10 w-full max-w-xl md:max-w-4xl lg:max-w-5xl px-2">
-      <h2 className="text-2xl sm:text-3xl font-semibold mb-3 md:mb-4 text-center">
+    <div className="mt-10 w-full max-w-4xl lg:max-w-5xl px-2">
+      <h2 className="text-3xl font-semibold mb-4 text-center">
         {soundboardStrings.title}
       </h2>
-      <p className="text-sm sm:text-md text-muted-foreground mb-3 md:mb-4 text-center">
+      <p className="text-md text-muted-foreground mb-4 text-center">
         {soundboardStrings.description}
       </p>
 
-      <div className="my-4 md:my-6 flex flex-col items-center w-full max-w-xs md:max-w-sm mx-auto">
-        <Label htmlFor="voice-select" className="text-base md:text-lg text-muted-foreground mb-2">
+      <div className="my-6 flex flex-col items-center w-full max-w-sm mx-auto">
+        <Label htmlFor="voice-select" className="text-lg text-muted-foreground mb-2">
           {soundboardStrings.voiceSelectorLabel}
         </Label>
         <Select value={selectedVoice} onValueChange={setSelectedVoice} disabled={voices.length === 0}>
-          <SelectTrigger id="voice-select" className="w-full text-base md:text-lg py-6">
+          <SelectTrigger id="voice-select" className="w-full text-lg py-6">
             <SelectValue placeholder={voices.length > 0 ? "Select a voice" : "Loading voices..."} />
           </SelectTrigger>
           <SelectContent>
             {voices.map((voice) => (
-              <SelectItem key={voice.voiceURI} value={voice.voiceURI} className="text-base md:text-lg py-2">
+              <SelectItem key={voice.voiceURI} value={voice.voiceURI} className="text-lg py-2">
                 {voice.name} ({voice.lang})
               </SelectItem>
             ))}
@@ -163,7 +170,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
       <Tabs defaultValue={categoryKeys[0]} className="w-full">
         <TabsList className="grid h-auto w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
           {categoryKeys.map((key) => (
-            <TabsTrigger key={key} value={key} className="text-sm md:text-base py-4">
+            <TabsTrigger key={key} value={key} className="text-base py-4">
               {soundboardStrings.categories[key].title}
             </TabsTrigger>
           ))}
@@ -186,7 +193,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
                       disabled={isSpeaking && !isCurrentlySpeakingThis}
                       variant="outline" 
                       className={cn(
-                        "h-32 md:h-36 lg:h-40 font-medium rounded-lg md:rounded-xl shadow-md flex flex-col items-center justify-center p-2 md:p-3 transition-all text-base",
+                        "h-40 font-medium rounded-xl shadow-md flex flex-col items-center justify-center p-3 transition-all text-base",
                         "focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
                         isCurrentlySpeakingThis
                           ? "bg-primary/10 text-primary border-primary ring-2 ring-primary"
@@ -198,11 +205,11 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
                       aria-busy={isCurrentlySpeakingThis}
                     >
                       {isCurrentlySpeakingThis ? (
-                        <Loader2 className="h-10 w-10 md:h-12 md:w-12 mb-1.5 md:mb-2 animate-spin" />
+                        <Loader2 className="h-12 w-12 mb-2 animate-spin" />
                       ) : (
-                        <Volume2 className="h-10 w-10 md:h-12 md:w-12 mb-1.5 md:mb-2" />
+                        <Volume2 className="h-12 w-12 mb-2" />
                       )}
-                      <span className="text-center text-sm md:text-base leading-tight">{phrase}</span>
+                      <span className="text-center text-base leading-tight">{phrase}</span>
                     </Button>
                   )})}
                 </div>
