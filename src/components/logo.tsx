@@ -9,10 +9,6 @@ const Logo = ({ className }: { className?: string }) => (
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
     >
-      {/* 
-        This is a new, detailed SVG logo created to match the provided image.
-        It consists of a service bell, a phone receiver, and a cord.
-      */}
       <g>
         {/* Phone receiver handle and bell base */}
         <path d="M11.6,41.4c-3.1-3.2-5.1-7.5-5-12c0.1-4,1.8-7.7,4.6-10.4c0.5-0.5,1.4-0.4,1.8,0.2c0.4,0.5,0.4,1.4-0.2,1.8
