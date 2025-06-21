@@ -14,7 +14,9 @@ export default function LanguageSelector({ selectedLanguage, onSelectLanguage }:
   const languages: { code: LanguageCode; name: string }[] = [
     { code: 'en', name: 'English' }, // These names are not translated as they are for language selection itself
     { code: 'es', name: 'Español' },
-    { code: 'fr', name: 'Français' }, // Added French
+    { code: 'fr', name: 'Français' },
+    { code: 'de', name: 'Deutsch' },
+    { code: 'pt', name: 'Português' },
   ];
 
   return (
@@ -22,7 +24,7 @@ export default function LanguageSelector({ selectedLanguage, onSelectLanguage }:
       <p className="text-sm md:text-md text-muted-foreground mb-2">
         {appTranslations.page.languageSelectorLabel[selectedLanguage]}
       </p>
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap justify-center">
         {languages.map((lang) => (
           <Button
             key={lang.code}

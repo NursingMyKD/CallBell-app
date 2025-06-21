@@ -47,7 +47,7 @@ export function useTranslations(lang: LanguageCode) {
 
         const langKeysForTarget = Object.keys(target);
         const isTargetSimpleTranslation = langKeysForTarget.length > 0 &&
-                                       langKeysForTarget.every(k => ['en', 'es', 'fr'].includes(k) && typeof target[k] === 'string');
+                                       langKeysForTarget.every(k => ['en', 'es', 'fr', 'de', 'pt'].includes(k) && typeof target[k] === 'string');
         if (lang in target && isTargetSimpleTranslation) {
           return target[lang];
         }
@@ -67,14 +67,14 @@ export function useTranslations(lang: LanguageCode) {
 
                 if (typeof langSpecificValue === 'string') {
                   const isSimpleTranslationObject = valueKeys.length > 0 && 
-                                                   valueKeys.every(k => ['en','es','fr'].includes(k) && typeof value[k] === 'string');
+                                                   valueKeys.every(k => ['en','es','fr', 'de', 'pt'].includes(k) && typeof value[k] === 'string');
                   if (isSimpleTranslationObject) {
                     return langSpecificValue;
                   }
                 } 
                 else if (Array.isArray(langSpecificValue)) {
                   const isLanguageArrayObject = valueKeys.length > 0 && 
-                                                valueKeys.every(k => ['en','es','fr'].includes(k) && Array.isArray(value[k]));
+                                                valueKeys.every(k => ['en','es','fr', 'de', 'pt'].includes(k) && Array.isArray(value[k]));
                   if (isLanguageArrayObject) {
                     return langSpecificValue; 
                   }
