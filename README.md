@@ -1,108 +1,41 @@
-# CallBell App (Next.js Starter)
+# iControlBell - Smart Patient Assistance
 
-This project is a Next.js application, likely bootstrapped or intended for use with Firebase and potentially AI features via Genkit. It's set up with TypeScript, Tailwind CSS, and a suite of modern development tools.
+![iControlBell Logo](public/iControlBell-logo.png)
+
+iControlBell is an intelligent, compassionate, and multilingual call bell system designed to empower patients and streamline care in healthcare facilities. By leveraging AI-powered voice commands and a simple, intuitive interface, iControlBell ensures that every patient's need is heard and addressed promptly.
 
 ## Project Overview
 
-*(Please replace this section with a more detailed description of your application's purpose and features.)*
+This Next.js application serves as the central hub for the iControlBell system. It provides a user-friendly interface for patients to make requests, and a real-time dashboard for caregivers to monitor and respond to those requests. The system is designed to be accessible, and with multilingual support, it breaks down communication barriers to provide equitable care for all.
 
-This application serves as a starting point for building...
+![App Screenshot](https://storage.googleapis.com/project-os-prod/images/22614b1c-7f72-4d31-8975-f09c693a0279.png)
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 (with Turbopack for development)
+- **Framework**: Next.js 15
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS with `tailwindcss-animate`
-- **UI Components**: Radix UI primitives, `lucide-react` for icons
-- **State Management/Data Fetching**: TanStack Query (React Query) with `@tanstack-query-firebase/react`
-- **Forms**: React Hook Form with Zod for validation
-- **AI Integration**: Genkit (with Google AI)
-- **Firebase**: Integrated for backend services (authentication, database, etc.)
-- **Linting/Formatting**: ESLint (as per Next.js defaults)
-- **Package Manager**: (Assumed Yarn or NPM based on `.gitignore` and `package.json`)
-- **Swift Prototype**: Early Swift port located in `swift/`
+- **Styling**: Tailwind CSS
+- **UI Components**: Shadcn UI, Radix UI, and Lucide React
+- **AI**: Google AI with Genkit
+- **Backend**: Firebase
+- **Mobile**: Swift (for potential future iOS integration)
 
-## Prerequisites
+## Features
 
-- Node.js (e.g., v18.x or v20.x - check `package.json` engines if specified, or test with current LTS)
-- Yarn or NPM
-- Firebase project setup and configuration (if using Firebase services).
+- **One-Touch & Voice-Activated Requests**: Patients can easily request assistance for common needs like "Water", "Restroom", or "Pain" with a single tap or by speaking in their native language.
+- **Real-Time Dashboard**: A centralized grid displays all active patient requests, allowing caregivers to prioritize and respond efficiently.
+- **Multilingual Support**: The system is designed to understand and respond to requests in multiple languages, ensuring clear communication and reducing the risk of misunderstandings.
+- **Auditory Feedback**: The system provides clear audio cues to confirm that a request has been successfully placed.
 
 ## Getting Started
 
-### 1. Clone the repository (if applicable)
+1.  **Clone the repository.**
+2.  **Install dependencies**: `npm install`
+3.  **Set up your Firebase project** and add your configuration to `.env.local`.
+4.  **Run the development server**: `npm run dev`
 
-### 2. Install Dependencies
-```bash
-# Using Yarn
-yarn install
-
-# Or using NPM
-npm install
-```
-
-### 3. Environment Variables
-Create a `.env.local` file in the root of the project. You might want to copy from an example file if one is provided (e.g., `.env.example`).
-
-Example `.env.local`:
-```env
-# Firebase configuration (replace with your actual Firebase project config)
-NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-
-# Genkit/Google AI (if applicable)
-GOOGLE_API_KEY=your_google_api_key
-```
-
-### 4. Run the Development Server
-```bash
-# Using Yarn
-yarn dev
-
-# Or using NPM
-npm run dev
-```
-This will start the Next.js development server, typically on `http://localhost:9002` (as per your `dev` script).
-
-### 5. Running Genkit (if applicable)
-To start the Genkit development flow:
-```bash
-# Using Yarn
-yarn genkit:dev
-
-# Or using NPM
-npm run genkit:dev
-```
-For watching changes:
-```bash
-# Using Yarn
-yarn genkit:watch
-
-# Or using NPM
-npm run genkit:watch
-```
-
-## Available Scripts
-
-- `dev`: Starts the Next.js development server with Turbopack.
-- `genkit:dev`: Starts the Genkit development flow.
-- `genkit:watch`: Starts the Genkit development flow with file watching.
-- `build`: Builds the application for production.
-- `start`: Starts a Next.js production server.
-- `lint`: Runs ESLint.
-- `typecheck`: Runs TypeScript compiler for type checking.
-- `postinstall`: Runs `patch-package` (if applicable).
+This will start the app on `http://localhost:9002`.
 
 ## Deployment
 
-*(Add instructions or notes on how to deploy this application, e.g., to Vercel, Firebase Hosting, or other platforms.)*
-
-## Further Exploration
-
-To get started with the application code, take a look at `src/app/page.tsx`.
-The global styles and CSS variables are defined in `src/app/globals.css`.
-Tailwind CSS configuration is in `tailwind.config.ts`.
+The application is configured for deployment with Firebase App Hosting.
