@@ -1,3 +1,4 @@
+
 "use client";
 import * as React from 'react';
 import type { LanguageCode } from '@/lib/translations';
@@ -36,6 +37,16 @@ export default function LanguageSelector({ selectedLanguage, onSelectLanguage }:
     { code: 'pl', name: 'Polski', englishName: 'Polish' },
     { code: 'sv', name: 'Svenska', englishName: 'Swedish' },
     { code: 'vi', name: 'Tiếng Việt', englishName: 'Vietnamese' },
+    { code: 'id', name: 'Bahasa Indonesia', englishName: 'Indonesian' },
+    { code: 'ur', name: 'اردو', englishName: 'Urdu' },
+    { code: 'tl', name: 'Tagalog', englishName: 'Filipino' },
+    { code: 'th', name: 'ภาษาไทย', englishName: 'Thai' },
+    { code: 'el', name: 'Ελληνικά', englishName: 'Greek' },
+    { code: 'cs', name: 'Čeština', englishName: 'Czech' },
+    { code: 'hu', name: 'Magyar', englishName: 'Hungarian' },
+    { code: 'ro', name: 'Română', englishName: 'Romanian' },
+    { code: 'da', name: 'Dansk', englishName: 'Danish' },
+    { code: 'fi', name: 'Suomi', englishName: 'Finnish' },
   ];
 
   const handleValueChange = (value: string) => {
@@ -52,7 +63,7 @@ export default function LanguageSelector({ selectedLanguage, onSelectLanguage }:
            <SelectValue placeholder="Select a language" />
          </SelectTrigger>
          <SelectContent>
-           {languages.map((lang) => (
+           {languages.sort((a, b) => a.englishName.localeCompare(b.englishName)).map((lang) => (
              <SelectItem key={lang.code} value={lang.code} className="text-base md:text-lg py-2">
                {lang.name}
                {lang.code !== 'en' && <span className="ml-2 text-muted-foreground font-normal">({lang.englishName})</span>}
