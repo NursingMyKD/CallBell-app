@@ -1,4 +1,3 @@
-
 "use client";
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
@@ -11,25 +10,25 @@ interface LanguageSelectorProps {
 }
 
 export default function LanguageSelector({ selectedLanguage, onSelectLanguage }: LanguageSelectorProps) {
-  const languages: { code: LanguageCode; name: string }[] = [
-    { code: 'en', name: 'English' },
-    { code: 'es', name: 'Español' },
-    { code: 'fr', name: 'Français' },
-    { code: 'de', name: 'Deutsch' },
-    { code: 'pt', name: 'Português' },
-    { code: 'it', name: 'Italiano' },
-    { code: 'ja', name: '日本語' },
-    { code: 'nl', name: 'Nederlands' },
-    { code: 'ru', name: 'Русский' },
-    { code: 'zh', name: '中文' },
-    { code: 'hi', name: 'हिन्दी' },
-    { code: 'ar', name: 'العربية' },
-    { code: 'bn', name: 'বাংলা' },
-    { code: 'ko', name: '한국어' },
-    { code: 'tr', name: 'Türkçe' },
-    { code: 'pl', name: 'Polski' },
-    { code: 'sv', name: 'Svenska' },
-    { code: 'vi', name: 'Tiếng Việt' },
+  const languages: { code: LanguageCode; name: string; englishName: string; }[] = [
+    { code: 'en', name: 'English', englishName: 'English' },
+    { code: 'es', name: 'Español', englishName: 'Spanish' },
+    { code: 'fr', name: 'Français', englishName: 'French' },
+    { code: 'de', name: 'Deutsch', englishName: 'German' },
+    { code: 'pt', name: 'Português', englishName: 'Portuguese' },
+    { code: 'it', name: 'Italiano', englishName: 'Italian' },
+    { code: 'ja', name: '日本語', englishName: 'Japanese' },
+    { code: 'nl', name: 'Nederlands', englishName: 'Dutch' },
+    { code: 'ru', name: 'Русский', englishName: 'Russian' },
+    { code: 'zh', name: '中文', englishName: 'Chinese' },
+    { code: 'hi', name: 'हिन्दी', englishName: 'Hindi' },
+    { code: 'ar', name: 'العربية', englishName: 'Arabic' },
+    { code: 'bn', name: 'বাংলা', englishName: 'Bengali' },
+    { code: 'ko', name: '한국어', englishName: 'Korean' },
+    { code: 'tr', name: 'Türkçe', englishName: 'Turkish' },
+    { code: 'pl', name: 'Polski', englishName: 'Polish' },
+    { code: 'sv', name: 'Svenska', englishName: 'Swedish' },
+    { code: 'vi', name: 'Tiếng Việt', englishName: 'Vietnamese' },
   ];
 
   return (
@@ -47,6 +46,7 @@ export default function LanguageSelector({ selectedLanguage, onSelectLanguage }:
             size="sm"
           >
             {lang.name}
+            {lang.code !== 'en' && <span className="ml-1.5 text-muted-foreground/80 font-normal">({lang.englishName})</span>}
           </Button>
         ))}
       </div>
