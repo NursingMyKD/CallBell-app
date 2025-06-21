@@ -133,7 +133,6 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
       setIsSpeaking(false);
       setCurrentlySpeakingPhrase(null);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentBcp47Lang, soundboardStrings, toast, speechSynthesisSupported]);
 
 
@@ -224,7 +223,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
   }
   
   return (
-    <div className="mt-6 md:mt-8 w-full max-w-xl md:max-w-3xl px-2">
+    <div className="mt-8 md:mt-10 w-full max-w-xl md:max-w-4xl lg:max-w-5xl px-2">
       <h2 className="text-2xl sm:text-3xl font-semibold mb-3 md:mb-4 text-center">
         {soundboardStrings.title}
       </h2>
@@ -234,14 +233,14 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
 
       {availableVoices.length > 0 && (
         <div className="mb-4 md:mb-6 flex flex-col items-center">
-           <Label htmlFor="voice-select" className="text-sm md:text-md text-muted-foreground mb-1.5">
+           <Label htmlFor="voice-select" className="text-base md:text-lg text-muted-foreground mb-1.5">
             {soundboardStrings.voiceSelectorLabel}
           </Label>
           <Select
             value={selectedVoiceURI || "default"} 
             onValueChange={(value) => setSelectedVoiceURI(value === "default" ? undefined : value)}
           >
-            <SelectTrigger id="voice-select" className="w-full max-w-xs mx-auto text-sm md:text-base">
+            <SelectTrigger id="voice-select" className="w-full max-w-sm mx-auto text-sm md:text-base">
               <SelectValue placeholder={soundboardStrings.defaultVoiceName} />
             </SelectTrigger>
             <SelectContent>
@@ -259,7 +258,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
       <Tabs defaultValue={categoryKeys[0]} className="w-full">
         <TabsList className="grid h-auto w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
           {categoryKeys.map((key) => (
-            <TabsTrigger key={key} value={key} className="text-xs sm:text-sm">
+            <TabsTrigger key={key} value={key} className="text-sm md:text-base">
               {soundboardStrings.categories[key].title}
             </TabsTrigger>
           ))}
@@ -270,7 +269,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
 
             return (
               <TabsContent key={key} value={key} className="mt-4">
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
                   {categoryPhrases.map((phrase) => (
                     <Button
                       key={phrase}
@@ -278,7 +277,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
                       disabled={isSpeaking && currentlySpeakingPhrase !== phrase}
                       variant="outline" 
                       className={cn(
-                        "h-28 md:h-32 text-sm md:text-base font-medium rounded-lg md:rounded-xl shadow-md flex flex-col items-center justify-center p-2 md:p-3 transition-all",
+                        "h-32 md:h-36 lg:h-40 font-medium rounded-lg md:rounded-xl shadow-md flex flex-col items-center justify-center p-2 md:p-3 transition-all",
                         "focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
                         currentlySpeakingPhrase === phrase && isSpeaking 
                           ? "bg-primary/10 text-primary border-primary ring-2 ring-primary animate-pulse" 
@@ -290,11 +289,11 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
                       aria-busy={currentlySpeakingPhrase === phrase && isSpeaking}
                     >
                       {currentlySpeakingPhrase === phrase && isSpeaking ? (
-                        <Loader2 className="h-6 w-6 md:h-7 md:w-7 mb-1 md:mb-1.5 animate-spin" />
+                        <Loader2 className="h-8 w-8 md:h-10 md:w-10 mb-1 md:mb-1.5 animate-spin" />
                       ) : (
-                        <Volume2 className="h-6 w-6 md:h-7 md:w-7 mb-1 md:mb-1.5" />
+                        <Volume2 className="h-8 w-8 md:h-10 md:w-10 mb-1 md:mb-1.5" />
                       )}
-                      <span className="text-center text-sm leading-tight">{phrase}</span>
+                      <span className="text-center text-sm md:text-base leading-tight">{phrase}</span>
                     </Button>
                   ))}
                 </div>

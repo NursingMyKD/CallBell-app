@@ -194,7 +194,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
       key={option.type}
       onClick={() => handleSpecificRequest(option.type)}
       className={cn(
-          "h-36 md:h-44 text-lg md:text-xl font-semibold rounded-xl md:rounded-2xl shadow-lg md:shadow-xl flex flex-col items-center justify-center p-3 md:p-4 transition-all focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
+          "h-40 md:h-48 lg:h-52 text-lg md:text-xl lg:text-2xl font-semibold rounded-xl md:rounded-2xl shadow-lg md:shadow-xl flex flex-col items-center justify-center p-3 md:p-4 transition-all focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
           status === 'success' && activeRequestType === option.type && "bg-success text-success-foreground hover:bg-success/90",
           status === 'error' && activeRequestType === option.type && "bg-destructive text-destructive-foreground hover:bg-destructive/90"
       )}
@@ -206,22 +206,22 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
       disabled={status === 'pending'}
       aria-label={`${gridStrings.statusCallingFor} ${option.label}`}
     >
-      <option.icon className="h-12 w-12 md:h-16 md:w-16 mb-2 md:mb-3" />
+      <option.icon className="h-16 w-16 md:h-20 lg:h-24 mb-2 md:mb-3" />
       {option.label}
     </Button>
   );
 
   return (
-    <div className="flex flex-col items-center space-y-3 md:space-y-4 w-full max-w-xl md:max-w-3xl px-2">
+    <div className="flex flex-col items-center space-y-3 md:space-y-4 w-full max-w-xl md:max-w-4xl lg:max-w-5xl px-2">
       <div className="h-8 md:h-10 mb-1 md:mb-2 flex items-center justify-center w-full">
         {status === 'pending' && activeRequestType && (
-          <div className="flex items-center text-md md:text-lg p-1.5 md:p-2 rounded-md bg-primary/10 text-primary animate-pulse">
+          <div className="flex items-center text-lg md:text-xl p-1.5 md:p-2 rounded-md bg-primary/10 text-primary animate-pulse">
             <Loader2 className="mr-2 h-5 w-5 md:mr-2.5 md:h-6 md:w-6 animate-spin" />
             {gridStrings.statusCallingFor} {getTranslatedLabelForType(activeRequestType)}...
           </div>
         )}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 lg:gap-8 w-full">
         {currentCallRequestOptions.map(renderButton)}
       </div>
     </div>

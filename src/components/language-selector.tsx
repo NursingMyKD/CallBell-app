@@ -34,16 +34,16 @@ export default function LanguageSelector({ selectedLanguage, onSelectLanguage }:
 
   return (
     <div className="my-3 md:my-4 flex flex-col items-center">
-      <p className="text-sm md:text-md text-muted-foreground mb-2">
+      <p className="text-base md:text-lg text-muted-foreground mb-2">
         {appTranslations.page.languageSelectorLabel[selectedLanguage]}
       </p>
-      <div className="flex gap-3 flex-wrap justify-center">
+      <div className="flex gap-4 flex-wrap justify-center">
         {languages.map((lang) => (
           <Button
             key={lang.code}
             variant={selectedLanguage === lang.code ? 'default' : 'outline'}
             onClick={() => onSelectLanguage(lang.code)}
-            className="px-4 py-2 text-sm rounded-lg"
+            className="px-5 py-3 text-base rounded-lg"
           >
             {lang.name}
             {lang.code !== 'en' && <span className="ml-1.5 text-muted-foreground/80 font-normal">({lang.englishName})</span>}
