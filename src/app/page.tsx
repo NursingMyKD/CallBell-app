@@ -10,10 +10,10 @@ export default function Home() {
   const [selectedLanguage, setSelectedLanguage] = React.useState<LanguageCode>('en');
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-8 lg:p-12">
-       <div className="relative mb-4 md:mb-6">
-         <Logo className="w-48 h-48 text-foreground" />
-         <h1 className="absolute bottom-5 left-0 right-0 text-4xl font-bold text-center text-foreground">
+    <main className="flex min-h-screen flex-col items-center p-4 pt-8 md:p-8 md:pt-8 lg:p-12 lg:pt-8">
+       <div className="relative mb-4 md:mb-6 -mt-24">
+         <Logo className="w-64 h-64 text-foreground" />
+         <h1 className="absolute bottom-10 left-0 right-0 text-4xl font-bold text-center text-foreground">
            {appTranslations.page.title[selectedLanguage]}
          </h1>
        </div>

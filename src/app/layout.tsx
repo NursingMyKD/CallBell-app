@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       {/*
         Hydration warning suppression moved to body as browser extensions
         like Grammarly often inject attributes there.
