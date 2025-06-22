@@ -11,10 +11,12 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-8 lg:p-12">
-       <Logo className="w-48 h-48 text-foreground mb-4" />
-       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 text-center text-foreground">
-         {appTranslations.page.title[selectedLanguage]}
-       </h1>
+       <div className="relative mb-4 md:mb-6">
+         <Logo className="w-48 h-48 text-foreground" />
+         <h1 className="absolute bottom-5 left-0 right-0 text-4xl font-bold text-center text-foreground">
+           {appTranslations.page.title[selectedLanguage]}
+         </h1>
+       </div>
        <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 md:mb-8 text-center max-w-lg md:max-w-2xl">
          {appTranslations.page.description[selectedLanguage]}
        </p>

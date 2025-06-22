@@ -39,23 +39,5 @@
       "firebase-debug.*.log",
       "functions"
     ]
-  },
-  "hosting": {
-    "source": "studio",
-    "frameworksBackend": {
-      "region": "us-central1"
-    },
-    "public": "studio/public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
   }
 }

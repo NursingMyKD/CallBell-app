@@ -4,14 +4,18 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && npm run build:genkit",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "genkit:dev": "node_modules/.bin/genkit dev",
+    "genkit:start": "node_modules/.bin/genkit start",
+    "build:genkit": "node_modules/.bin/genkit build"
   },
   "dependencies": {
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
+    "@genkit-ai/googleai": "^1.13.0",
     "@opentelemetry/exporter-jaeger": "^2.0.1",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -36,9 +40,9 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
-    "firebase": "^11.3.0",
+    "firebase": "^11.9.1",
     "lucide-react": "^0.475.0",
-    "next": "14.2.4",
+    "next": "^14.2.30",
     "patch-package": "^8.0.0",
     "react": "^18.2.0",
     "react-day-picker": "^8.10.1",

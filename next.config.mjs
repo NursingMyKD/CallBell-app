@@ -17,9 +17,10 @@ const nextConfig = {
       },
     ],
   },
-  devIndicators: {
+  experimental: {
     allowedDevOrigins: [
       "https://*.cluster-ux5mmlia3zhhask7riihruxydo.cloudworkstations.dev",
+      "http://localhost:3000"
     ],
   },
 };
