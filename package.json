@@ -4,14 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && npm run build:genkit",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "postinstall": "patch-package",
-    "genkit:dev": "node_modules/.bin/genkit dev",
-    "genkit:start": "node_modules/.bin/genkit start",
-    "build:genkit": "node_modules/.bin/genkit build"
+    "genkit:dev": "genkit dev",
+    "genkit:start": "genkit start",
+    "build:genkit": "genkit build"
   },
   "dependencies": {
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
