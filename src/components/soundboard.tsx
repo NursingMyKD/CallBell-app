@@ -32,7 +32,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
 
   const [isSpeechSupported, setIsSpeechSupported] = React.useState(true);
   const [voices, setVoices] = React.useState<SpeechSynthesisVoice[]>([]);
-  const [selectedVoice, setSelectedVoice] = React.useState<string | undefined>(undefined);
+  const [selectedVoice, setSelectedVoice] = React.useState('');
 
   React.useEffect(() => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -54,13 +54,11 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
 
         const isSelectedVoiceInList = languageVoices.some(v => v.voiceURI === selectedVoice);
 
-        if (!isSelectedVoiceInList || !selectedVoice) {
-          setSelectedVoice(languageVoices[0]?.voiceURI);
+        if (!isSelectedVoiceInList) {
+          setSelectedVoice(languageVoices[0]?.voiceURI || '');
         }
       };
       
-      // onvoiceschanged is not consistently fired in all browsers.
-      // So we call it directly and also set it as a handler.
       handleVoicesChanged();
       if (window.speechSynthesis.onvoiceschanged !== undefined) {
         window.speechSynthesis.onvoiceschanged = handleVoicesChanged;
@@ -76,7 +74,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
     } else {
       setIsSpeechSupported(false);
     }
-  }, [selectedLanguage, selectedVoice]);
+  }, [selectedLanguage]);
 
   const handleSpeak = React.useCallback(async (phrase: string, index: number) => {
     if (isSpeaking) {
