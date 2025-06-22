@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from 'react';
@@ -30,12 +31,13 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
     return Object.keys(appTranslations.soundboard.categories);
   }, []);
 
-  const [isSpeechSupported, setIsSpeechSupported] = React.useState(true);
+  const [isSpeechSupported, setIsSpeechSupported] = React.useState<boolean | undefined>(undefined);
   const [voices, setVoices] = React.useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = React.useState('');
 
   React.useEffect(() => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      setIsSpeechSupported(true);
       const handleVoicesChanged = () => {
         const allVoices = window.speechSynthesis.getVoices();
         if (allVoices.length === 0) return;
@@ -129,7 +131,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
     setIsClient(true);
   }, []); 
 
-  if (!isClient) {
+  if (!isClient || isSpeechSupported === undefined) {
     return null; 
   }
 

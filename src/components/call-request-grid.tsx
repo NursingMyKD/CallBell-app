@@ -13,6 +13,23 @@ import { useTranslations } from '@/hooks/use-translations';
 
 type Status = 'idle' | 'pending' | 'success' | 'error';
 
+interface GridStrings {
+  statusCallingFor: string;
+  toastSuccessTitle: string;
+  toastSuccessRequestSent: string;
+  toastErrorTitle: string;
+  toastFailedToSend: string;
+  toastSystemErrorTitle: string;
+  toastCouldNotProcess: string;
+  audioErrorToastTitle: string;
+  audioErrorAborted: string;
+  audioErrorNetwork: string;
+  audioErrorDecode: string;
+  audioErrorSrcNotSupported: string;
+  audioErrorDefault: string;
+  audioErrorUnexpected: string;
+}
+
 interface CallRequestGridProps {
   selectedLanguage: LanguageCode;
 }
@@ -27,7 +44,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
 
   const t = useTranslations(selectedLanguage);
 
-  const gridStrings = React.useMemo(() => {
+  const gridStrings: GridStrings = React.useMemo(() => {
     return t('callRequestGrid');
   }, [t]);
 
@@ -59,7 +76,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
       };
       
       const handleError = (event: Event) => {
-        let userFriendlyMessageKey: keyof typeof gridStrings = 'audioErrorDefault';
+        let userFriendlyMessageKey: keyof GridStrings = 'audioErrorDefault';
         let consoleLogMessage = "Error loading success sound. Ensure '/sounds/success.mp3' exists in public/sounds and is a supported format.";
         let errorPayload: object | string = { eventType: event.type };
         const audioEl = audioRef.current;
