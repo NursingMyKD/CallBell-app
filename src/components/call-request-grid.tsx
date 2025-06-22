@@ -38,7 +38,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
 
   const getTranslatedCallRequestOptions = React.useCallback(() => {
     return callRequestOptionsStructure.map(optionStructure => {
-      const translationEntry = callRequestOptionLabels.find(trans => trans.type === optionStructure.type);
+      const translationEntry = callRequestOptionLabels.find((trans: CallRequestOptionStructure) => trans.type === optionStructure.type);
       return {
         ...optionStructure,
         label: translationEntry ? translationEntry.label : optionStructure.type,
@@ -142,7 +142,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
   };
 
   const getTranslatedLabelForType = React.useCallback((requestType: CallRequestType): string => {
-    const option = callRequestOptionLabels.find(opt => opt.type === requestType);
+    const option = callRequestOptionLabels.find((opt: CallRequestOptionStructure) => opt.type === requestType);
     return option ? option.label : requestType;
   }, [callRequestOptionLabels]);
 

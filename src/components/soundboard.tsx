@@ -74,7 +74,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
     } else {
       setIsSpeechSupported(false);
     }
-  }, [selectedLanguage]);
+  }, [selectedLanguage, selectedVoice]);
 
   const handleSpeak = React.useCallback(async (phrase: string, index: number) => {
     if (isSpeaking) {
