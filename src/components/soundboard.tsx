@@ -141,7 +141,7 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
         <h2 className="text-3xl font-semibold mb-4">
           {soundboardStrings.speechNotSupportedTitle}
         </h2>
-        <p className="text-lg text-muted-foreground">
+        <p className="text-lg text-foreground">
           {soundboardStrings.speechNotSupportedDescription}
         </p>
       </div>
@@ -153,12 +153,12 @@ export default function Soundboard({ selectedLanguage }: SoundboardProps) {
       <h2 className="text-3xl font-semibold mb-4 text-center">
         {soundboardStrings.title}
       </h2>
-      <p className="text-md text-muted-foreground mb-4 text-center">
+      <p className="text-md text-foreground mb-4 text-center">
         {soundboardStrings.description}
       </p>
 
       <div className="my-6 flex flex-col items-center w-full max-w-sm mx-auto">
-        <Label htmlFor="voice-select" className="text-lg text-muted-foreground mb-2">
+        <Label htmlFor="voice-select" className="text-lg text-foreground mb-2">
           {soundboardStrings.voiceSelectorLabel}
         </Label>
         <Select value={selectedVoice} onValueChange={setSelectedVoice} disabled={voices.length === 0}>

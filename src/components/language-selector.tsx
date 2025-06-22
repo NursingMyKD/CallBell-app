@@ -55,7 +55,7 @@ export default function LanguageSelector({ selectedLanguage, onSelectLanguage }:
 
   return (
     <div className="my-4 md:my-6 flex flex-col items-center w-full max-w-xs md:max-w-sm">
-       <Label htmlFor="language-select" className="text-base md:text-lg text-muted-foreground mb-2">
+       <Label htmlFor="language-select" className="text-base md:text-lg text-foreground mb-2">
          {appTranslations.page.languageSelectorLabel[selectedLanguage]}
        </Label>
        <Select value={selectedLanguage} onValueChange={handleValueChange}>
@@ -66,7 +66,7 @@ export default function LanguageSelector({ selectedLanguage, onSelectLanguage }:
            {languages.sort((a, b) => a.englishName.localeCompare(b.englishName)).map((lang) => (
              <SelectItem key={lang.code} value={lang.code} className="text-base md:text-lg py-2">
                {lang.name}
-               {lang.code !== 'en' && <span className="ml-2 text-muted-foreground font-normal">({lang.englishName})</span>}
+               {lang.code !== 'en' && <span className="ml-2 text-foreground font-normal">({lang.englishName})</span>}
              </SelectItem>
            ))}
          </SelectContent>

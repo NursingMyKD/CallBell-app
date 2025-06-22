@@ -17,7 +17,7 @@ export default function Home() {
            {appTranslations.page.title[selectedLanguage]}
          </h1>
        </div>
-       <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 md:mb-8 text-center max-w-lg md:max-w-2xl">
+       <p className="text-base sm:text-lg md:text-xl text-foreground mb-6 md:mb-8 text-center max-w-lg md:max-w-2xl">
          {appTranslations.page.description[selectedLanguage]}
        </p>
        <LanguageSelector selectedLanguage={selectedLanguage} onSelectLanguage={setSelectedLanguage} />
