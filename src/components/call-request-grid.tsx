@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { handleCallBellTrigger } from '@/app/actions';
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import { callRequestOptionsStructure, type CallRequestType, type CallRequestOption as CallRequestOptionStructure } from '@/types/call-requests';
+import { callRequestOptionsStructure, type CallRequestType, type CallRequestOption } from '@/types/call-requests';
 import type { LanguageCode } from '@/lib/translations';
 import { useTranslations } from '@/hooks/use-translations';
 
@@ -15,6 +15,11 @@ type Status = 'idle' | 'pending' | 'success' | 'error';
 
 interface CallRequestGridProps {
   selectedLanguage: LanguageCode;
+}
+
+interface TranslatedCallRequestOption {
+  type: CallRequestType;
+  label: string;
 }
 
 export default function CallRequestGrid({ selectedLanguage }: CallRequestGridProps) {
@@ -31,14 +36,14 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
     return t('callRequestGrid');
   }, [t]);
 
-  const callRequestOptionLabels = React.useMemo(() => {
+  const callRequestOptionLabels: TranslatedCallRequestOption[] = React.useMemo(() => {
     return t('callRequestOptions');
   }, [t]);
 
 
   const getTranslatedCallRequestOptions = React.useCallback(() => {
     return callRequestOptionsStructure.map(optionStructure => {
-      const translationEntry = callRequestOptionLabels.find((trans: CallRequestOptionStructure) => trans.type === optionStructure.type);
+      const translationEntry = callRequestOptionLabels.find((trans) => trans.type === optionStructure.type);
       return {
         ...optionStructure,
         label: translationEntry ? translationEntry.label : optionStructure.type,
@@ -142,7 +147,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
   };
 
   const getTranslatedLabelForType = React.useCallback((requestType: CallRequestType): string => {
-    const option = callRequestOptionLabels.find((opt: CallRequestOptionStructure) => opt.type === requestType);
+    const option = callRequestOptionLabels.find((opt) => opt.type === requestType);
     return option ? option.label : requestType;
   }, [callRequestOptionLabels]);
 
@@ -189,7 +194,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
     timeoutRef.current = setTimeout(resetToIdle, 5000);
   }, [status, toast, playSuccessSound, gridStrings, getTranslatedLabelForType]);
 
-  const renderButton = (option: { type: CallRequestType; icon: CallRequestOptionStructure['icon']; label: string }) => (
+  const renderButton = (option: { type: CallRequestType; icon: CallRequestOption['icon']; label: string }) => (
     <Button
       key={option.type}
       onClick={() => handleSpecificRequest(option.type)}
