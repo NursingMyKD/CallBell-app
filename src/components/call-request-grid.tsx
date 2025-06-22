@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from 'react';
@@ -12,16 +13,6 @@ import { useTranslations } from '@/hooks/use-translations';
 
 type Status = 'idle' | 'pending' | 'success' | 'error';
 
-interface GridStrings {
-  statusCallingFor: string;
-  toastSuccessTitle: string;
-  toastSuccessRequestSent: string;
-  toastErrorTitle: string;
-  toastFailedToSend: string;
-  toastSystemErrorTitle: string;
-  toastCouldNotProcess: string;
-}
-
 interface CallRequestGridProps {
   selectedLanguage: LanguageCode;
 }
@@ -34,30 +25,17 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
 
   const t = useTranslations(selectedLanguage);
 
-  const gridStrings: GridStrings = React.useMemo(() => {
-    const translations = t('callRequestGrid');
-    // Remove audio-related properties that are no longer used
-    const {
-      audioErrorToastTitle,
-      audioErrorAborted,
-      audioErrorNetwork,
-      audioErrorDecode,
-      audioErrorSrcNotSupported,
-      audioErrorDefault,
-      audioErrorUnexpected,
-      ...rest
-    } = translations;
-    return rest;
+  const gridStrings = React.useMemo(() => {
+    return t('callRequestGrid');
   }, [t]);
 
-  const callRequestOptionLabels: { type: CallRequestType; label: string }[] = React.useMemo(() => {
+  const callRequestOptionLabels = React.useMemo(() => {
     return t('callRequestOptions');
   }, [t]);
 
-
   const getTranslatedCallRequestOptions = React.useCallback(() => {
     return callRequestOptionsStructure.map(optionStructure => {
-      const translationEntry = callRequestOptionLabels.find((trans: { type: CallRequestType; label: string }) => trans.type === optionStructure.type);
+      const translationEntry = callRequestOptionLabels.find((trans: CallRequestOptionStructure) => trans.type === optionStructure.type);
       return {
         ...optionStructure,
         label: translationEntry ? translationEntry.label : optionStructure.type,
@@ -67,15 +45,18 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
 
   const currentCallRequestOptions = React.useMemo(() => getTranslatedCallRequestOptions(), [getTranslatedCallRequestOptions]);
 
-  React.useEffect(() => {
-    // Cleanup timeout on component unmount
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
-
+  const playSuccessSound = React.useCallback(() => {
+    const audio = new Audio('/sounds/success.mp3');
+    audio.play().catch(error => {
+      console.error("Error playing success sound:", error);
+      toast({ 
+          title: gridStrings.audioErrorToastTitle, 
+          description: "Could not play sound. Browser interaction might be required.",
+          variant: "destructive", 
+          duration: 3000 
+      });
+    });
+  }, [toast, gridStrings]);
 
   const resetToIdle = () => {
     setStatus('idle');
@@ -83,7 +64,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
   };
 
   const getTranslatedLabelForType = React.useCallback((requestType: CallRequestType): string => {
-    const option = callRequestOptionLabels.find((opt: { type: CallRequestType; label: string }) => opt.type === requestType);
+    const option = callRequestOptionLabels.find((opt: CallRequestOptionStructure) => opt.type === requestType);
     return option ? option.label : requestType;
   }, [callRequestOptionLabels]);
 
@@ -100,6 +81,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
       const result = await handleCallBellTrigger(requestType);
       if (result.success) {
         setStatus('success');
+        playSuccessSound();
         toast({
           title: gridStrings.toastSuccessTitle,
           description: `${translatedRequestLabel} ${gridStrings.toastSuccessRequestSent}`,
@@ -127,7 +109,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
       });
     }
     timeoutRef.current = setTimeout(resetToIdle, 5000);
-  }, [status, toast, gridStrings, getTranslatedLabelForType]);
+  }, [status, toast, playSuccessSound, gridStrings, getTranslatedLabelForType]);
 
   const renderButton = (option: { type: CallRequestType; icon: CallRequestOptionStructure['icon']; label: string }) => (
     <Button
