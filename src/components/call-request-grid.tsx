@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from 'react';
@@ -21,13 +20,6 @@ interface GridStrings {
   toastFailedToSend: string;
   toastSystemErrorTitle: string;
   toastCouldNotProcess: string;
-  audioErrorToastTitle: string;
-  audioErrorAborted: string;
-  audioErrorNetwork: string;
-  audioErrorDecode: string;
-  audioErrorSrcNotSupported: string;
-  audioErrorDefault: string;
-  audioErrorUnexpected: string;
 }
 
 interface CallRequestGridProps {
@@ -39,23 +31,33 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
   const [activeRequestType, setActiveRequestType] = React.useState<CallRequestType | null>(null);
   const { toast } = useToast();
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
-  const audioRef = React.useRef<HTMLAudioElement | null>(null);
-  const [isSoundReady, setIsSoundReady] = React.useState(false);
 
   const t = useTranslations(selectedLanguage);
 
   const gridStrings: GridStrings = React.useMemo(() => {
-    return t('callRequestGrid');
+    const translations = t('callRequestGrid');
+    // Remove audio-related properties that are no longer used
+    const {
+      audioErrorToastTitle,
+      audioErrorAborted,
+      audioErrorNetwork,
+      audioErrorDecode,
+      audioErrorSrcNotSupported,
+      audioErrorDefault,
+      audioErrorUnexpected,
+      ...rest
+    } = translations;
+    return rest;
   }, [t]);
 
-  const callRequestOptionLabels = React.useMemo(() => {
+  const callRequestOptionLabels: { type: CallRequestType; label: string }[] = React.useMemo(() => {
     return t('callRequestOptions');
   }, [t]);
 
 
   const getTranslatedCallRequestOptions = React.useCallback(() => {
     return callRequestOptionsStructure.map(optionStructure => {
-      const translationEntry = callRequestOptionLabels.find((trans: CallRequestOptionStructure) => trans.type === optionStructure.type);
+      const translationEntry = callRequestOptionLabels.find((trans: { type: CallRequestType; label: string }) => trans.type === optionStructure.type);
       return {
         ...optionStructure,
         label: translationEntry ? translationEntry.label : optionStructure.type,
@@ -66,92 +68,14 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
   const currentCallRequestOptions = React.useMemo(() => getTranslatedCallRequestOptions(), [getTranslatedCallRequestOptions]);
 
   React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      audioRef.current = new Audio('/sounds/success.mp3');
-      audioRef.current.load();
+    // Cleanup timeout on component unmount
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
-      const handleCanPlayThrough = () => {
-        console.log("Success sound ready to play.");
-        setIsSoundReady(true);
-      };
-      
-      const handleError = (event: Event) => {
-        let userFriendlyMessageKey: keyof GridStrings = 'audioErrorDefault';
-        let consoleLogMessage = "Error loading success sound. Ensure '/sounds/success.mp3' exists in public/sounds and is a supported format.";
-        let errorPayload: object | string = { eventType: event.type };
-        const audioEl = audioRef.current;
-
-        if (audioEl && audioEl.error) {
-          const mediaError = audioEl.error;
-          errorPayload = { code: mediaError.code, message: mediaError.message || "No specific message.", type: "MediaError" };
-          switch (mediaError.code) {
-            case MediaError.MEDIA_ERR_ABORTED:
-              userFriendlyMessageKey = 'audioErrorAborted';
-              consoleLogMessage += " (MEDIA_ERR_ABORTED)";
-              break;
-            case MediaError.MEDIA_ERR_NETWORK:
-              userFriendlyMessageKey = 'audioErrorNetwork';
-              consoleLogMessage += " (MEDIA_ERR_NETWORK)";
-              break;
-            case MediaError.MEDIA_ERR_DECODE:
-              userFriendlyMessageKey = 'audioErrorDecode';
-              consoleLogMessage += " (MEDIA_ERR_DECODE)";
-              break;
-            case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-              userFriendlyMessageKey = 'audioErrorSrcNotSupported';
-              consoleLogMessage += " (MEDIA_ERR_SRC_NOT_SUPPORTED)";
-              break;
-            default:
-              userFriendlyMessageKey = 'audioErrorUnexpected';
-              consoleLogMessage += ` (Unknown MediaError code: ${mediaError.code})`;
-          }
-        } else {
-          consoleLogMessage += " (No specific MediaError object found). Event type: " + event.type;
-          errorPayload = "No specific MediaError details. Original event: " + event.type;
-        }
-        
-        console.error(consoleLogMessage, "Internal Details:", errorPayload, "Original Event:", event);
-        setIsSoundReady(false);
-        toast({ 
-          title: gridStrings.audioErrorToastTitle, 
-          description: gridStrings[userFriendlyMessageKey] || gridStrings.audioErrorDefault, 
-          variant: "destructive", 
-          duration: 5000 
-        });
-      };
-
-      audioRef.current.addEventListener('canplaythrough', handleCanPlayThrough);
-      audioRef.current.addEventListener('error', handleError);
-      
-      return () => {
-        if (audioRef.current) {
-          audioRef.current.removeEventListener('canplaythrough', handleCanPlayThrough);
-          audioRef.current.removeEventListener('error', handleError);
-          audioRef.current.pause(); 
-          audioRef.current.src = '';
-          audioRef.current.load(); 
-        }
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      };
-    }
-  }, [toast, gridStrings, selectedLanguage]);
-
-  const playSuccessSound = React.useCallback(() => {
-    if (audioRef.current && isSoundReady) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(error => {
-        console.error("Error playing success sound:", error);
-        toast({ 
-            title: gridStrings.audioErrorToastTitle, 
-            description: "Could not play sound. Browser interaction might be required.",
-            variant: "destructive", 
-            duration: 3000 
-        });
-      });
-    } else {
-      console.warn("Attempted to play sound, but it was not ready or audioRef is null.");
-    }
-  }, [isSoundReady, toast, gridStrings]);
 
   const resetToIdle = () => {
     setStatus('idle');
@@ -159,7 +83,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
   };
 
   const getTranslatedLabelForType = React.useCallback((requestType: CallRequestType): string => {
-    const option = callRequestOptionLabels.find((opt: CallRequestOptionStructure) => opt.type === requestType);
+    const option = callRequestOptionLabels.find((opt: { type: CallRequestType; label: string }) => opt.type === requestType);
     return option ? option.label : requestType;
   }, [callRequestOptionLabels]);
 
@@ -176,7 +100,6 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
       const result = await handleCallBellTrigger(requestType);
       if (result.success) {
         setStatus('success');
-        playSuccessSound();
         toast({
           title: gridStrings.toastSuccessTitle,
           description: `${translatedRequestLabel} ${gridStrings.toastSuccessRequestSent}`,
@@ -204,7 +127,7 @@ export default function CallRequestGrid({ selectedLanguage }: CallRequestGridPro
       });
     }
     timeoutRef.current = setTimeout(resetToIdle, 5000);
-  }, [status, toast, playSuccessSound, gridStrings, getTranslatedLabelForType]);
+  }, [status, toast, gridStrings, getTranslatedLabelForType]);
 
   const renderButton = (option: { type: CallRequestType; icon: CallRequestOptionStructure['icon']; label: string }) => (
     <Button
