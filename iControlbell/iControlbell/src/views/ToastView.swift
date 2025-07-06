@@ -1,5 +1,5 @@
 // ToastView.swift
-// Simple toast/notification overlay for user feedback
+// Toast/notification UI
 
 import SwiftUI
 
@@ -8,18 +8,13 @@ struct ToastView: View {
     let isError: Bool
     var body: some View {
         Text(message)
-            .font(.headline)
-            .foregroundColor(.white)
             .padding()
             .background(isError ? Color.red : Color.green)
-            .cornerRadius(12)
-            .shadow(radius: 8)
+            .foregroundColor(.white)
+            .cornerRadius(8)
+            .shadow(radius: 4)
             .padding(.top, 40)
             .transition(.move(edge: .top).combined(with: .opacity))
-            .accessibilityAddTraits(.isStaticText)
+            .animation(.easeInOut, value: message)
     }
-}
-
-#Preview {
-    ToastView(message: "Request sent!", isError: false)
 }

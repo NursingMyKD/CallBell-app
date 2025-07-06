@@ -8,15 +8,15 @@ struct LanguageSelectorView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(AppStrings.languageSelectorLabel(for: selectedLanguage))
+            Text("language_selector_label".localized)
                 .font(.headline)
-            Picker(AppStrings.languageSelectorLabel(for: selectedLanguage), selection: $selectedLanguage) {
+            Picker("language_selector_label".localized, selection: $selectedLanguage) {
                 ForEach(Language.allCases) { lang in
                     Text(lang.displayName).tag(lang)
                 }
             }
             .pickerStyle(MenuPickerStyle())
-            .accessibilityLabel(AppStrings.languageSelectorLabel(for: selectedLanguage))
+            .accessibilityLabel("language_selector_label".localized)
             .accessibilityHint("Double tap to change language.")
         }
         .padding(.vertical)

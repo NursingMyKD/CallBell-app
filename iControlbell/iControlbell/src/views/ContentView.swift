@@ -5,23 +5,25 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
+    @StateObject private var soundboardData = SoundboardData(language: .english)
+    @StateObject private var callRequestData = CallRequestData(language: .english)
     
     var body: some View {
         NavigationView {
             VStack(spacing: 24) {
                 LogoView()
                     .accessibilityHidden(true)
-                Text(AppStrings.title(for: appState.selectedLanguage))
+                Text("app_title".localized)
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .accessibilityAddTraits(.isHeader)
-                Text(AppStrings.description(for: appState.selectedLanguage))
+                Text("app_description".localized)
                     .font(.title3)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                 LanguageSelectorView(selectedLanguage: $appState.selectedLanguage)
-                CallRequestGridView(selectedLanguage: appState.selectedLanguage)
-                SoundboardView(selectedLanguage: appState.selectedLanguage)
+                CallRequestGridView(selectedLanguage: appState.selectedLanguage, callRequests: callRequestData.options)
+                SoundboardView(selectedLanguage: appState.selectedLanguage, categories: soundboardData.categories)
                 Spacer()
             }
             .padding()
@@ -35,6 +37,10 @@ struct ContentView: View {
             )
         }
     }
+}
+
+extension String {
+    var localized: String { NSLocalizedString(self, comment: "") }
 }
 
 #Preview {
