@@ -29,43 +29,9 @@
 		2972F0832E1AA45400929A73 /* iControlbellUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iControlbellUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		2972F08B2E1AA45400929A73 /* Exceptions for "iControlbell" folder in "iControlbell" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-				swift,
-			);
-			target = 2972F0672E1AA45300929A73 /* iControlbell */;
-		};
-		2972F0A12E1AAA1900929A73 /* Exceptions for "iControlbell" folder in "iControlbellTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				logo.png,
-				README.md,
-				sounds/success.mp3,
-			);
-			target = 2972F0782E1AA45400929A73 /* iControlbellTests */;
-		};
-		2972F0A22E1AAA1900929A73 /* Exceptions for "iControlbell" folder in "iControlbellUITests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				logo.png,
-				README.md,
-				sounds/success.mp3,
-			);
-			target = 2972F0822E1AA45400929A73 /* iControlbellUITests */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2972F06A2E1AA45300929A73 /* iControlbell */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				2972F08B2E1AA45400929A73 /* Exceptions for "iControlbell" folder in "iControlbell" target */,
-				2972F0A12E1AAA1900929A73 /* Exceptions for "iControlbell" folder in "iControlbellTests" target */,
-				2972F0A22E1AAA1900929A73 /* Exceptions for "iControlbell" folder in "iControlbellUITests" target */,
-			);
 			path = iControlbell;
 			sourceTree = "<group>";
 		};
