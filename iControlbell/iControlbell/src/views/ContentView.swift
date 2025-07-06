@@ -24,10 +24,13 @@ struct ContentView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                 LanguageSelectorView(selectedLanguage: $appState.selectedLanguage)
+                Divider()
+                BluetoothStatusView()
+                Divider()
                 CallRequestGridView(selectedLanguage: appState.selectedLanguage, callRequests: callRequestData.options)
+                Divider()
                 SoundboardView(selectedLanguage: appState.selectedLanguage, categories: soundboardData.categories)
                 Spacer()
-                BluetoothStatusView()
             }
             .padding()
             .overlay(
