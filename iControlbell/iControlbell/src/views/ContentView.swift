@@ -2,6 +2,8 @@
 // Main Home Screen for iControlBell
 
 import SwiftUI
+import CoreBluetooth // Add this import for Bluetooth support
+import BluetoothStatusView
 
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
@@ -25,6 +27,7 @@ struct ContentView: View {
                 CallRequestGridView(selectedLanguage: appState.selectedLanguage, callRequests: callRequestData.options)
                 SoundboardView(selectedLanguage: appState.selectedLanguage, categories: soundboardData.categories)
                 Spacer()
+                BluetoothStatusView()
             }
             .padding()
             .overlay(
