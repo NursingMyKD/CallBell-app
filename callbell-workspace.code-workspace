@@ -1,0 +1,26 @@
+{
+    "folders": [
+        {
+            "name": "CallBell Main",
+            "path": "."
+        },
+        {
+            "name": "Other Repository",
+            "path": "../path-to-other-repo"
+        }
+    ],
+    "settings": {
+        "files.exclude": {
+            "**/.git": true,
+            "**/node_modules": true,
+            "**/.DS_Store": true
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-vscode.vscode-typescript-next",
+            "bradlc.vscode-tailwindcss",
+            "esbenp.prettier-vscode"
+        ]
+    }
+}
