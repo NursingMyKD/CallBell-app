@@ -1,0 +1,81 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "CallBellSwift-arm64-apple-macosx16.0-debug.exe": ["<CallBellSwift-arm64-apple-macosx16.0-debug.exe>"]
+  "CallBellSwift-arm64-apple-macosx16.0-debug.module": ["<CallBellSwift-arm64-apple-macosx16.0-debug.module>"]
+  "PackageStructure": ["<PackageStructure>"]
+  "main": ["<CallBellSwift-arm64-apple-macosx16.0-debug.exe>","<CallBellSwift-arm64-apple-macosx16.0-debug.module>"]
+  "test": ["<CallBellSwift-arm64-apple-macosx16.0-debug.exe>","<CallBellSwift-arm64-apple-macosx16.0-debug.module>"]
+default: "main"
+nodes:
+  "/Users/shanestone/Documents/CallBell-app/swift/Sources/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+  "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift":
+    is-mutated: true
+commands:
+  "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift-entitlement.plist":
+    tool: write-auxiliary-file
+    inputs: ["<entitlement-plist>","<com.apple.security.get-task-allow>"]
+    outputs: ["/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift-entitlement.plist"]
+    description: "Write auxiliary file /Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift-entitlement.plist"
+
+  "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/shanestone/Documents/CallBell-app/swift/Sources/CallBell.swift","/Users/shanestone/Documents/CallBell-app/swift/Sources/CliMain.swift","/Users/shanestone/Documents/CallBell-app/swift/Sources/iControlBellApp.swift"]
+    outputs: ["/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/sources"]
+    description: "Write auxiliary file /Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/sources"
+
+  "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CallBell.swift.o","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CliMain.swift.o","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/iControlBellApp.swift.o"]
+    outputs: ["/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.product/Objects.LinkFileList"
+
+  "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"]
+    outputs: ["/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+
+  "<CallBellSwift-arm64-apple-macosx16.0-debug.exe>":
+    tool: phony
+    inputs: ["<CallBellSwift-arm64-apple-macosx16.0-debug.exe-CodeSigning>"]
+    outputs: ["<CallBellSwift-arm64-apple-macosx16.0-debug.exe>"]
+
+  "<CallBellSwift-arm64-apple-macosx16.0-debug.module>":
+    tool: phony
+    inputs: ["/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CallBell.swift.o","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CliMain.swift.o","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/iControlBellApp.swift.o","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/Modules/CallBellSwift.swiftmodule"]
+    outputs: ["<CallBellSwift-arm64-apple-macosx16.0-debug.module>"]
+
+  "C.CallBellSwift-arm64-apple-macosx16.0-debug.exe":
+    tool: shell
+    inputs: ["/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CallBell.swift.o","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CliMain.swift.o","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/iControlBellApp.swift.o","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.product/Objects.LinkFileList"]
+    outputs: ["/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift"]
+    description: "Linking ./.build/arm64-apple-macosx/debug/CallBellSwift"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-L","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug","-o","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift","-module-name","CallBellSwift","-Xlinker","-no_warn_duplicate_libraries","-emit-executable","-Xlinker","-alias","-Xlinker","_CallBellSwift_main","-Xlinker","_main","-Xlinker","-rpath","-Xlinker","@loader_path","@/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.product/Objects.LinkFileList","-target","arm64-apple-macosx13.0","-Xlinker","-add_ast_path","-Xlinker","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/Modules/CallBellSwift.swiftmodule","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g"]
+
+  "C.CallBellSwift-arm64-apple-macosx16.0-debug.exe-entitlements":
+    tool: shell
+    inputs: ["/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift-entitlement.plist"]
+    outputs: ["<CallBellSwift-arm64-apple-macosx16.0-debug.exe-CodeSigning>"]
+    description: "Applying debug entitlements to ./.build/arm64-apple-macosx/debug/CallBellSwift"
+    args: ["codesign","--force","--sign","-","--entitlements","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift-entitlement.plist","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift"]
+
+  "C.CallBellSwift-arm64-apple-macosx16.0-debug.module":
+    tool: shell
+    inputs: ["/Users/shanestone/Documents/CallBell-app/swift/Sources/CallBell.swift","/Users/shanestone/Documents/CallBell-app/swift/Sources/CliMain.swift","/Users/shanestone/Documents/CallBell-app/swift/Sources/iControlBellApp.swift","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/sources"]
+    outputs: ["/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CallBell.swift.o","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CliMain.swift.o","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/iControlBellApp.swift.o","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/Modules/CallBellSwift.swiftmodule"]
+    description: "Compiling Swift Module 'CallBellSwift' (3 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","CallBellSwift","-emit-dependencies","-emit-module","-emit-module-path","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/Modules/CallBellSwift.swiftmodule","-output-file-map","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/output-file-map.json","-incremental","-c","@/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/sources","-I","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx13.0","-enable-batch-mode","-index-store-path","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j10","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-Xfrontend","-entry-point-function-name","-Xfrontend","CallBellSwift_main","-color-diagnostics","-swift-version","5","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","swift"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/shanestone/Documents/CallBell-app/swift/Sources/","/Users/shanestone/Documents/CallBell-app/swift/Package.swift","/Users/shanestone/Documents/CallBell-app/swift/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

@@ -1,0 +1,23 @@
+{
+  "": {
+    "swift-dependencies": "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/master.swiftdeps"
+  },
+  "/Users/shanestone/Documents/CallBell-app/swift/Sources/CallBell.swift": {
+    "dependencies": "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CallBell.d",
+    "object": "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CallBell.swift.o",
+    "swiftmodule": "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CallBell~partial.swiftmodule",
+    "swift-dependencies": "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CallBell.swiftdeps"
+  },
+  "/Users/shanestone/Documents/CallBell-app/swift/Sources/CliMain.swift": {
+    "dependencies": "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CliMain.d",
+    "object": "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CliMain.swift.o",
+    "swiftmodule": "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CliMain~partial.swiftmodule",
+    "swift-dependencies": "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/CliMain.swiftdeps"
+  },
+  "/Users/shanestone/Documents/CallBell-app/swift/Sources/iControlBellApp.swift": {
+    "dependencies": "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/iControlBellApp.d",
+    "object": "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/iControlBellApp.swift.o",
+    "swiftmodule": "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/iControlBellApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/shanestone/Documents/CallBell-app/swift/.build/arm64-apple-macosx/debug/CallBellSwift.build/iControlBellApp.swiftdeps"
+  }
+}

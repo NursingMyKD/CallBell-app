@@ -1,6 +1,6 @@
 import Foundation
 
-@main
+// @main - commented out to avoid conflict with SwiftUI app
 struct Main {
     static func main() async {
         let result = await handleCallBellTrigger(requestType: .general)
