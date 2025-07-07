@@ -5,7 +5,19 @@
 import Foundation
 import CoreBluetooth
 
-class BluetoothManager: NSObject, ObservableObject {
+/// Protocol for Bluetooth management, for testability and abstraction.
+protocol BluetoothManaging: AnyObject {
+    var isConnected: Bool { get }
+    var lastError: String? { get }
+    func startScanning()
+    func stopScanning()
+    func triggerCallBell()
+    func disconnect()
+}
+
+/// Manages Bluetooth LE connectivity for hospital call bell integration.
+@MainActor
+class BluetoothManager: NSObject, ObservableObject, BluetoothManaging {
     static let shared = BluetoothManager()
     private var centralManager: CBCentralManager!
     private var discoveredPeripheral: CBPeripheral?
@@ -36,6 +48,15 @@ class BluetoothManager: NSObject, ObservableObject {
         guard let peripheral = discoveredPeripheral, let characteristic = callBellCharacteristic else { return }
         let data = Data([0x01]) // Example: 0x01 triggers the call bell
         peripheral.writeValue(data, for: characteristic, type: .withResponse)
+    }
+    /// Disconnects from the current peripheral if connected.
+    func disconnect() {
+        if let peripheral = discoveredPeripheral {
+            centralManager.cancelPeripheralConnection(peripheral)
+            discoveredPeripheral = nil
+            callBellCharacteristic = nil
+            isConnected = false
+        }
     }
 }
 

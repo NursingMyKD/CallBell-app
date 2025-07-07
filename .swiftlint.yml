@@ -1,0 +1,56 @@
+# SwiftLint Configuration for iControlBell
+
+# Enable recommended rules
+opt_in_rules:
+  - empty_count
+  - explicit_init
+  - fatal_error_message
+  - force_unwrapping
+  - force_cast
+  - implicitly_unwrapped_optional
+  - missing_docs
+  - private_outlet
+  - redundant_optional_initialization
+  - sorted_imports
+  - switch_case_on_newline
+  - unneeded_parentheses_in_closure_argument
+  - unused_declaration
+
+# Exclude generated and legacy folders
+excluded:
+  - legacy_web_firebase
+  - dataconnect-generated
+  - dataconnect-generated 2
+
+# Customize some rules
+line_length:
+  warning: 120
+  error: 160
+identifier_name:
+  min_length: 2
+  excluded:
+    - id
+    - x
+    - y
+    - i
+    - j
+    - k
+    - t
+    - n
+    - s
+    - p
+    - q
+    - v
+    - z
+trailing_whitespace:
+  ignores_empty_lines: true
+
+# Documentation required for all public types and methods
+missing_docs:
+  severity: warning
+  included:
+    - "**/*.swift"
+
+# Allow TODOs but warn
+todo:
+  severity: warning

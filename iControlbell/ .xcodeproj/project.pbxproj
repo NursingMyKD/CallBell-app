@@ -99,6 +99,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2972F08C2E1AA45400929A73 /* Build configuration list for PBXNativeTarget "iControlbell" */;
 			buildPhases = (
+				29ECF73F2E1B3A94007678F2 /* ShellScript */,
 				2972F0642E1AA45300929A73 /* Sources */,
 				2972F0652E1AA45300929A73 /* Frameworks */,
 				2972F0662E1AA45300929A73 /* Resources */,
@@ -186,7 +187,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2972F0632E1AA45300929A73 /* Build configuration list for PBXProject "iControlbell" */;
+			buildConfigurationList = 2972F0632E1AA45300929A73 /* Build configuration list for PBXProject " " */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -230,6 +231,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		29ECF73F2E1B3A94007678F2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/iControlbell/iControlbell/scripts/swiftlint.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2972F0642E1AA45300929A73 /* Sources */ = {
@@ -534,7 +555,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2972F0632E1AA45300929A73 /* Build configuration list for PBXProject "iControlbell" */ = {
+		2972F0632E1AA45300929A73 /* Build configuration list for PBXProject " " */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2972F08F2E1AA45400929A73 /* Debug */,

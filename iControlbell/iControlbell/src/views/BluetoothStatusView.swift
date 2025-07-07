@@ -3,8 +3,10 @@
 
 import SwiftUI
 
+/// Displays Bluetooth connection status and allows triggering the call bell.
 struct BluetoothStatusView: View {
-    @ObservedObject var bluetooth = BluetoothManager.shared
+    @ObservedObject var bluetooth: BluetoothManaging
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
         VStack(spacing: 16) {
@@ -12,13 +14,13 @@ struct BluetoothStatusView: View {
                 Circle()
                     .fill(bluetooth.isConnected ? Color.green : Color.red)
                     .frame(width: 16, height: 16)
-                Text(bluetooth.isConnected ? "Connected to Call Bell" : "Not Connected")
-                    .accessibilityLabel(bluetooth.isConnected ? "Bluetooth connected to call bell system" : "Bluetooth not connected")
+                Text(bluetooth.isConnected ? "bluetooth_connected".localized : "bluetooth_not_connected".localized)
+                    .accessibilityLabel(bluetooth.isConnected ? "bluetooth_connected_accessibility".localized : "bluetooth_not_connected_accessibility".localized)
             }
             Button(action: {
                 bluetooth.triggerCallBell()
             }) {
-                Text("Trigger Call Bell")
+                Text("trigger_call_bell".localized)
                     .padding()
                     .background(Color.accentColor)
                     .foregroundColor(.white)
@@ -28,6 +30,9 @@ struct BluetoothStatusView: View {
             if let error = bluetooth.lastError {
                 Text("Error: \(error)")
                     .foregroundColor(.red)
+                    .onAppear {
+                        appState.showBluetoothError(error)
+                    }
             }
         }
         .padding()

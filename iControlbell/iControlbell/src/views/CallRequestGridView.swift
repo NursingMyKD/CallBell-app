@@ -3,44 +3,45 @@
 
 import SwiftUI
 
+/// Displays a grid of call request buttons for the patient UI.
 struct CallRequestGridView: View {
     var selectedLanguage: Language
     var callRequests: [CallRequestOption]
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("call_request_grid_title".localized)
-                .font(.headline)
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 120), spacing: 16)], spacing: 16) {
-                ForEach(callRequests) { option in
+        VStack(spacing: 16) {
+            // Five call request buttons in a horizontal row
+            HStack(spacing: 16) {
+                ForEach(callRequests.prefix(5)) { option in
                     Button(action: {
-                        let message = (option.labels[selectedLanguage.rawValue] ?? option.type) + " request sent!"
-                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                           let delegate = windowScene.delegate as? SceneDelegate,
-                           let appState = delegate.appState {
-                            appState.showToast(message)
-                        }
+                        let message = option.label(for: selectedLanguage) + " request sent!"
+                        appState.showToast(message)
                     }) {
-                        VStack {
+                        VStack(spacing: 8) {
                             Image(systemName: option.iconName)
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                                .padding(.bottom, 8)
-                            Text(option.labels[selectedLanguage.rawValue] ?? option.type)
+                                .font(.system(size: 32))
+                                .foregroundColor(.white)
+                            Text(option.label(for: selectedLanguage))
+                                .font(.body)
+                                .fontWeight(.medium)
+                                .foregroundColor(.white)
                                 .multilineTextAlignment(.center)
                         }
-                        .padding()
-                        .frame(maxWidth: .infinity, minHeight: 100)
-                        .background(Color(.secondarySystemBackground))
+                        .padding(.vertical, 24)
+                        .padding(.horizontal, 16)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 120)
+                        .background(Color(red: 0.0, green: 0.6, blue: 0.6)) // Teal color matching image
                         .cornerRadius(16)
-                        .shadow(radius: 2)
                     }
-                    .accessibilityLabel(option.labels[selectedLanguage.rawValue] ?? option.type)
+                    .accessibilityLabel(option.label(for: selectedLanguage))
                     .accessibilityAddTraits(.isButton)
                     .accessibilityHint("Double tap to send request.")
+                    .accessibilityIdentifier("button_\(option.id)")
                 }
             }
+            .padding(.horizontal, 16)
         }
-        .padding(.vertical)
     }
 }

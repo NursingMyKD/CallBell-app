@@ -3,6 +3,7 @@
 
 import SwiftUI
 
+/// Displays the app logo image.
 struct LogoView: View {
     var body: some View {
         Image("logo")

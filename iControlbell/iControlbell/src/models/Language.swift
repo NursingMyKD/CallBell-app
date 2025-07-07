@@ -1,36 +1,38 @@
 // Language.swift
 // Supported languages for iControlBell
 
+/// Supported languages for the iControlBell app.
 enum Language: String, CaseIterable, Identifiable {
-    case english = "en"
-    case spanish = "es"
-    case french = "fr"
-    case german = "de"
-    case portuguese = "pt"
-    case italian = "it"
-    case japanese = "ja"
-    case dutch = "nl"
-    case russian = "ru"
-    case chinese = "zh"
-    case hindi = "hi"
-    case arabic = "ar"
-    case bengali = "bn"
-    case korean = "ko"
-    case turkish = "tr"
-    case polish = "pl"
-    case swedish = "sv"
-    case vietnamese = "vi"
-    case indonesian = "id"
-    case urdu = "ur"
-    case tagalog = "tl"
-    case thai = "th"
-    case greek = "el"
-    case czech = "cs"
-    case hungarian = "hu"
-    case romanian = "ro"
-    case danish = "da"
-    case finnish = "fi"
+    case english = "en" // English
+    case spanish = "es" // Español
+    case french = "fr" // Français
+    case german = "de" // Deutsch
+    case portuguese = "pt" // Português
+    case italian = "it" // Italiano
+    case japanese = "ja" // 日本語
+    case dutch = "nl" // Nederlands
+    case russian = "ru" // Русский
+    case chinese = "zh" // 中文
+    case hindi = "hi" // हिन्दी
+    case arabic = "ar" // العربية
+    case bengali = "bn" // বাংলা
+    case korean = "ko" // 한국어
+    case turkish = "tr" // Türkçe
+    case polish = "pl" // Polski
+    case swedish = "sv" // Svenska
+    case vietnamese = "vi" // Tiếng Việt
+    case indonesian = "id" // Bahasa Indonesia
+    case urdu = "ur" // اردو
+    case tagalog = "tl" // Tagalog
+    case thai = "th" // ภาษาไทย
+    case greek = "el" // Ελληνικά
+    case czech = "cs" // Čeština
+    case hungarian = "hu" // Magyar
+    case romanian = "ro" // Română
+    case danish = "da" // Dansk
+    case finnish = "fi" // Suomi
     var id: String { rawValue }
+    /// Returns the display name for the language, localized if possible.
     var displayName: String {
         switch self {
         case .english: return "English"

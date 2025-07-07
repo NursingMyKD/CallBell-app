@@ -3,6 +3,7 @@
 
 import SwiftUI
 
+/// Displays a toast notification with a message and error/success color.
 struct ToastView: View {
     let message: String
     let isError: Bool

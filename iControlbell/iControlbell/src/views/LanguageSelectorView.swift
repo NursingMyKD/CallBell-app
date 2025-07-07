@@ -3,23 +3,26 @@
 
 import SwiftUI
 
+/// Displays a language picker for selecting the app's language.
 struct LanguageSelectorView: View {
     @Binding var selectedLanguage: Language
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("language_selector_label".localized)
-                .font(.headline)
-            Picker("language_selector_label".localized, selection: $selectedLanguage) {
+        VStack(spacing: 8) {
+            Picker("Language", selection: $selectedLanguage) {
                 ForEach(Language.allCases) { lang in
                     Text(lang.displayName).tag(lang)
                 }
             }
             .pickerStyle(MenuPickerStyle())
-            .accessibilityLabel("language_selector_label".localized)
+            .foregroundColor(.white)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+            .background(Color(red: 0.15, green: 0.15, blue: 0.15))
+            .cornerRadius(8)
+            .accessibilityLabel("Select Language")
             .accessibilityHint("Double tap to change language.")
         }
-        .padding(.vertical)
     }
 }
 
