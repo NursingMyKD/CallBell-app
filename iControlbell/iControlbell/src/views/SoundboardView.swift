@@ -101,13 +101,6 @@ struct SoundboardView: View {
         }
         .padding(.vertical)
     }
-                        .accessibilityIdentifier("sound_button_\(phrase)")
-                    }
-                }
-            }
-        }
-        .padding(.vertical)
-    }
     
     /// Speaks the given phrase using AVSpeechSynthesizer.
     func speak(_ phrase: String) {
