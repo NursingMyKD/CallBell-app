@@ -4,6 +4,10 @@
 import SwiftUI
 import AVFoundation
 
+#if canImport(UIKit)
+import UIKit
+#endif
+
 // MARK: - Models
 
 enum LanguageCode: String, CaseIterable, Identifiable {
@@ -80,10 +84,14 @@ class AppViewModel: ObservableObject {
     }
 }
 
-struct ToastData: Identifiable {
+struct ToastData: Identifiable, Equatable {
     let id = UUID()
     let title: String
     let description: String
+    
+    static func == (lhs: ToastData, rhs: ToastData) -> Bool {
+        return lhs.id == rhs.id && lhs.title == rhs.title && lhs.description == rhs.description
+    }
 }
 
 // MARK: - Views
@@ -106,9 +114,11 @@ struct MainView: View {
                     Soundboard(viewModel: viewModel)
                 }
                 .padding()
-                .background(Color(.systemGroupedBackground))
+                .background(Color.gray.opacity(0.1))
             }
+            #if os(iOS)
             .navigationBarHidden(true)
+            #endif
             .toast(data: $viewModel.toast)
         }
     }
